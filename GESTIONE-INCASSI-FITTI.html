@@ -1,0 +1,2728 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#b8bcc4;min-height:100%}
+.section{background:var(--color-background-primary);border:none;border-radius:var(--border-radius-lg);padding:1.25rem;margin-bottom:1rem}
+.section-title{
+  font-size:15px;font-weight:700;color:#1e4f78;
+  margin:-1.25rem -1.25rem 1rem -1.25rem;
+  padding:10px 16px;
+  background:#dceef9;
+  border-left:4px solid #2a6496;
+  border-bottom:1px solid #c8dff0;
+  border-radius:var(--border-radius-lg) var(--border-radius-lg) 0 0;
+  display:flex;align-items:center;gap:8px;
+}
+.section-subtitle{
+  font-size:13px;font-weight:700;color:#2a6496;
+  margin:1rem 0 0.6rem;padding:4px 0 4px 10px;
+  border-left:3px solid #2a6496;
+}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+label{font-size:13px;color:var(--color-text-secondary);display:block;margin-bottom:4px}
+input,select{width:100%;font-size:14px}
+select{border-radius:8px;border:1.5px solid #178a5a!important;background:#f4f5f6;color:var(--color-text-primary);font-weight:600;cursor:pointer;padding:5px 8px}
+.btn{
+  padding:8px 18px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;
+  border:1.5px solid var(--color-border-secondary);
+  background:var(--color-background-secondary);color:var(--color-text-primary);
+  box-shadow:0 1px 3px rgba(0,0,0,.08);
+  transition:all 0.15s ease;
+  letter-spacing:0.01em;
+}
+.btn:hover{background:var(--color-background-tertiary);box-shadow:0 3px 8px rgba(0,0,0,.13);transform:translateY(-1px)}
+.btn:active{transform:translateY(0);box-shadow:0 1px 2px rgba(0,0,0,.1)}
+/* Bottoni colorati: testo sempre bianco, hover corretto */
+.btn-primary{background:linear-gradient(135deg,#178a5a,#1aad72);border-color:#178a5a;color:#fff!important}
+.btn-primary:hover{background:linear-gradient(135deg,#0f6e48,#178a5a)!important;color:#fff!important}
+.btn-secondary{background:linear-gradient(135deg,#e74c3c,#f1948a);border:1.5px solid #e74c3c;color:#fff!important}
+.btn-secondary:hover{background:linear-gradient(135deg,#c0392b,#e74c3c)!important;border-color:#c0392b;color:#fff!important}
+.btn-excel{background:linear-gradient(135deg,#1d6f42,#27a05f);border-color:#1d6f42;color:#fff!important}
+.btn-excel:hover{background:linear-gradient(135deg,#155230,#1d6f42)!important;color:#fff!important}
+.btn-pdf{background:linear-gradient(135deg,#c0392b,#e74c3c);border-color:#c0392b;color:#fff!important}
+.btn-pdf:hover{background:linear-gradient(135deg,#96281e,#c0392b)!important;color:#fff!important}
+.btn-danger{background:linear-gradient(135deg,#a32d2d,#c0392b);border-color:#a32d2d;color:#fff!important}
+.btn-danger:hover{background:linear-gradient(135deg,#7d2020,#a32d2d)!important;color:#fff!important}
+.metric{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:0.75rem 1rem}
+.metric-label{font-size:12px;color:var(--color-text-secondary);margin-bottom:4px}
+.metric-value{font-size:20px;font-weight:500;color:var(--color-text-primary)}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px;border:1px solid #b0c4d8}
+th{font-size:12px;font-weight:700;text-align:left;padding:8px 10px;background:#2a6496;color:#fff;border:1px solid #1e4f78;white-space:nowrap}
+td{padding:6px 10px;border:1px solid #b0c4d8;color:var(--color-text-primary);background:#f4f5f6}
+tr:nth-child(even) td{background:#eaebec}
+tr:hover td{background:#dceef9}
+.tab-bar{
+  display:flex;gap:4px;margin-bottom:1.25rem;flex-wrap:wrap;align-items:center;
+  background:#1e4f78;border-radius:10px;padding:6px;
+  box-shadow:0 2px 8px rgba(30,79,120,.25);
+  position:sticky;top:0;z-index:100;
+}
+.tab{
+  padding:8px 18px;border-radius:7px;font-size:13px;font-weight:700;
+  cursor:pointer;border:none;
+  background:transparent;color:rgba(255,255,255,.65);
+  transition:all .18s ease;letter-spacing:.01em;
+  display:flex;align-items:center;gap:7px;
+}
+.tab:hover{background:rgba(255,255,255,.12);color:#fff}
+.tab.active{background:#178a5a;color:#fff;box-shadow:0 2px 6px rgba(23,138,90,.4)}
+.tab-icon{font-size:17px;line-height:1}
+.tab-home{margin-right:auto}
+.tab-home.active{background:#e67e22;box-shadow:0 2px 6px rgba(230,126,34,.4)}
+/* ── Report matrix ─────────────────────────────────────── */
+#report-wrap{overflow-x:auto}
+#report-wrap table{border-collapse:collapse;font-size:13px;min-width:100%}
+#report-wrap th{background:#178a5a;color:#fff;padding:8px 10px;text-align:center;white-space:nowrap;border:1px solid #0e6644;font-weight:600}
+#report-wrap th.col-mese{background:#e67e22;text-align:left;min-width:140px}
+#report-wrap td{padding:7px 10px;text-align:center;border:1px solid #c8ddd0;vertical-align:middle}
+#report-wrap td.col-mese{text-align:left;font-weight:700;background:#fff9c4;white-space:nowrap;color:#5a4000}
+#report-wrap td.ok{background:#d4edda;color:#155724;font-weight:700;font-size:15px}
+#report-wrap td.no{background:#f8f9fa;color:#ccc}
+#report-wrap td.dup{background:#fde8e8;font-size:16px;cursor:default}
+@media print{
+  body *{display:none!important}
+  #print-report-frame,#print-report-frame *{display:block!important}
+  @page{size:A4 landscape;margin:1cm}
+}
+.page{display:none}.page.active{display:block;background:var(--color-background-secondary);min-height:calc(100vh - 54px);padding:1.25rem}
+.info-box{background:var(--color-background-info);border:0.5px solid var(--color-border-info);border-radius:var(--border-radius-md);padding:0.75rem 1rem;font-size:13px;color:var(--color-text-info);margin-bottom:1rem}
+.resoconto-card{background:var(--color-background-secondary);border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-tertiary);padding:1rem;margin-bottom:0.75rem}
+.resoconto-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem;flex-wrap:wrap;gap:6px}
+.empty{text-align:center;padding:2rem;color:var(--color-text-tertiary);font-size:14px}
+.btn-group{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.mesi-tag{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:600;padding:4px 10px;border-radius:20px;background:linear-gradient(135deg,#178a5a,#1aad72);color:#fff;margin:2px;box-shadow:0 1px 3px rgba(23,138,90,.25)}
+.mesi-tag .mese-x{font-size:11px;opacity:.75;margin-left:2px;transition:opacity .15s}
+.mesi-tag:hover .mese-x{opacity:1}
+.mese-picker{border:1.5px solid var(--color-border-tertiary);border-radius:10px;padding:10px;background:var(--color-background-secondary)}
+.mese-picker-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.mese-picker-nav span{font-size:14px;font-weight:500;color:var(--color-text-primary);background:#fff9c4;border-radius:6px;padding:2px 12px;border:1px solid #f9e04b}
+.mese-picker-nav button{padding:2px 10px;font-size:13px}
+.mese-btn{padding:6px 4px;font-size:12px;font-weight:600;border-radius:8px;cursor:pointer;border:1.5px solid var(--color-border-tertiary);background:var(--color-background-primary);color:var(--color-text-primary);text-align:center;transition:all .15s}
+.mese-btn:hover{background:var(--color-background-tertiary);border-color:#2a6496;color:#2a6496;transform:translateY(-1px)}
+.mese-btn.sel{background:linear-gradient(135deg,#178a5a,#1aad72);border-color:#178a5a;color:#fff;font-weight:700;box-shadow:0 2px 6px rgba(23,138,90,.3)}
+.mese-btn.suggerito{background:#fff176;border-color:#f9a825;color:#5d4037;font-weight:800;box-shadow:0 2px 6px rgba(249,168,37,.35)}
+.mesi-sel-box{margin-top:8px;border:1.5px dashed #b0c4d8;border-radius:10px;padding:8px 10px;min-height:44px;background:var(--color-background-secondary);transition:border-color .2s}
+.mesi-sel-box.has-items{border-style:solid;border-color:#178a5a;background:#f0faf5}
+.mesi-sel-header{font-size:11px;font-weight:700;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px}
+.mesi-sel-wrap{display:flex;flex-wrap:wrap;gap:4px;align-items:center;min-height:24px}
+.importo-hint{font-size:11px;color:var(--color-text-secondary);margin-top:3px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.cassa-saldo-box{background:linear-gradient(135deg,#1a6b3a,#178a5a);color:#fff;border-radius:var(--border-radius-md);padding:1rem 1.25rem;text-align:center;margin-bottom:1rem}
+.cassa-saldo-box.negativo{background:linear-gradient(135deg,#7d2020,#a32d2d)}
+.cassa-saldo-label{font-size:13px;opacity:0.85;margin-bottom:4px}
+.cassa-saldo-value{font-size:34px;font-weight:900;letter-spacing:-1px}
+.mov-deposito{color:#178a5a;font-weight:700}
+.mov-prelievo{color:#c0392b;font-weight:700}
+.periodo-selector{display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:4px 0}
+.periodo-btn{padding:5px 13px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid;transition:background 0.13s,color 0.13s;white-space:nowrap;line-height:1.4}
+.periodo-btn-tutti{border-color:#aaa;background:var(--color-background-secondary);color:var(--color-text-secondary)}
+.periodo-btn-tutti.sel,.periodo-btn-tutti:hover{background:#666;border-color:#666;color:#fff}
+.periodo-btn-storico{border-color:#2a6496;background:#dceef9;color:#1e4f78}
+.periodo-btn-storico.sel,.periodo-btn-storico:hover{background:#2a6496;border-color:#2a6496;color:#fff}
+.periodo-btn-corrente{border-color:#178a5a;background:#e6f4ed;color:#0f6e48}
+.periodo-btn-corrente.sel,.periodo-btn-corrente:hover{background:#178a5a;border-color:#178a5a;color:#fff}
+
+/* LABEL in grassetto (sezione pagamenti e pagamenti registrati) */
+#page-pagamenti label{
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+/* Barra anno con frecce — evidenziata con colore verde */
+#page-pagamenti .mese-picker-nav{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: linear-gradient(90deg,#178a5a18,#178a5a0a);
+  border: 1.5px solid #178a5a66;
+  margin-bottom: 8px;
+}
+
+#page-pagamenti #picker-anno{
+  font-size: 17px;
+  font-weight: 900;
+  color: #178a5a;
+  letter-spacing: 1px;
+  background:#fff9c4;border-radius:6px;padding:2px 12px;border:1px solid #f9e04b;
+}
+
+/* Storico: padding celle e stili specifici */
+#storico-table td{padding:8px 10px;font-size:13px;vertical-align:middle}
+#storico-table .persone-cell{font-size:11px;line-height:1.6}
+#storico-table .badge-periodo{display:inline-block;font-size:11px;padding:2px 8px;border-radius:20px;background:#dceef9;color:#1e4f78;white-space:nowrap}
+
+
+/* Input globale: tutti i campi testo/numero/data */
+input[type=text],input[type=number],input[type=date]{
+  border:1.5px solid #b0c4d8;border-radius:6px;
+  background:#f4f5f6;
+  padding:5px 8px;font-size:13px;
+  transition:border-color 0.15s;
+}
+input[type=text]:focus,input[type=number]:focus,input[type=date]:focus{
+  border-color:#2a6496;outline:none;
+  background:#eaebec;
+}
+/* ── Sezione Configurazione ─────────────────────────────── */
+#page-config .section-title{display:flex;align-items:center;gap:8px}
+#page-config .section-title .cfg-badge{font-size:12px;font-weight:700;padding:2px 9px;border-radius:20px;background:#2a6496;color:#fff;margin-left:4px}
+#cfg-eredi-title .cfg-badge{background:#178a5a!important}
+/* Sfondo grigio sezioni e intestazioni tabelle in Configurazione */
+#page-config .section{background:var(--color-background-secondary)}
+#page-config table{background:#f4f5f6}
+#page-config th{background:#d0d7de;color:var(--color-text-primary);border-color:#b0bcc8}
+#erede-table th{background:#c6ddd1;border-color:#9dbfb0;color:var(--color-text-primary)}
+/* Cella quota evidenziata */
+.td-quota{}
+/* Avatar erede */
+.erede-av{width:30px;height:30px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;color:#fff;flex-shrink:0;margin-right:4px}
+
+#page-resoconto label{font-weight:700;color:var(--color-text-primary)}
+#page-storico label{font-weight:700;color:var(--color-text-primary)}
+
+#btn-registra:disabled{
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+/* ── Modale modifica pagamento ──────────────────────────── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:9000;display:flex;align-items:center;justify-content:center;padding:16px}
+.modal-box{background:rgba(255,255,255,0.15);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,0.3);border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,.25);width:100%;max-width:520px;overflow:hidden}
+.modal-header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;background:#2a6496;color:#fff}
+.modal-header h3{font-size:15px;font-weight:700;margin:0}
+.modal-close{background:none;border:none;color:#fff;font-size:20px;cursor:pointer;line-height:1;padding:0 2px;opacity:.8}
+.modal-close:hover{opacity:1}
+.modal-body{padding:18px}
+.modal-footer{display:flex;gap:8px;justify-content:flex-end;padding:12px 18px;border-top:1px solid var(--color-border-tertiary)}
+.modal-warning{background:#fff8e1;border:1.5px solid #f9a825;border-radius:8px;padding:8px 12px;font-size:12px;color:#7a5c00;margin-bottom:14px;display:flex;align-items:flex-start;gap:6px}
+.btn-edit{background:linear-gradient(135deg,#2a6496,#3a84c9);border-color:#2a6496;color:#fff!important}
+.btn-edit:hover{background:linear-gradient(135deg,#1e4f78,#2a6496)!important;color:#fff!important}
+
+</style>
+
+</head><body><div class="tab-bar">
+  <div class="tab tab-home active" onclick="showPage('home')" title="Home"><span class="tab-icon">🏠</span> Home</div>
+  <div class="tab" onclick="showPage('config')"><span class="tab-icon">📇</span> Anagrafiche</div>
+  <div class="tab" onclick="showPage('pagamenti')"><span class="tab-icon">💶</span> Incassi</div>
+  <div class="tab" onclick="showPage('spese')"><span class="tab-icon">🧾</span> Spese</div>
+  <div class="tab" onclick="showPage('resoconto')"><span class="tab-icon">📊</span> Resoconti</div>
+  <div class="tab" onclick="showPage('report')"><span class="tab-icon">📈</span> Report</div>
+  <div class="tab" onclick="showPage('storico')"><span class="tab-icon">💰</span> Cassa</div>
+  <div class="tab" onclick="showPage('strumenti')"><span class="tab-icon">🛠️</span> Strumenti</div>
+</div>
+
+<div id="page-home" class="page active">
+  <div style="max-width:1200px;margin:2.5rem auto;text-align:center;padding:0 1rem">
+    <div style="font-size:72px;margin-bottom:0.75rem">🏠</div>
+    <h1 style="font-size:26px;font-weight:900;color:#1e4f78;margin-bottom:0.4rem;letter-spacing:-0.5px">Gestione Incassi Fitti</h1>
+    <p style="font-size:14px;color:var(--color-text-secondary);margin-bottom:2rem;line-height:1.6;max-width:560px;margin-left:auto;margin-right:auto">
+      Applicazione per la gestione dei pagamenti degli affitti, la generazione di resoconti periodici e il controllo della cassa condominiale.
+    </p>
+    <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:0.9rem;margin-bottom:1.5rem">
+      <div onclick="showPage('config')" style="background:linear-gradient(135deg,#dbeafe,#bfdbfe);border:2px solid #93c5fd;border-radius:16px;padding:1.8rem 0.8rem;cursor:pointer;transition:box-shadow .2s,transform .15s;box-shadow:0 3px 10px rgba(59,130,246,.18);text-align:center" onmouseover="this.style.boxShadow='0 8px 22px rgba(59,130,246,.32)';this.style.transform='translateY(-3px)'" onmouseout="this.style.boxShadow='0 3px 10px rgba(59,130,246,.18)';this.style.transform='translateY(0)'">
+        <div style="font-size:40px;margin-bottom:10px">📇</div>
+        <div style="font-weight:800;font-size:13px;color:#1e3a8a">Anagrafiche</div>
+        <div style="font-size:11px;color:#3b5bdb;margin-top:5px">Patrimonio ed eredi</div>
+      </div>
+      <div onclick="showPage('pagamenti')" style="background:linear-gradient(135deg,#dcfce7,#bbf7d0);border:2px solid #86efac;border-radius:16px;padding:1.8rem 0.8rem;cursor:pointer;transition:box-shadow .2s,transform .15s;box-shadow:0 3px 10px rgba(34,197,94,.18);text-align:center" onmouseover="this.style.boxShadow='0 8px 22px rgba(34,197,94,.32)';this.style.transform='translateY(-3px)'" onmouseout="this.style.boxShadow='0 3px 10px rgba(34,197,94,.18)';this.style.transform='translateY(0)'">
+        <div style="font-size:40px;margin-bottom:10px">💶</div>
+        <div style="font-weight:800;font-size:13px;color:#14532d">Incassi</div>
+        <div style="font-size:11px;color:#166534;margin-top:5px">Registra pagamenti</div>
+      </div>
+      <div onclick="showPage('spese')" style="background:linear-gradient(135deg,#fff7ed,#fed7aa);border:2px solid #fdba74;border-radius:16px;padding:1.8rem 0.8rem;cursor:pointer;transition:box-shadow .2s,transform .15s;box-shadow:0 3px 10px rgba(249,115,22,.18);text-align:center" onmouseover="this.style.boxShadow='0 8px 22px rgba(249,115,22,.32)';this.style.transform='translateY(-3px)'" onmouseout="this.style.boxShadow='0 3px 10px rgba(249,115,22,.18)';this.style.transform='translateY(0)'">
+        <div style="font-size:40px;margin-bottom:10px">🧾</div>
+        <div style="font-weight:800;font-size:13px;color:#7c2d12">Spese</div>
+        <div style="font-size:11px;color:#9a3412;margin-top:5px">Registra le spese</div>
+      </div>
+      <div onclick="showPage('resoconto')" style="background:linear-gradient(135deg,#fef3c7,#fde68a);border:2px solid #fcd34d;border-radius:16px;padding:1.8rem 0.8rem;cursor:pointer;transition:box-shadow .2s,transform .15s;box-shadow:0 3px 10px rgba(245,158,11,.18);text-align:center" onmouseover="this.style.boxShadow='0 8px 22px rgba(245,158,11,.32)';this.style.transform='translateY(-3px)'" onmouseout="this.style.boxShadow='0 3px 10px rgba(245,158,11,.18)';this.style.transform='translateY(0)'">
+        <div style="font-size:40px;margin-bottom:10px">📊</div>
+        <div style="font-weight:800;font-size:13px;color:#78350f">Resoconti</div>
+        <div style="font-size:11px;color:#92400e;margin-top:5px">Chiudi periodi</div>
+      </div>
+      <div onclick="showPage('report')" style="background:linear-gradient(135deg,#fefce8,#fef08a);border:2px solid #facc15;border-radius:16px;padding:1.8rem 0.8rem;cursor:pointer;transition:box-shadow .2s,transform .15s;box-shadow:0 3px 10px rgba(234,179,8,.18);text-align:center" onmouseover="this.style.boxShadow='0 8px 22px rgba(234,179,8,.32)';this.style.transform='translateY(-3px)'" onmouseout="this.style.boxShadow='0 3px 10px rgba(234,179,8,.18)';this.style.transform='translateY(0)'">
+        <div style="font-size:40px;margin-bottom:10px">📈</div>
+        <div style="font-weight:800;font-size:13px;color:#713f12">Report</div>
+        <div style="font-size:11px;color:#92400e;margin-top:5px">Matrice incassi</div>
+      </div>
+      <div onclick="showPage('storico')" style="background:linear-gradient(135deg,#fce7f3,#fbcfe8);border:2px solid #f9a8d4;border-radius:16px;padding:1.8rem 0.8rem;cursor:pointer;transition:box-shadow .2s,transform .15s;box-shadow:0 3px 10px rgba(236,72,153,.18);text-align:center" onmouseover="this.style.boxShadow='0 8px 22px rgba(236,72,153,.32)';this.style.transform='translateY(-3px)'" onmouseout="this.style.boxShadow='0 3px 10px rgba(236,72,153,.18)';this.style.transform='translateY(0)'">
+        <div style="font-size:40px;margin-bottom:10px">💰</div>
+        <div style="font-weight:800;font-size:13px;color:#831843">Cassa</div>
+        <div style="font-size:11px;color:#9d174d;margin-top:5px">Movimenti e saldo</div>
+      </div>
+      <div onclick="showPage('strumenti')" style="background:linear-gradient(135deg,#f3e8ff,#e9d5ff);border:2px solid #c4b5fd;border-radius:16px;padding:1.8rem 0.8rem;cursor:pointer;transition:box-shadow .2s,transform .15s;box-shadow:0 3px 10px rgba(139,92,246,.18);text-align:center" onmouseover="this.style.boxShadow='0 8px 22px rgba(139,92,246,.32)';this.style.transform='translateY(-3px)'" onmouseout="this.style.boxShadow='0 3px 10px rgba(139,92,246,.18)';this.style.transform='translateY(0)'">
+        <div style="font-size:40px;margin-bottom:10px">🛠️</div>
+        <div style="font-weight:800;font-size:13px;color:#4c1d95">Strumenti</div>
+        <div style="font-size:11px;color:#6d28d9;margin-top:5px">Backup e utilità</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="page-config" class="page">
+  <div class="section">
+    <div class="section-title">🏠 PATRIMONIO <span class="cfg-badge" id="cfg-imm-badge">8</span></div>
+    <div id="immobili-list">
+    <div class="table-wrap">
+      <table>
+        <thead><tr>
+          <th>🏠 Immobile</th>
+          <th>👤 Inquilino</th>
+          <th style="text-align:right">💶 Fitto mensile</th>
+          <th style="text-align:center;width:90px">Azioni</th>
+        </tr></thead>
+        <tbody>
+    <tr>
+      <td>PORTA CAPUANA - NAPOLI</td>
+      <td>ROMANO</td>
+      <td class="td-quota" style="text-align:right;font-weight:700;color:#178a5a">€ 1700,00</td>
+      <td style="text-align:center;white-space:nowrap">
+        <div style="display:flex;gap:4px;justify-content:center;align-items:center">
+          <button class="btn btn-sm btn-edit" onclick="apriModificaImmobile(0)" title="Modifica">✏️</button>
+          <button class="btn btn-sm btn-danger" onclick="removeImmobile(0)" title="Rimuovi">✕</button>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>CORSO GARIBALDI - NAPOLI</td>
+      <td>SHAMAD</td>
+      <td class="td-quota" style="text-align:right;font-weight:700;color:#178a5a">€ 430,00</td>
+      <td style="text-align:center;white-space:nowrap">
+        <div style="display:flex;gap:4px;justify-content:center;align-items:center">
+          <button class="btn btn-sm btn-edit" onclick="apriModificaImmobile(1)" title="Modifica">✏️</button>
+          <button class="btn btn-sm btn-danger" onclick="removeImmobile(1)" title="Rimuovi">✕</button>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>VICO EQUENSE</td>
+      <td>CESARANO</td>
+      <td class="td-quota" style="text-align:right;font-weight:700;color:#178a5a">€ 700,00</td>
+      <td style="text-align:center;white-space:nowrap">
+        <div style="display:flex;gap:4px;justify-content:center;align-items:center">
+          <button class="btn btn-sm btn-edit" onclick="apriModificaImmobile(2)" title="Modifica">✏️</button>
+          <button class="btn btn-sm btn-danger" onclick="removeImmobile(2)" title="Rimuovi">✕</button>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>VICO EQUENSE</td>
+      <td>DE MARTINO</td>
+      <td class="td-quota" style="text-align:right;font-weight:700;color:#178a5a">€ 794,00</td>
+      <td style="text-align:center;white-space:nowrap">
+        <div style="display:flex;gap:4px;justify-content:center;align-items:center">
+          <button class="btn btn-sm btn-edit" onclick="apriModificaImmobile(3)" title="Modifica">✏️</button>
+          <button class="btn btn-sm btn-danger" onclick="removeImmobile(3)" title="Rimuovi">✕</button>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>VICO EQUENSE</td>
+      <td>ESPOSITO</td>
+      <td class="td-quota" style="text-align:right;font-weight:700;color:#178a5a">€ 905,00</td>
+      <td style="text-align:center;white-space:nowrap">
+        <div style="display:flex;gap:4px;justify-content:center;align-items:center">
+          <button class="btn btn-sm btn-edit" onclick="apriModificaImmobile(4)" title="Modifica">✏️</button>
+          <button class="btn btn-sm btn-danger" onclick="removeImmobile(4)" title="Rimuovi">✕</button>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>VICO EQUENSE</td>
+      <td>BARBATO</td>
+      <td class="td-quota" style="text-align:right;font-weight:700;color:#178a5a">€ 1000,00</td>
+      <td style="text-align:center;white-space:nowrap">
+        <div style="display:flex;gap:4px;justify-content:center;align-items:center">
+          <button class="btn btn-sm btn-edit" onclick="apriModificaImmobile(5)" title="Modifica">✏️</button>
+          <button class="btn btn-sm btn-danger" onclick="removeImmobile(5)" title="Rimuovi">✕</button>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>VICO EQUENSE</td>
+      <td>NETWORK TRAVEL</td>
+      <td class="td-quota" style="text-align:right;font-weight:700;color:#178a5a">€ 850,00</td>
+      <td style="text-align:center;white-space:nowrap">
+        <div style="display:flex;gap:4px;justify-content:center;align-items:center">
+          <button class="btn btn-sm btn-edit" onclick="apriModificaImmobile(6)" title="Modifica">✏️</button>
+          <button class="btn btn-sm btn-danger" onclick="removeImmobile(6)" title="Rimuovi">✕</button>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>VICO EQUENSE</td>
+      <td>PATAVINI</td>
+      <td class="td-quota" style="text-align:right;font-weight:700;color:#178a5a">€ 800,00</td>
+      <td style="text-align:center;white-space:nowrap">
+        <div style="display:flex;gap:4px;justify-content:center;align-items:center">
+          <button class="btn btn-sm btn-edit" onclick="apriModificaImmobile(7)" title="Modifica">✏️</button>
+          <button class="btn btn-sm btn-danger" onclick="removeImmobile(7)" title="Rimuovi">✕</button>
+        </div>
+      </td>
+    </tr></tbody>
+      </table>
+    </div></div>
+    <div class="btn-group">
+      <button class="btn" onclick="addImmobile()">+ Aggiungi immobile</button>
+    </div>
+    <hr style="border:none;border-top:1.5px solid #e67e22;margin:1.2rem 0;opacity:0.4">
+    <div class="section-title" id="cfg-eredi-title">👥 EREDI <span class="cfg-badge" id="cfg-ered-badge">3</span></div>
+    <div id="persone-list">
+    <div class="table-wrap">
+      <table id="erede-table">
+        <thead><tr>
+          <th style="width:46px"></th>
+          <th>👤 Nominativo</th>
+          <th style="text-align:center;width:90px">Azioni</th>
+        </tr></thead>
+        <tbody>
+    <tr>
+      <td style="width:46px;text-align:center">
+        <div class="erede-av" style="background:#178a5a">FC</div>
+      </td>
+      <td>FERRAIULOLO CARMELA</td>
+      <td style="text-align:center;white-space:nowrap">
+        <div style="display:flex;gap:4px;justify-content:center;align-items:center">
+          <button class="btn btn-sm btn-edit" onclick="apriModificaPersona(0)" title="Modifica">✏️</button>
+          <button class="btn btn-sm btn-danger" onclick="removePersona(0)" title="Rimuovi">✕</button>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td style="width:46px;text-align:center">
+        <div class="erede-av" style="background:#2a6496">EA</div>
+      </td>
+      <td>ESENTE ANTONIO</td>
+      <td style="text-align:center;white-space:nowrap">
+        <div style="display:flex;gap:4px;justify-content:center;align-items:center">
+          <button class="btn btn-sm btn-edit" onclick="apriModificaPersona(1)" title="Modifica">✏️</button>
+          <button class="btn btn-sm btn-danger" onclick="removePersona(1)" title="Rimuovi">✕</button>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td style="width:46px;text-align:center">
+        <div class="erede-av" style="background:#8e44ad">FN</div>
+      </td>
+      <td>F.LLI NIOSI</td>
+      <td style="text-align:center;white-space:nowrap">
+        <div style="display:flex;gap:4px;justify-content:center;align-items:center">
+          <button class="btn btn-sm btn-edit" onclick="apriModificaPersona(2)" title="Modifica">✏️</button>
+          <button class="btn btn-sm btn-danger" onclick="removePersona(2)" title="Rimuovi">✕</button>
+        </div>
+      </td>
+    </tr></tbody>
+      </table>
+    </div></div>
+    <button class="btn" onclick="addPersona()" style="margin-top:10px">+ Aggiungi erede</button>
+    <div style="display:flex;justify-content:center;margin-top:16px">
+      <button class="btn btn-primary" onclick="salvaConfig()">💾 Salva Anagrafiche Patrimonio/Eredi</button>
+    </div>
+  </div>
+  <div class="section">
+  </div>
+</div>
+
+<div id="page-strumenti" class="page">
+  <div class="section">
+    <div class="section-title">🔄 Backup automatico locale</div>
+    <div class="info-box" style="background:#e8f5e9;border-color:#a5d6a7;color:#1b5e20">
+      <strong>Salvataggio automatico all'apertura e ogni ora</strong> — i dati vengono salvati in <em>localStorage</em> ad ogni modifica, e in <em>IndexedDB</em> subito all'apertura del file e poi ogni ora (5 copie storiche conservate). Il backup avviene in automatico senza nessuna azione richiesta.
+    </div>
+    <div id="export-status" style="margin-top:10px;font-size:13px;padding:8px 12px;border-radius:6px;background:#f5f5f5;color:#555">⏳ Backup in attesa del primo ciclo…</div>
+    <div style="margin-top:8px;font-size:12px;color:var(--color-text-secondary)">
+      ⚠️ <strong>Per trasferire su altro PC:</strong> usa "Esporta dati (JSON)" qui sotto, copia il file sull'altro PC e usa "Importa dati (JSON)".
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-title">🕓 Ripristina da copia storica</div>
+    <div class="info-box">Seleziona una delle ultime 5 copie salvate automaticamente per ripristinare i dati a un momento precedente. L'operazione sovrascrive i dati attuali (il browser ti chiederà conferma).</div>
+    <div class="btn-group">
+      <button class="btn btn-secondary" onclick="mostraListaBackup()">📋 Mostra copie disponibili</button>
+    </div>
+    <div id="backup-list" style="margin-top:10px"></div>
+  </div>
+  <div class="section">
+    <div class="section-title">🗄️ Backup e ripristino dati (JSON separato)</div>
+    <div class="info-box">I dati sono salvati solo su questo browser. Usa queste opzioni per un backup in formato JSON.</div>
+    <div class="btn-group">
+      <button class="btn btn-excel" onclick="esportaDatiJSON()">⬇ Esporta dati (JSON)</button>
+      <button class="btn btn-excel" onclick="document.getElementById('inp-import-json').click()">⬆ Importa dati (JSON)</button>
+    </div>
+    <input type="file" id="inp-import-json" accept=".json" style="display:none" onchange="importaDatiJSON(this)">
+    <div style="margin-top:8px;font-size:12px;color:var(--color-text-secondary)">
+      <strong>Esporta JSON</strong>: salva i dati come file separato &nbsp;|&nbsp;
+      <strong>Importa JSON</strong>: carica dati da un backup
+    </div>
+  </div>
+
+  <!-- ══ CLOUD SYNC (GitHub Gist) ══ -->
+  <div class="section">
+    <div class="section-title">☁️ Sincronizzazione Cloud (GitHub Gist — gratuito)</div>
+    <div class="info-box" style="background:#e8f0fe;border-color:#a8c4f5;color:#1a237e">
+      <div style="margin-bottom:8px"><strong>Come funziona:</strong> i dati vengono salvati in un tuo <em>Gist privato</em> su GitHub. Puoi aprire questa app da qualsiasi PC o browser e trovare sempre i dati aggiornati.</div>
+      <div style="margin-bottom:4px">📋 <strong>Passaggi iniziali (una sola volta):</strong></div>
+      <ol style="margin-left:18px;margin-top:4px;line-height:1.9">
+        <li>Vai su <a href="https://github.com/settings/tokens/new" target="_blank" style="color:#1a73e8;font-weight:700">github.com/settings/tokens/new</a></li>
+        <li>Dai un nome (es. <em>affitti-app</em>), seleziona scadenza <strong>No expiration</strong></li>
+        <li>Spunta solo <strong>gist</strong> nei permessi, poi clicca <em>Generate token</em></li>
+        <li>Copia il token (inizia con <code>ghp_</code>) e incollalo qui sotto</li>
+        <li>Clicca <strong>Crea nuovo Gist</strong> la prima volta; poi basta <strong>Sincronizza ora</strong></li>
+      </ol>
+    </div>
+    <div id="cloud-sync-status" style="margin-bottom:12px;padding:8px 12px;border-radius:6px;font-size:13px;border:1px solid #ccc;background:#f5f5f5;color:#555">☁️ Non configurato — inserisci il token per abilitare la sincronizzazione cloud</div>
+    <div style="display:grid;grid-template-columns:1fr auto;gap:8px;align-items:end;margin-bottom:10px">
+      <div>
+        <label style="font-weight:700;font-size:13px">🔑 GitHub Personal Access Token</label>
+        <input type="password" id="gist-token-inp" placeholder="ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" style="width:100%;font-family:monospace;font-size:13px;margin-top:4px">
+      </div>
+      <button class="btn" onclick="toggleTokenVisibility()" style="white-space:nowrap" id="btn-toggle-token">👁 Mostra</button>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr auto;gap:8px;align-items:end;margin-bottom:14px">
+      <div>
+        <label style="font-weight:700;font-size:13px">🆔 ID Gist (compilato automaticamente dopo la prima creazione)</label>
+        <input type="text" id="gist-id-inp" placeholder="es. a1b2c3d4e5f6... (lascia vuoto per crearne uno nuovo)" style="width:100%;font-family:monospace;font-size:12px;margin-top:4px">
+      </div>
+    </div>
+    <div class="btn-group">
+      <button class="btn btn-primary" onclick="salvaConfigGist()">💾 Salva configurazione</button>
+      <button class="btn btn-edit" onclick="sincronizzaOra()">☁️↑ Carica su cloud</button>
+      <button class="btn" style="background:linear-gradient(135deg,#6a1b9a,#8e24aa);color:#fff;border-color:#6a1b9a" onclick="scaricaDaCloud()">☁️↓ Scarica da cloud</button>
+      <button class="btn btn-secondary" onclick="resettaConfigGist()">🗑 Rimuovi configurazione</button>
+    </div>
+    <div style="margin-top:10px;font-size:12px;color:var(--color-text-secondary)">
+      ⚠️ Il token viene salvato <strong>solo in questo browser</strong> (localStorage). Non viene mai trasmesso ad altri server tranne GitHub.
+      Il Gist viene creato come <strong>privato</strong> (non visibile pubblicamente).
+    </div>
+  </div>
+</div>
+
+<div id="page-pagamenti" class="page">
+  <div class="section">
+    <div class="section-title">✏️ Registra pagamento</div>
+    <div class="grid2" style="margin-bottom:10px">
+      <div>
+        <label>Inquilino</label>
+        <select id="sel-inquilino" onchange="onInquilinoChange()"><option value="">Seleziona</option><option value="ROMANO">ROMANO (PORTA CAPUANA - NAPOLI)</option><option value="SHAMAD">SHAMAD (CORSO GARIBALDI - NAPOLI)</option><option value="CESARANO">CESARANO (VICO EQUENSE)</option><option value="DE MARTINO">DE MARTINO (VICO EQUENSE)</option><option value="ESPOSITO">ESPOSITO (VICO EQUENSE)</option><option value="BARBATO">BARBATO (VICO EQUENSE)</option><option value="NETWORK TRAVEL">NETWORK TRAVEL (VICO EQUENSE)</option><option value="PATAVINI">PATAVINI (VICO EQUENSE)</option></select>
+      </div>
+      <div>
+        <label>Importo (€)</label>
+        <input type="number" id="inp-importo" placeholder="es. 800" min="0" step="0.01" oninput="checkRegistraBtn()">
+        <div class="importo-hint" id="importo-hint"></div>
+      </div>
+      <div><label>Data pagamento (bonifico)</label><input type="date" id="inp-data"></div>
+      <div><label>Note (opzionale)</label><input type="text" id="inp-note" placeholder="es. doppia mensilità gen-feb"></div>
+    </div>
+    <div style="margin-bottom:12px">
+      <label style="margin-bottom:6px">Mesi di Riferimento</label>
+      <div class="mese-picker">
+        <div class="mese-picker-nav">
+          <button class="btn btn-sm" onclick="pickerAnno(-1)">←</button>
+          <span id="picker-anno"></span>
+          <button class="btn btn-sm" onclick="pickerAnno(+1)">→</button>
+        </div>
+        <div id="picker-grid"><table style="width: 100%; border-collapse: collapse;"><tr><td style="padding: 3px 4px; width: 33.3%;"><button class="mese-btn" type="button" style="width: 100%; font-weight: 700; font-size: 13px; padding: 7px 4px;">Gennaio</button></td><td style="padding: 3px 4px; width: 33.3%;"><button class="mese-btn" type="button" style="width: 100%; font-weight: 700; font-size: 13px; padding: 7px 4px;">Febbraio</button></td><td style="padding: 3px 4px; width: 33.3%;"><button class="mese-btn" type="button" style="width: 100%; font-weight: 700; font-size: 13px; padding: 7px 4px;">Marzo</button></td></tr><tr><td style="padding: 3px 4px; width: 33.3%;"><button class="mese-btn" type="button" style="width: 100%; font-weight: 700; font-size: 13px; padding: 7px 4px;">Aprile</button></td><td style="padding: 3px 4px; width: 33.3%;"><button class="mese-btn" type="button" style="width: 100%; font-weight: 700; font-size: 13px; padding: 7px 4px;">Maggio</button></td><td style="padding: 3px 4px; width: 33.3%;"><button class="mese-btn" type="button" style="width: 100%; font-weight: 700; font-size: 13px; padding: 7px 4px;">Giugno</button></td></tr><tr><td style="padding: 3px 4px; width: 33.3%;"><button class="mese-btn" type="button" style="width: 100%; font-weight: 700; font-size: 13px; padding: 7px 4px;">Luglio</button></td><td style="padding: 3px 4px; width: 33.3%;"><button class="mese-btn" type="button" style="width: 100%; font-weight: 700; font-size: 13px; padding: 7px 4px;">Agosto</button></td><td style="padding: 3px 4px; width: 33.3%;"><button class="mese-btn" type="button" style="width: 100%; font-weight: 700; font-size: 13px; padding: 7px 4px;">Settembre</button></td></tr><tr><td style="padding: 3px 4px; width: 33.3%;"><button class="mese-btn" type="button" style="width: 100%; font-weight: 700; font-size: 13px; padding: 7px 4px;">Ottobre</button></td><td style="padding: 3px 4px; width: 33.3%;"><button class="mese-btn" type="button" style="width: 100%; font-weight: 700; font-size: 13px; padding: 7px 4px;">Novembre</button></td><td style="padding: 3px 4px; width: 33.3%;"><button class="mese-btn" type="button" style="width: 100%; font-weight: 700; font-size: 13px; padding: 7px 4px;">Dicembre</button></td></tr></table></div>
+      </div>
+      <div class="mesi-sel-box" id="mesi-sel-box">
+        <div class="mesi-sel-header">📅 Mesi selezionati</div>
+        <div class="mesi-sel-wrap" id="mesi-sel-tags"><span style="color:var(--color-text-tertiary);font-size:12px">Nessuno — clicca sul calendario</span></div>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:center;gap:12px;margin-top:10px">
+      <button class="btn btn-secondary" onclick="annullaRegistrazione()">✕ Annulla</button>
+      <button id="btn-registra" class="btn btn-primary" onclick="registraPagamento()" disabled="">✔ Registra</button>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-title">📋 Pagamenti registrati</div>
+    <div style="margin-bottom:10px;display:flex;gap:16px;flex-wrap:wrap;align-items:flex-end">
+      <div>
+        <label>Filtra per inquilino</label>
+        <select id="fil-inquilino" onchange="renderPagamenti()" style="width:auto;min-width:200px"><option value="">Tutti gli inquilini</option><option value="ROMANO">ROMANO (PORTA CAPUANA - NAPOLI)</option><option value="SHAMAD">SHAMAD (CORSO GARIBALDI - NAPOLI)</option><option value="CESARANO">CESARANO (VICO EQUENSE)</option><option value="DE MARTINO">DE MARTINO (VICO EQUENSE)</option><option value="ESPOSITO">ESPOSITO (VICO EQUENSE)</option><option value="BARBATO">BARBATO (VICO EQUENSE)</option><option value="NETWORK TRAVEL">NETWORK TRAVEL (VICO EQUENSE)</option><option value="PATAVINI">PATAVINI (VICO EQUENSE)</option></select>
+      </div>
+      <div>
+        <label>Resoconto di riferimento</label>
+        <select id="fil-resoconto" onchange="setFilResoconto(this.value)" style="width:auto;min-width:200px"><option value="">🔍 Tutti i periodi</option><optgroup label="── Periodi chiusi ──────────────"><option value="2025-09-01&gt;2026-04-07">🗓  01-09-2025  →  07-04-2026</option></optgroup><optgroup label="── Periodo corrente ────────────"><option value="2026-04-08|">▶  Dal 08-04-2026</option></optgroup></select>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:flex-end;align-items:center;margin-bottom:6px">
+      <span style="font-weight:700;font-size:14px">Totale incassato: <span id="tot-incassato">€ 42.773,00</span></span>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Data pagamento</th><th>Mesi riferimento</th><th>Inquilino</th><th>Immobile</th><th>Importo</th><th>Note</th><th style="text-align:center;width:90px">Azioni</th></tr></thead>
+        <tbody id="tbl-pagamenti"><tr><td>27-03-2026</td><td><span class="mesi-tag">Mar 2026</span></td><td>ROMANO</td><td>PORTA CAPUANA - NAPOLI</td><td>€ 1700,00</td><td>-</td><td><div style="display:flex;gap:4px"><button class="btn btn-sm btn-edit" onclick="apriModificaPagamento(1777151074354)" title="Modifica nota">✏️</button><button class="btn btn-sm btn-danger" disabled="" title="Periodo chiuso: cancellazione non consentita" style="opacity:.45;cursor:not-allowed">X</button></div></td></tr><tr><td>14-03-2026</td><td><span class="mesi-tag">Mar 2026</span></td><td>ESPOSITO</td><td>VICO EQUENSE</td><td>€ 905,00</td><td>-</td><td><div style="display:flex;gap:4px"><button class="btn btn-sm btn-edit" onclick="apriModificaPagamento(1777152801009)" title="Modifica nota">✏️</button><button class="btn btn-sm btn-danger" disabled="" title="Periodo chiuso: cancellazione non consentita" style="opacity:.45;cursor:not-allowed">X</button></div></td></tr><tr><td>10-03-2026</td><td><span class="mesi-tag">Feb 2026</span></td><td>ROMANO</td><td>PORTA CAPUANA - NAPOLI</td><td>€ 1700,00</td><td>-</td><td><div style="display:flex;gap:4px"><button class="btn btn-sm btn-edit" onclick="apriModificaPagamento(1777150998571)" title="Modifica nota">✏️</button><button class="btn btn-sm btn-danger" disabled="" title="Periodo chiuso: cancellazione non consentita" style="opacity:.45;cursor:not-allowed">X</button></div></td></tr><tr><td>10-03-2026</td><td><span class="mesi-tag">Mar 2026</span></td><td>DE MARTINO</td><td>VICO EQUENSE</td><td>€ 794,00</td><td>-</td><td><div style="display:flex;gap:4px"><button class="btn btn-sm btn-edit" onclick="apriModificaPagamento(1777152461594)" title="Modifica nota">✏️</button><button class="btn btn-sm btn-danger" disabled="" title="Periodo chiuso: cancellazione non consentita" style="opacity:.45;cursor:not-allowed">X</button></div></td></tr><tr><td>09-03-2026</td><td><span class="mesi-tag">Mar 2026</span></td><td>CESARANO</td><td>VICO EQUENSE</td><td>€ 700,00</td><td>-</td><td><div style="display:flex;gap:4px"><button class="btn btn-sm btn-edit" onclick="apriModificaPagamento(1777152594147)" title="Modifica nota">✏️</button><button class="btn btn-sm btn-danger" disabled="" title="Periodo chiuso: cancellazione non consentita" style="opacity:.45;cursor:not-allowed">X</button></div></td></tr><tr><td>05-03-2026</td><td><span class="mesi-tag">Feb 2026</span><span class="mesi-tag">Mar 2026</span></td><td>PATAVINI</td><td>VICO EQUENSE</td><td>€ 1600,00</td><td>-</td><td><div style="display:flex;gap:4px"><button class="btn btn-sm btn-edit" onclick="apriModificaPagamento(1777153380939)" title="Modifica nota">✏️</button><button class="btn btn-sm btn-danger" disabled="" title="Periodo chiuso: cancellazione non consentita" style="opacity:.45;cursor:not-allowed">X</button></div></td></tr><tr><td>04-03-2026</td><td><span class="mesi-tag">Mar 2026</span></td><td>SHAMAD</td><td>CORSO GARIBALDI - NAPOLI</td><td>€ 430,00</td><td>-</td><td><div style="display:flex;gap:4px"><button class="btn btn-sm btn-edit" onclick="apriModificaPagamento(1777151817522)" title="Modifica nota">✏️</button><button class="btn btn-sm btn-danger" disabled="" title="Periodo chiuso: cancellazione non consentita" style="opacity:.45;cursor:not-allowed">X</button></div></td></tr><tr><td>13-02-2026</td><td><span class="mesi-tag">Feb 2026</span></td><td>ESPOSITO</td><td>VICO EQUENSE</td><td>€ 905,00</td><td>-</td><td><div style="display:flex;gap:4px"><button class="btn btn-sm btn-edit" onclick="apriModificaPagamento(1777152781994)" title="Modifica nota">✏️</button><button class="btn btn-sm btn-danger" disabled="" title="Periodo chiuso: cancellazione non consentita" style="opacity:.45;cursor:not-allowed">X</button></div></td></tr><tr><td>10-02-2026</td><td><span class="mesi-tag">Feb 2026</span></td><td>DE MARTINO</td><td>VICO EQUENSE</td><td>€ 794,00</td><td>-</td><td><div style="display:flex;gap:4px"><button class="btn btn-sm btn-edit" onclick="apriModificaPagamento(1777152452610)" title="Modifica nota">✏️</button><button class="btn btn-sm btn-danger" disabled="" title="Periodo chiuso: cancellazione non consentita" style="opacity:.45;cursor:not-allowed">X</button></div></td></tr><tr><td>05-02-2026</td><td><span class="mesi-tag">Feb 2026</span></td><td>CESARANO</td><td>VICO EQUENSE</td><td>€ 700,00</td><td>-</td><td><div style="display:flex;gap:4px"><button class="btn btn-sm btn-edit" onclick="apriModificaPagamento(1777152585186)" title="Modifica nota">✏️</button><button class="btn btn-sm btn-danger" disabled="" title="Periodo chiuso: cancellazione non consentita" style="opacity:.45;cursor:not-allowed">X</button></div></td></tr><tr><td>04-02-2026</td><td><span class="mesi-tag">Feb 2026</span></td><td>SHAMAD</td><td>CORSO GARIBALDI - NAPOLI</td><td>€ 430,00</td><td>-</td><td><div style="display:flex;gap:4px"><button class="btn btn-sm btn-edit" onclick="apriModificaPagamento(1777151805163)" title="Modifica nota">✏️</button><button class="btn btn-sm btn-danger" disabled="" title="Periodo chiuso: cancellazione non consentita" style="opacity:.45;cursor:not-allowed">X</button></div></td></tr><tr><td>19-01-2026</td><td><span class="mesi-tag">Dic 2025</span><span class="mesi-tag">Gen 2026</span></td><td>NETWORK</td><td>VICO EQUENSE</td><td>€ 1500,00</td><td>-</td><td><div style="display:flex;gap:4px"><button class="btn btn-sm btn-edit" onclick="apriModificaPagamento(1777153207018)" title="Modifica nota">✏️</button><button class="btn btn-sm btn-danger" disabled="" title="Periodo chiuso: cancellazione non consentita" style="opacity:.45;cursor:not-allowed">X</button></div></td></tr><tr><td>12-01-2026</td><td><span class="mesi-tag">Gen 2026</span></td><td>DE MARTINO</td><td>VICO EQUENSE</td><td>€ 794,00</td><td>-</td><td><div style="display:flex;gap:4px"><button class="btn btn-sm btn-edit" onclick="apriModificaPagamento(1777152424698)" title="Modifica nota">✏️</button><button class="btn btn-sm btn-danger" disabled="" title="Periodo chiuso: cancellazione non consentita" style="opacity:.45;cursor:not-allowed">X</button></div></td></tr><tr><td>12-01-2026</td><td><span class="mesi-tag">Gen 2026</span></td><td>ESPOSITO</td><td>VICO EQUENSE</td><td>€ 905,00</td><td>-</td><td><div style="display:flex;gap:4px"><button class="btn btn-sm btn-edit" onclick="apriModificaPagamento(1777152765338)" title="Modifica nota">✏️</button><button class="btn btn-sm btn-danger" disabled="" title="Periodo chiuso: cancellazione non consentita" style="opacity:.45;cursor:not-allowed">X</button></div></td></tr><tr><td>12-01-2026</td><td><span class="mesi-tag">Dic 2025</span><span class="mesi-tag">Gen 2026</span></td><td>PATAVINI</td><td>VICO EQUENSE</td><td>€ 1600,00</td><td>-</td><td><div style="display:flex;gap:4px"><button class="btn btn-sm btn-edit" onclick="apriModificaPagamento(1777153362785)" title="Modifica nota">✏️</button><button class="btn btn-sm btn-danger" disabled="" title="Periodo chiuso: cancellazione non consentita" style="opacity:.45;cursor:not-allowed">X</button></div></td></tr><tr><td>09-01-2026</td><td><span class="mesi-tag">Gen 2026</span></td><td>CESARANO</td><td>VICO EQUENSE</td><td>€ 700,00</td><td>-</td><td><div style="display:flex;gap:4px"><button class="btn btn-sm btn-edit" onclick="apriModificaPagamento(1777152559059)" title="Modifica nota">✏️</button><button class="btn btn-sm btn-danger" disabled="" title="Periodo chiuso: cancellazione non consentita" style="opacity:.45;cursor:not-allowed">X</button></div></td></tr><tr><td>08-01-2026</td><td><span class="mesi-tag">Gen 2026</span></td><td>ROMANO</td><td>PORTA CAPUANA - NAPOLI</td><td>€ 1700,00</td><td>-</td><td><div style="display:flex;gap:4px"><button class="btn btn-sm btn-edit" onclick="apriModificaPagamento(1777151045642)" title="Modifica nota">✏️</button><button class="btn btn-sm btn-danger" disabled="" title="Periodo chiuso: cancellazione non consentita" style="opacity:.45;cursor:not-allowed">X</button></div></td></tr><tr><td>06-01-2026</td><td><span class="mesi-tag">Gen 2026</span></td><td>SHAMAD</td><td>CORSO GARIBALDI - NAPOLI</td><td>€ 430,00</td><td>-</td><td><div style="display:flex;gap:4px"><button class="btn btn-sm btn-edit" onclick="apriModificaPagamento(1777151778594)" title="Modifica nota">✏️</button><button class="btn btn-sm btn-danger" disabled="" title="Periodo chiuso: cancellazione non consentita" style="opacity:.45;cursor:not-allowed">X</button></div></td></tr><tr><td>15-12-2025</td><td><span class="mesi-tag">Dic 2025</span></td><td>ESPOSITO</td><td>VICO EQUENSE</td><td>€ 905,00</td><td>-</td><td><div style="display:flex;gap:4px"><button class="btn btn-sm btn-edit" onclick="apriModificaPagamento(1777152750059)" title="Modifica nota">✏️</button><button class="btn btn-sm btn-danger" disabled="" title="Periodo chiuso: cancellazione non consentita" style="opacity:.45;cursor:not-allowed">X</button></div></td></tr><tr><td>09-12-2025</td><td><span class="mesi-tag">Dic 2025</span></td><td>ROMANO</td><td>PORTA CAPUANA - NAPOLI</td><td>€ 1700,00</td><td>-</td><td><div style="display:flex;gap:4px"><button class="btn btn-sm btn-edit" onclick="apriModificaPagamento(1777150872059)" title="Modifica nota">✏️</button><button class="btn btn-sm btn-danger" disabled="" title="Periodo chiuso: cancellazione non consentita" style="opacity:.45;cursor:not-allowed">X</button></div></td></tr><tr><td>08-12-2025</td><td><span class="mesi-tag">Dic 2025</span></td><td>DE MARTINO</td><td>VICO EQUENSE</td><td>€ 794,00</td><td>-</td><td><div style="display:flex;gap:4px"><button class="btn btn-sm btn-edit" onclick="apriModificaPagamento(1777152197363)" title="Modifica nota">✏️</button><button class="btn btn-sm btn-danger" disabled="" title="Periodo chiuso: cancellazione non consentita" style="opacity:.45;cursor:not-allowed">X</button></div></td></tr><tr><td>08-12-2025</td><td><span class="mesi-tag">Dic 2025</span></td><td>CESARANO</td><td>VICO EQUENSE</td><td>€ 700,00</td><td>-</td><td><div style="display:flex;gap:4px"><button class="btn btn-sm btn-edit" onclick="apriModificaPagamento(1777152539722)" title="Modifica nota">✏️</button><button class="btn btn-sm btn-danger" disabled="" title="Periodo chiuso: cancellazione non consentita" style="opacity:.45;cursor:not-allowed">X</button></div></td></tr><tr><td>04-12-2025</td><td><span class="mesi-tag">Dic 2025</span></td><td>SHAMAD</td><td>CORSO GARIBALDI - NAPOLI</td><td>€ 430,00</td><td>-</td><td><div style="display:flex;gap:4px"><button class="btn btn-sm btn-edit" onclick="apriModificaPagamento(1777151738371)" title="Modifica nota">✏️</button><button class="btn btn-sm btn-danger" disabled="" title="Periodo chiuso: cancellazione non consentita" style="opacity:.45;cursor:not-allowed">X</button></div></td></tr><tr><td>17-11-2025</td><td><span class="mesi-tag">Nov 2025</span></td><td>ESPOSITO</td><td>VICO EQUENSE</td><td>€ 905,00</td><td>-</td><td><div style="display:flex;gap:4px"><button class="btn btn-sm btn-edit" onclick="apriModificaPagamento(1777152739057)" title="Modifica nota">✏️</button><button class="btn btn-sm btn-danger" disabled="" title="Periodo chiuso: cancellazione non consentita" style="opacity:.45;cursor:not-allowed">X</button></div></td></tr><tr><td>11-11-2025</td><td><span class="mesi-tag">Ott 2025</span><span class="mesi-tag">Nov 2025</span></td><td>PATAVINI</td><td>VICO EQUENSE</td><td>€ 1600,00</td><td>-</td><td><div style="display:flex;gap:4px"><button class="btn btn-sm btn-edit" onclick="apriModificaPagamento(1777153343427)" title="Modifica nota">✏️</button><button class="btn btn-sm btn-danger" disabled="" title="Periodo chiuso: cancellazione non consentita" style="opacity:.45;cursor:not-allowed">X</button></div></td></tr><tr><td>06-11-2025</td><td><span class="mesi-tag">Nov 2025</span></td><td>DE MARTINO</td><td>VICO EQUENSE</td><td>€ 794,00</td><td>-</td><td><div style="display:flex;gap:4px"><button class="btn btn-sm btn-edit" onclick="apriModificaPagamento(1777152313906)" title="Modifica nota">✏️</button><button class="btn btn-sm btn-danger" disabled="" title="Periodo chiuso: cancellazione non consentita" style="opacity:.45;cursor:not-allowed">X</button></div></td></tr><tr><td>05-11-2025</td><td><span class="mesi-tag">Nov 2025</span></td><td>BARBATO</td><td>VICO EQUENSE</td><td>€ 1000,00</td><td>-</td><td><div style="display:flex;gap:4px"><button class="btn btn-sm btn-edit" onclick="apriModificaPagamento(1777152938762)" title="Modifica nota">✏️</button><button class="btn btn-sm btn-danger" disabled="" title="Periodo chiuso: cancellazione non consentita" style="opacity:.45;cursor:not-allowed">X</button></div></td></tr><tr><td>04-11-2025</td><td><span class="mesi-tag">Nov 2025</span></td><td>SHAMAD</td><td>CORSO GARIBALDI - NAPOLI</td><td>€ 430,00</td><td>-</td><td><div style="display:flex;gap:4px"><button class="btn btn-sm btn-edit" onclick="apriModificaPagamento(1777151719747)" title="Modifica nota">✏️</button><button class="btn btn-sm btn-danger" disabled="" title="Periodo chiuso: cancellazione non consentita" style="opacity:.45;cursor:not-allowed">X</button></div></td></tr><tr><td>29-10-2025</td><td><span class="mesi-tag">Ott 2025</span><span class="mesi-tag">Nov 2025</span></td><td>NETWORK</td><td>VICO EQUENSE</td><td>€ 1500,00</td><td>-</td><td><div style="display:flex;gap:4px"><button class="btn btn-sm btn-edit" onclick="apriModificaPagamento(1777158639948)" title="Modifica nota">✏️</button><button class="btn btn-sm btn-danger" disabled="" title="Periodo chiuso: cancellazione non consentita" style="opacity:.45;cursor:not-allowed">X</button></div></td></tr><tr><td>13-10-2025</td><td><span class="mesi-tag">Ott 2025</span></td><td>ESPOSITO</td><td>VICO EQUENSE</td><td>€ 905,00</td><td>-</td><td><div style="display:flex;gap:4px"><button class="btn btn-sm btn-edit" onclick="apriModificaPagamento(1777152730802)" title="Modifica nota">✏️</button><button class="btn btn-sm btn-danger" disabled="" title="Periodo chiuso: cancellazione non consentita" style="opacity:.45;cursor:not-allowed">X</button></div></td></tr><tr><td>10-10-2025</td><td><span class="mesi-tag">Ott 2025</span></td><td>BARBATO</td><td>VICO EQUENSE</td><td>€ 1000,00</td><td>-</td><td><div style="display:flex;gap:4px"><button class="btn btn-sm btn-edit" onclick="apriModificaPagamento(1777152927434)" title="Modifica nota">✏️</button><button class="btn btn-sm btn-danger" disabled="" title="Periodo chiuso: cancellazione non consentita" style="opacity:.45;cursor:not-allowed">X</button></div></td></tr><tr><td>09-10-2025</td><td><span class="mesi-tag">Ott 2025</span></td><td>CESARANO</td><td>VICO EQUENSE</td><td>€ 700,00</td><td>-</td><td><div style="display:flex;gap:4px"><button class="btn btn-sm btn-edit" onclick="apriModificaPagamento(1777152515275)" title="Modifica nota">✏️</button><button class="btn btn-sm btn-danger" disabled="" title="Periodo chiuso: cancellazione non consentita" style="opacity:.45;cursor:not-allowed">X</button></div></td></tr><tr><td>08-10-2025</td><td><span class="mesi-tag">Ott 2025</span></td><td>DE MARTINO</td><td>VICO EQUENSE</td><td>€ 794,00</td><td>-</td><td><div style="display:flex;gap:4px"><button class="btn btn-sm btn-edit" onclick="apriModificaPagamento(1777152164874)" title="Modifica nota">✏️</button><button class="btn btn-sm btn-danger" disabled="" title="Periodo chiuso: cancellazione non consentita" style="opacity:.45;cursor:not-allowed">X</button></div></td></tr><tr><td>07-10-2025</td><td><span class="mesi-tag">Ott 2025</span></td><td>ROMANO</td><td>PORTA CAPUANA - NAPOLI</td><td>€ 1700,00</td><td>-</td><td><div style="display:flex;gap:4px"><button class="btn btn-sm btn-edit" onclick="apriModificaPagamento(1777150822242)" title="Modifica nota">✏️</button><button class="btn btn-sm btn-danger" disabled="" title="Periodo chiuso: cancellazione non consentita" style="opacity:.45;cursor:not-allowed">X</button></div></td></tr><tr><td>03-10-2025</td><td><span class="mesi-tag">Ott 2025</span></td><td>SHAMAD</td><td>CORSO GARIBALDI - NAPOLI</td><td>€ 430,00</td><td>-</td><td><div style="display:flex;gap:4px"><button class="btn btn-sm btn-edit" onclick="apriModificaPagamento(1777151229218)" title="Modifica nota">✏️</button><button class="btn btn-sm btn-danger" disabled="" title="Periodo chiuso: cancellazione non consentita" style="opacity:.45;cursor:not-allowed">X</button></div></td></tr><tr><td>16-09-2025</td><td><span class="mesi-tag">Set 2025</span></td><td>BARBATO</td><td>VICO EQUENSE</td><td>€ 1000,00</td><td>-</td><td><div style="display:flex;gap:4px"><button class="btn btn-sm btn-edit" onclick="apriModificaPagamento(1777152896402)" title="Modifica nota">✏️</button><button class="btn btn-sm btn-danger" disabled="" title="Periodo chiuso: cancellazione non consentita" style="opacity:.45;cursor:not-allowed">X</button></div></td></tr><tr><td>15-09-2025</td><td><span class="mesi-tag">Set 2025</span></td><td>ESPOSITO</td><td>VICO EQUENSE</td><td>€ 905,00</td><td>-</td><td><div style="display:flex;gap:4px"><button class="btn btn-sm btn-edit" onclick="apriModificaPagamento(1777152719699)" title="Modifica nota">✏️</button><button class="btn btn-sm btn-danger" disabled="" title="Periodo chiuso: cancellazione non consentita" style="opacity:.45;cursor:not-allowed">X</button></div></td></tr><tr><td>13-09-2025</td><td><span class="mesi-tag">Set 2025</span></td><td>ROMANO</td><td>PORTA CAPUANA - NAPOLI</td><td>€ 1700,00</td><td>-</td><td><div style="display:flex;gap:4px"><button class="btn btn-sm btn-edit" onclick="apriModificaPagamento(1777150779322)" title="Modifica nota">✏️</button><button class="btn btn-sm btn-danger" disabled="" title="Periodo chiuso: cancellazione non consentita" style="opacity:.45;cursor:not-allowed">X</button></div></td></tr><tr><td>11-09-2025</td><td><span class="mesi-tag">Ago 2025</span><span class="mesi-tag">Set 2025</span></td><td>PATAVINI</td><td>VICO EQUENSE</td><td>€ 1600,00</td><td>-</td><td><div style="display:flex;gap:4px"><button class="btn btn-sm btn-edit" onclick="apriModificaPagamento(1777153307722)" title="Modifica nota">✏️</button><button class="btn btn-sm btn-danger" disabled="" title="Periodo chiuso: cancellazione non consentita" style="opacity:.45;cursor:not-allowed">X</button></div></td></tr><tr><td>11-09-2025</td><td><span class="mesi-tag">Ago 2025</span><span class="mesi-tag">Set 2025</span></td><td>NETWORK</td><td>VICO EQUENSE</td><td>€ 1500,00</td><td>-</td><td><div style="display:flex;gap:4px"><button class="btn btn-sm btn-edit" onclick="apriModificaPagamento(1777158687369)" title="Modifica nota">✏️</button><button class="btn btn-sm btn-danger" disabled="" title="Periodo chiuso: cancellazione non consentita" style="opacity:.45;cursor:not-allowed">X</button></div></td></tr><tr><td>09-09-2025</td><td><span class="mesi-tag">Set 2025</span></td><td>DE MARTINO</td><td>VICO EQUENSE</td><td>€ 794,00</td><td>-</td><td><div style="display:flex;gap:4px"><button class="btn btn-sm btn-edit" onclick="apriModificaPagamento(1777152151659)" title="Modifica nota">✏️</button><button class="btn btn-sm btn-danger" disabled="" title="Periodo chiuso: cancellazione non consentita" style="opacity:.45;cursor:not-allowed">X</button></div></td></tr><tr><td>09-09-2025</td><td><span class="mesi-tag">Set 2025</span></td><td>CESARANO</td><td>VICO EQUENSE</td><td>€ 700,00</td><td>-</td><td><div style="display:flex;gap:4px"><button class="btn btn-sm btn-edit" onclick="apriModificaPagamento(1777152509282)" title="Modifica nota">✏️</button><button class="btn btn-sm btn-danger" disabled="" title="Periodo chiuso: cancellazione non consentita" style="opacity:.45;cursor:not-allowed">X</button></div></td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div id="page-resoconto" class="page">
+  <!-- ══ GENERA RESOCONTO ══ -->
+  <div class="section">
+    <div class="section-title">Creazione Resoconto per Periodo</div>
+    <div class="grid2" style="margin-bottom: 12px;">
+      <div><label>Data inizio</label><input type="date" id="res-inizio" oninput="aggiornaSpeseResoconto()" readonly style="font-weight:700;background:#e8eaed;cursor:not-allowed;opacity:.85"></div>
+      <div><label>Data fine</label><input type="date" id="res-fine" oninput="aggiornaSpeseResoconto()"></div>
+    </div>
+    <div class="grid3" style="margin-bottom:12px">
+      <div><label>Spese sostenute (€)</label><input type="number" id="res-spese" placeholder="0" min="0" step="0.01" readonly style="background:#e8eaed;cursor:not-allowed;opacity:.85"></div>
+      <div><label>Quota da lasciare in cassa (€)</label><input type="number" id="res-cassa" placeholder="0" min="0" step="0.01"></div>
+      <div>
+        <label>Quota da prelevare dalla cassa (€) <span id="res-prelievo-hint" style="font-weight:400;color:var(--color-text-secondary);font-size:11px"></span></label>
+        <input type="number" id="res-prelievo-cassa" placeholder="0" min="0" step="0.01" oninput="validaPrelievoResoconto(this)">
+      </div>
+    </div>
+    <div style="margin-bottom:12px">
+      <label>Nota spese <span style="font-weight:400;font-size:11px;color:var(--color-text-secondary)">(compilata automaticamente)</span></label>
+      <textarea id="res-nota-spese" rows="7" placeholder="Compilata automaticamente dalle spese del periodo…" readonly style="width:100%;font-size:13px;resize:vertical;padding:6px 8px;border:3px double #2a6496;border-radius:var(--border-radius-md);background:#e8eaed;color:var(--color-text-primary);cursor:not-allowed;opacity:.85"></textarea>
+    </div>
+    <div style="display:flex;justify-content:center;gap:12px;margin-top:4px;flex-wrap:wrap">
+      <button class="btn btn-secondary" onclick="annullaResoconto()">✕ Annulla</button>
+      <button class="btn" style="background:linear-gradient(135deg,#e8f4fd,#bee3f8);color:#1a4a6b;border:1.5px solid #7ec8e3;font-weight:700" onclick="anteprimaCalcolo()">🔍 Anteprima Calcolo</button>
+      <button class="btn btn-primary" onclick="calcolaResoconto()">🧮 Calcola e chiudi periodo</button>
+    </div>
+  </div>
+  <!-- ══ STORICO RESOCONTI ══ -->
+  <div class="section">
+    <div class="section-title" id="storico-table-wrap">🗂️ Storico resoconti</div>
+    <div style="margin-bottom:12px;display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap">
+      <div>
+        <label>Filtra per anno</label>
+        <select id="fil-storico-anno" onchange="renderStorico()" style="width:auto;min-width:140px"><option value="">Tutti gli anni</option><option value="2026">2026</option></select>
+      </div>
+      <div>
+        <label>Filtra per periodo</label>
+        <select id="fil-storico-periodo" onchange="renderStorico()" style="width:auto;min-width:200px"><option value="">Tutti i periodi</option><option value="2025-09-01&gt;2026-04-07">🗓 01-09-2025 → 07-04-2026</option></select>
+      </div>
+      <button class="btn btn-sm" onclick="resetFiltriStorico()" style="margin-bottom:0">↺ Reset filtri</button>
+    </div>
+    <div id="storico-list">
+    <div class="table-wrap">
+      <table id="storico-table">
+        <thead>
+          <tr>
+            <th>Salvato il</th><th>Da</th><th>A</th>
+            <th style="text-align:right">Incassato</th><th style="text-align:right">Spese</th>
+            <th>Nota spese</th><th style="text-align:right">Depositato in Cassa</th>
+            <th style="text-align:right">Prelevato dalla cassa</th><th style="text-align:right">Netto diviso</th>
+            <th>Divisione</th><th style="text-align:center;width:90px">Azioni</th>
+          </tr>
+        </thead>
+        <tbody><tr>
+      <td style="white-space:nowrap">26/04/2026</td>
+      <td style="white-space:nowrap">01-09-2025</td>
+      <td style="white-space:nowrap">07-04-2026</td>
+      <td style="text-align:right;font-weight:600">€ 42.773,00</td>
+      <td style="text-align:right;color:#c0392b;font-weight:700">€ 483,52</td>
+      <td style="font-size:12px;color:var(--color-text-secondary);max-width:180px">Stendardo: 300€ + 20€ + 50€ + 20€ - Taxi: 20€ Luce Cimitero: 73,52</td>
+      <td style="text-align:right">€ 0,00</td>
+      <td style="text-align:right;color:#1a6b3a;font-weight:600">-</td>
+      <td style="text-align:right;font-weight:700;color:#178a5a">€ 42.289,48</td>
+      <td class="persone-cell"><span>FERRAIULOLO CARMELA: <strong>€ 14.096,49</strong></span><br><span>ESENTE ANTONIO: <strong>€ 14.096,49</strong></span><br><span>F.LLI NIOSI: <strong>€ 14.096,49</strong></span></td>
+      <td style="text-align:center;white-space:nowrap">
+        <div style="display:flex;gap:4px;justify-content:center;align-items:center">
+          <button class="btn btn-sm btn-excel" onclick="esportaExcel(state.storico[0])" title="Esporta Excel">XLS</button>
+          <button class="btn btn-sm btn-pdf" onclick="stampaPDF(state.storico[0])" title="Stampa PDF">PDF</button>
+          <button class="btn btn-sm btn-danger" onclick="eliminaResoconto(0)" title="Elimina">✕</button>
+        </div>
+      </td>
+    </tr></tbody>
+      </table>
+    </div></div>
+  </div>
+</div>
+
+<div id="page-storico" class="page">
+  <div class="section">
+    <div class="section-title">💰 Gestione Cassa</div>
+    <div id="gc-saldo-box" class="cassa-saldo-box">
+      <div class="cassa-saldo-label">Saldo Cassa Attuale</div>
+      <div class="cassa-saldo-value" id="gc-saldo">€ 214,04</div>
+    </div>
+    <div class="grid3" style="margin-bottom:10px">
+      <div>
+        <label>Tipo movimento</label>
+        <select id="gc-tipo">
+          <option value="deposito">📥 Deposito</option>
+          <option value="prelievo">📤 Prelievo</option>
+        </select>
+      </div>
+      <div>
+        <label>Importo (€)</label>
+        <input type="number" id="gc-importo" placeholder="0,00" min="0" step="0.01">
+      </div>
+      <div>
+        <label>Nota (opzionale)</label>
+        <input type="text" id="gc-nota" placeholder="es. versamento, prelievo spese…">
+      </div>
+    </div>
+    <div style="display:flex;justify-content:center;gap:12px;margin-top:4px">
+      <button class="btn btn-secondary" onclick="annullaMovimentoCassa()">✕ Annulla</button>
+      <button class="btn btn-primary" onclick="aggiungiMovimentoCassa()">💰 Registra movimento</button>
+    </div>
+    <div class="section-title" style="margin-top:1.2rem">📋 Lista Movimenti Cassa</div>
+    <div style="margin-bottom:12px;display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap">
+      <div>
+        <label>Tipo</label>
+        <select id="gc-fil-tipo" onchange="renderGestioneCassa()" style="width:auto;min-width:140px">
+          <option value="">Tutti</option>
+          <option value="deposito">📥 Deposito</option>
+          <option value="prelievo">📤 Prelievo</option>
+        </select>
+      </div>
+      <div>
+        <label>Dal</label>
+        <input type="date" id="gc-fil-dal" oninput="renderGestioneCassa()" style="width:auto">
+      </div>
+      <div>
+        <label>Al</label>
+        <input type="date" id="gc-fil-al" oninput="renderGestioneCassa()" style="width:auto">
+      </div>
+      <button class="btn btn-sm" onclick="resetFiltriCassa()" style="margin-bottom:0">↺ Reset filtri</button>
+    </div>
+    <div id="gc-movimenti-wrap" style="margin-top:0"><div class="table-wrap"><table>
+    <thead><tr><th>Data</th><th>Tipo</th><th style="text-align:right">Importo</th><th>Nota</th><th style="text-align:center;width:90px">Azioni</th></tr></thead>
+    <tbody><tr>
+      <td>26/04/2026</td>
+      <td><span style="color:#178a5a;font-weight:700">📥 Deposito</span></td>
+      <td style="text-align:right;color:#178a5a;font-weight:700">+€ 600,00</td>
+      <td style="font-size:12px">Acconto arretrati Network</td>
+      <td style="text-align:center;white-space:nowrap"><div style="display:flex;gap:4px;justify-content:center;align-items:center"><button class="btn btn-sm btn-edit" onclick="apriModificaMovimentoCassa(1)" title="Modifica">✏️</button><button class="btn btn-sm btn-danger" onclick="rimuoviMovimentoCassa(1)">✕</button></div></td>
+    </tr><tr>
+      <td>26/04/2026</td>
+      <td><span style="color:#c0392b;font-weight:700">📤 Prelievo</span></td>
+      <td style="text-align:right;color:#c0392b;font-weight:700">-€ 385,96</td>
+      <td style="font-size:12px">SALDO NEGATIVO PER ERRATA EROGAZIONE PERIODO 01/09/2025 - 07/04/2026. Erogato 14.289,49 a fronte di 14.096,47</td>
+      <td style="text-align:center;white-space:nowrap"><div style="display:flex;gap:4px;justify-content:center;align-items:center"><button class="btn btn-sm btn-edit" onclick="apriModificaMovimentoCassa(0)" title="Modifica">✏️</button><button class="btn btn-sm btn-danger" onclick="rimuoviMovimentoCassa(0)">✕</button></div></td>
+    </tr></tbody>
+  </table></div></div>
+  </div>
+</div>
+
+<div id="page-spese" class="page">
+  <div class="section">
+    <div class="section-title">➕ Registra spesa</div>
+    <div class="grid3" style="margin-bottom:10px">
+      <div><label>Data spesa</label><input type="date" id="sp-data"></div>
+      <div><label>Importo (€)</label><input type="number" id="sp-importo" placeholder="0,00" min="0" step="0.01"></div>
+      <div><label>Note</label><input type="text" id="sp-note" placeholder="es. riparazione tetto, bolletta…"></div>
+    </div>
+    <div style="display:flex;justify-content:center;gap:12px;margin-top:4px">
+      <button class="btn btn-secondary" onclick="annullaSpesa()">✕ Annulla</button>
+      <button class="btn btn-primary" onclick="registraSpesa()">📝 Registra spesa</button>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-title">📋 Spese Registrate</div>
+    <div style="margin-bottom:12px;display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap">
+      <div>
+        <label>Resoconto di riferimento</label>
+        <select id="fil-resoconto-spese" onchange="renderSpese()" style="width:auto;min-width:220px"></select>
+      </div>
+      <button class="btn btn-sm" onclick="resetFiltriSpese()" style="margin-bottom:0">↺ Reset filtri</button>
+    </div>
+    <div id="sp-wrap">
+      <div class="table-wrap"><table>
+        <thead><tr><th>Data</th><th style="text-align:right">Importo</th><th>Note</th><th style="text-align:center;width:90px">Azioni</th></tr></thead>
+        <tbody id="tbl-spese"><tr><td colspan="4" class="empty">Nessuna spesa registrata.</td></tr></tbody>
+      </table></div>
+    </div>
+    <div style="display:flex;justify-content:flex-end;margin-top:8px">
+      <span style="font-weight:700;font-size:14px">Totale spese: <span id="tot-spese">€ 0,00</span></span>
+    </div>
+  </div>
+</div>
+
+<div id="page-report" class="page">
+  <div class="section">
+    <div class="section-title">📈 Report Incassi per Mese</div>
+    <div style="display:flex;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:16px">
+      <div>
+        <label style="font-weight:700;font-size:13px">Periodo dal (mese)</label>
+        <input type="month" id="rep-dal" style="display:block;padding:6px 10px;border-radius:6px;border:2px solid #178a5a;font-size:14px;font-weight:700;margin-top:4px">
+      </div>
+      <div>
+        <label style="font-weight:700;font-size:13px">Periodo al (mese)</label>
+        <input type="month" id="rep-al" style="display:block;padding:6px 10px;border-radius:6px;border:2px solid #178a5a;font-size:14px;font-weight:700;margin-top:4px">
+      </div>
+      <button class="btn btn-primary" onclick="renderReport()">🔍 Visualizza</button>
+      <button class="btn btn-secondary" id="btn-stampa-report" onclick="stampaReport()" style="display:none">🖨️ Stampa PDF</button>
+    </div>
+    <div id="report-wrap"></div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script>
+const MESI=['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'];
+const MESI3=['Gen','Feb','Mar','Apr','Mag','Giu','Lug','Ago','Set','Ott','Nov','Dic'];
+
+let state={immobili:[],persone:[],pagamenti:[],storico:[],saldoCassa:0,movimentiCassa:[]};
+let pickerAnnoVal=new Date().getFullYear();
+let mesiSelezionati=[];
+let resPickerAnnoVal=2025;
+let resMesiSelezionati=[];
+let filResocontoVal='';
+
+function loadState(){
+  // Priorità 1: dati incorporati tramite scaricaHTMLConDati (variabile globale)
+  if(window.__INCASSI_DATA__){
+    try{state=window.__INCASSI_DATA__;window.__INCASSI_DATA__=null;saveState();return;}catch(e){}
+  }
+  // Priorità 2: localStorage
+  try{const s=localStorage.getItem('incassi_v5');if(s)state=JSON.parse(s);}catch(e){}
+  // migra da versione precedente
+  try{if(!state.immobili||!state.immobili.length){const old=localStorage.getItem('incassi_v4');if(old){const o=JSON.parse(old);state=o;}}}catch(e){}
+  ['immobili','persone','pagamenti','storico'].forEach(k=>{if(!state[k])state[k]=[];});
+  if(!state.movimentiCassa)state.movimentiCassa=[];
+  if(!state.spese)state.spese=[];
+  if(typeof state.saldoCassa!=='number')state.saldoCassa=0;
+}
+function saveState(){try{localStorage.setItem('incassi_v5',JSON.stringify(state));}catch(e){} gistAutoSync();}
+
+// ── CLOUD SYNC (GitHub Gist) ─────────────────────────────────
+const GIST_TOKEN_KEY='incassi_gist_token';
+const GIST_ID_KEY='incassi_gist_id';
+const GIST_FILENAME='incassi-affitti-data.json';
+let _gistSyncTimer=null;
+
+function getGistConfig(){
+  return{token:localStorage.getItem(GIST_TOKEN_KEY)||'',gistId:localStorage.getItem(GIST_ID_KEY)||''};
+}
+function updateSyncStatus(ok,msg){
+  const el=document.getElementById('cloud-sync-status');
+  if(!el)return;
+  if(ok){el.style.cssText='margin-bottom:12px;padding:8px 12px;border-radius:6px;font-size:13px;background:#e8f5e9;color:#1b5e20;border:1px solid #a5d6a7';el.textContent='✅ '+msg;}
+  else{el.style.cssText='margin-bottom:12px;padding:8px 12px;border-radius:6px;font-size:13px;background:#ffebee;color:#b71c1c;border:1px solid #ef9a9a';el.textContent='⚠️ '+msg;}
+}
+function salvaConfigGist(){
+  const token=document.getElementById('gist-token-inp').value.trim();
+  const gistId=document.getElementById('gist-id-inp').value.trim();
+  if(!token){alert('Inserisci il GitHub Personal Access Token.');return;}
+  localStorage.setItem(GIST_TOKEN_KEY,token);
+  if(gistId)localStorage.setItem(GIST_ID_KEY,gistId);
+  updateSyncStatus(true,'Configurazione salvata. Clicca "Carica su cloud" per sincronizzare.');
+}
+function resettaConfigGist(){
+  if(!confirm('Rimuovere la configurazione cloud?\n\nI dati locali rimarranno intatti.'))return;
+  localStorage.removeItem(GIST_TOKEN_KEY);
+  localStorage.removeItem(GIST_ID_KEY);
+  document.getElementById('gist-token-inp').value='';
+  document.getElementById('gist-id-inp').value='';
+  updateSyncStatus(false,'Configurazione rimossa.');
+}
+function toggleTokenVisibility(){
+  const inp=document.getElementById('gist-token-inp');
+  const btn=document.getElementById('btn-toggle-token');
+  if(inp.type==='password'){inp.type='text';btn.textContent='🙈 Nascondi';}
+  else{inp.type='password';btn.textContent='👁 Mostra';}
+}
+async function sincronizzaOra(){
+  const{token,gistId}=getGistConfig();
+  if(!token){updateSyncStatus(false,'Token non configurato. Vai in Strumenti → Cloud Sync.');return;}
+  updateSyncStatus(true,'⏳ Caricamento in corso…');
+  const body={description:'Incassi Affitti — sincronizzato '+new Date().toLocaleString('it-IT'),public:false,files:{[GIST_FILENAME]:{content:JSON.stringify(state,null,2)}}};
+  const url=gistId?`https://api.github.com/gists/${gistId}`:'https://api.github.com/gists';
+  const method=gistId?'PATCH':'POST';
+  try{
+    const res=await fetch(url,{method,headers:{'Authorization':'token '+token,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'},body:JSON.stringify(body)});
+    if(!res.ok){const e=await res.json();updateSyncStatus(false,'Errore GitHub: '+(e.message||res.status));return;}
+    const data=await res.json();
+    if(!gistId){
+      localStorage.setItem(GIST_ID_KEY,data.id);
+      const inp=document.getElementById('gist-id-inp');if(inp)inp.value=data.id;
+    }
+    updateSyncStatus(true,'Sincronizzato su GitHub Gist — '+new Date().toLocaleTimeString('it-IT')+(gistId?'':' — Gist creato: '+data.id));
+  }catch(e){updateSyncStatus(false,'Errore di rete: '+e.message);}
+}
+async function scaricaDaCloud(){
+  const{token,gistId}=getGistConfig();
+  if(!token||!gistId){updateSyncStatus(false,'Token e ID Gist necessari per scaricare.');return;}
+  if(!confirm('Scaricare i dati dal cloud?\n\nI dati attuali verranno sovrascritti con quelli presenti su GitHub Gist.\nConsiglio: esporta prima un backup JSON.'))return;
+  updateSyncStatus(true,'⏳ Download in corso…');
+  try{
+    const res=await fetch(`https://api.github.com/gists/${gistId}`,{headers:{'Authorization':'token '+token,'Accept':'application/vnd.github.v3+json'}});
+    if(!res.ok){updateSyncStatus(false,'Gist non trovato o accesso negato ('+res.status+').');return;}
+    const data=await res.json();
+    const file=data.files[GIST_FILENAME];
+    if(!file){updateSyncStatus(false,'File "'+GIST_FILENAME+'" non trovato nel Gist.');return;}
+    const content=file.truncated?(await(await fetch(file.raw_url)).text()):file.content;
+    const imp=JSON.parse(content);
+    ['immobili','persone','pagamenti','storico'].forEach(k=>{if(!imp[k])imp[k]=[];});
+    if(!imp.movimentiCassa)imp.movimentiCassa=[];
+    if(!imp.spese)imp.spese=[];
+    if(typeof imp.saldoCassa!=='number')imp.saldoCassa=0;
+    state=imp;
+    localStorage.setItem('incassi_v5',JSON.stringify(state));
+    renderImmobili();renderPersone();renderSelInquilino();
+    updateSyncStatus(true,'✅ Dati scaricati da cloud — '+state.pagamenti.length+' pagamenti, '+state.immobili.length+' immobili');
+    alert('✅ Dati caricati dal cloud!\n\n'+state.pagamenti.length+' pagamenti, '+state.immobili.length+' immobili');
+  }catch(e){updateSyncStatus(false,'Errore: '+e.message);}
+}
+function gistAutoSync(){
+  const{token}=getGistConfig();
+  if(!token)return;
+  if(_gistSyncTimer)clearTimeout(_gistSyncTimer);
+  _gistSyncTimer=setTimeout(()=>sincronizzaOra(),4000);
+}
+function initGistUI(){
+  const{token,gistId}=getGistConfig();
+  const tinp=document.getElementById('gist-token-inp');
+  const ginp=document.getElementById('gist-id-inp');
+  if(tinp&&token)tinp.value=token;
+  if(ginp&&gistId)ginp.value=gistId;
+  if(token)updateSyncStatus(true,'Configurazione cloud attiva'+(gistId?' — Gist ID: '+gistId:''));
+}
+async function initCloudSync(){
+  initGistUI();
+  const{token,gistId}=getGistConfig();
+  if(!token||!gistId)return;
+  try{
+    const res=await fetch(`https://api.github.com/gists/${gistId}`,{headers:{'Authorization':'token '+token,'Accept':'application/vnd.github.v3+json'}});
+    if(!res.ok)return;
+    const data=await res.json();
+    const file=data.files[GIST_FILENAME];
+    if(!file)return;
+    const content=file.truncated?(await(await fetch(file.raw_url)).text()):file.content;
+    const imp=JSON.parse(content);
+    const localTs=(state.pagamenti||[]).length+(state.immobili||[]).length;
+    const cloudTs=(imp.pagamenti||[]).length+(imp.immobili||[]).length;
+    if(cloudTs>localTs||(cloudTs===localTs&&JSON.stringify(imp)!==JSON.stringify(state))){
+      ['immobili','persone','pagamenti','storico'].forEach(k=>{if(!imp[k])imp[k]=[];});
+      if(!imp.movimentiCassa)imp.movimentiCassa=[];
+      if(!imp.spese)imp.spese=[];
+      if(typeof imp.saldoCassa!=='number')imp.saldoCassa=0;
+      state=imp;
+      localStorage.setItem('incassi_v5',JSON.stringify(state));
+      renderImmobili();renderPersone();renderSelInquilino();
+      updateSyncStatus(true,'☁️ Dati aggiornati dal cloud — '+new Date().toLocaleTimeString('it-IT'));
+    }else{
+      updateSyncStatus(true,'☁️ Dati locali aggiornati — sync cloud attivo');
+    }
+  }catch(e){/* silenzioso, cloud non disponibile */}
+}
+function fmt(n){return '€ '+Number(n).toLocaleString('it-IT',{minimumFractionDigits:2,maximumFractionDigits:2});}
+function fmtData(iso){if(!iso)return '-';const[y,m,d]=iso.split('-');return d+'-'+m+'-'+y;}
+function mKey(y,m){return y+'-'+String(m+1).padStart(2,'0');}
+function mesiLabel(arr){if(!arr||!arr.length)return '-';return arr.map(m=>{const[y,mo]=m.split('-');return MESI[parseInt(mo)-1]+' '+y;}).join(', ');}
+function mesiTagsHtml(arr){if(!arr||!arr.length)return '<span style="color:var(--color-text-tertiary);font-size:12px">-</span>';return arr.map(m=>{const[y,mo]=m.split('-');return `<span class="mesi-tag">${MESI3[parseInt(mo)-1]} ${y}</span>`;}).join('');}
+
+// Primo mese utile (successivo all'ultimo registrato per l'inquilino)
+let _primoMeseUtile_=null;
+function calcolaPrimoMeseUtile(inq){
+  if(!inq){_primoMeseUtile_=null;return;}
+  const tuttiMesi=[];
+  state.pagamenti.forEach(p=>{if(p.inquilino===inq)(p.mesiRif||[]).forEach(k=>tuttiMesi.push(k));});
+  if(!tuttiMesi.length){_primoMeseUtile_=null;return;}
+  tuttiMesi.sort();
+  const last=tuttiMesi[tuttiMesi.length-1];
+  const[y,mo]=last.split('-').map(Number);
+  _primoMeseUtile_=(mo===12)?((y+1)+'-01'):(y+'-'+String(mo+1).padStart(2,'0'));
+}
+function checkRegistraBtn(){
+  const inq=document.getElementById('sel-inquilino').value;
+  const importo=parseFloat(document.getElementById('inp-importo').value);
+  const btn=document.getElementById('btn-registra');
+  if(!btn)return;
+  btn.disabled=!(inq&&importo>0);
+}
+
+// Auto-compila importo quando cambia inquilino o mesi selezionati
+function aggiornaImportoAuto(){
+  const inq=document.getElementById('sel-inquilino').value;
+  const imm=state.immobili.find(m=>m.inquilino===inq);
+  const hint=document.getElementById('importo-hint');
+  if(!imm||!imm.quota){if(hint)hint.textContent='';return;}
+  const nMesi=mesiSelezionati.length||1;
+  const tot=imm.quota*nMesi;
+  document.getElementById('inp-importo').value=tot.toFixed(2);
+  if(hint){
+    if(nMesi>1) hint.textContent=`Quota €${imm.quota.toLocaleString('it-IT')} × ${nMesi} mesi`;
+    else hint.textContent=`Quota mensile: €${imm.quota.toLocaleString('it-IT')}`;
+  }
+}
+function onInquilinoChange(){
+  const inq=document.getElementById('sel-inquilino').value;
+  const fil=document.getElementById('fil-inquilino');
+  if(fil){ fil.value=inq; renderPagamenti(); }
+  if(!inq){
+    document.getElementById('inp-importo').value='';
+    document.getElementById('inp-data').value='';
+    document.getElementById('inp-note').value='';
+    document.getElementById('importo-hint').textContent='';
+    mesiSelezionati=[];
+    _primoMeseUtile_=null;
+    renderPicker();
+  } else {
+    calcolaPrimoMeseUtile(inq);
+    // Naviga il picker all'anno del mese suggerito (se presente)
+    if(_primoMeseUtile_) pickerAnnoVal=parseInt(_primoMeseUtile_.split('-')[0]);
+    renderPicker();
+  }
+  aggiornaImportoAuto();
+  checkRegistraBtn();
+}
+
+// PICKER PAGAMENTO
+function pickerAnno(d){pickerAnnoVal+=d;renderPicker();}
+function renderPicker(){
+  const el=document.getElementById('picker-anno');if(el)el.textContent=pickerAnnoVal;
+  const grid=document.getElementById('picker-grid');if(!grid)return;
+  grid.innerHTML='';
+  const table=document.createElement('table');
+  table.style.cssText='width:100%;border-collapse:collapse';
+  const COLS=3;
+  for(let row=0;row<4;row++){
+    const tr=document.createElement('tr');
+    for(let col=0;col<COLS;col++){
+      const m=row*COLS+col;
+      const k=mKey(pickerAnnoVal,m);
+      const td=document.createElement('td');
+      td.style.cssText='padding:3px 4px;width:33.3%';
+      const btn=document.createElement('button');
+      btn.className='mese-btn'+(mesiSelezionati.includes(k)?' sel':(k===_primoMeseUtile_&&!mesiSelezionati.includes(k)?' suggerito':''));
+      btn.type='button';
+      btn.style.cssText='width:100%;font-weight:700;font-size:13px;padding:7px 4px';
+      btn.textContent=MESI[m];
+      btn.onclick=()=>{toggleMese(k);};
+      td.appendChild(btn);
+      tr.appendChild(td);
+    }
+    table.appendChild(tr);
+  }
+  grid.appendChild(table);
+  renderMesiTags();
+}
+function toggleMese(k){
+  if(mesiSelezionati.includes(k))mesiSelezionati=mesiSelezionati.filter(x=>x!==k);
+  else mesiSelezionati.push(k);
+  mesiSelezionati.sort();
+  renderPicker();
+  aggiornaImportoAuto();
+  checkRegistraBtn();
+}
+function renderMesiTags(){
+  const el=document.getElementById('mesi-sel-tags');if(!el)return;
+  const box=document.getElementById('mesi-sel-box');
+  if(!mesiSelezionati.length){
+    el.innerHTML='<span style="color:var(--color-text-tertiary);font-size:12px">Nessuno — clicca sul calendario</span>';
+    if(box)box.className='mesi-sel-box';return;
+  }
+  if(box)box.className='mesi-sel-box has-items';
+  el.innerHTML=mesiSelezionati.map(m=>{
+    const[y,mo]=m.split('-');
+    return `<span class="mesi-tag" style="cursor:pointer" onclick="toggleMese('${m}')" title="Clicca per rimuovere">📅 ${MESI3[parseInt(mo)-1]} ${y}<span class="mese-x">✕</span></span>`;
+  }).join('');
+}
+
+// PICKER RESOCONTO
+function resPickerAnno(d){resPickerAnnoVal+=d;renderResPicker();}
+function renderResPicker(){
+  const el=document.getElementById('res-picker-anno');if(el)el.textContent=resPickerAnnoVal;
+  const grid=document.getElementById('res-picker-grid');if(!grid)return;
+  grid.innerHTML='';
+  for(let m=0;m<12;m++){
+    const k=mKey(resPickerAnnoVal,m);
+    const btn=document.createElement('button');
+    btn.className='mese-btn'+(resMesiSelezionati.includes(k)?' sel':'');
+    btn.type='button';btn.textContent=MESI3[m];
+    btn.onclick=()=>{toggleResMese(k);};
+    grid.appendChild(btn);
+  }
+  renderResMesiTags();
+}
+function toggleResMese(k){
+  if(resMesiSelezionati.includes(k))resMesiSelezionati=resMesiSelezionati.filter(x=>x!==k);
+  else resMesiSelezionati.push(k);
+  resMesiSelezionati.sort();
+  renderResPicker();
+}
+function renderResMesiTags(){
+  const el=document.getElementById('res-mesi-sel-tags');if(!el)return;
+  const box=document.getElementById('res-mesi-sel-box');
+  if(!resMesiSelezionati.length){
+    el.innerHTML='<span style="color:var(--color-text-tertiary);font-size:12px">Nessuno — clicca sul calendario</span>';
+    if(box)box.className='mesi-sel-box';return;
+  }
+  if(box)box.className='mesi-sel-box has-items';
+  el.innerHTML=resMesiSelezionati.map(m=>{
+    const[y,mo]=m.split('-');
+    return `<span class="mesi-tag" style="cursor:pointer" onclick="toggleResMese('${m}')" title="Clicca per rimuovere">📅 ${MESI3[parseInt(mo)-1]} ${y}<span class="mese-x">✕</span></span>`;
+  }).join('');
+}
+
+function showPage(p){
+  document.querySelectorAll('.page').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(el=>el.classList.remove('active'));
+  document.getElementById('page-'+p).classList.add('active');
+  const tab=document.querySelector(`.tab[onclick="showPage('${p}')"]`);
+  if(tab) tab.classList.add('active');
+  if(p==='pagamenti'){renderSelInquilino();renderFilResoconto();renderPicker();renderPagamenti();checkRegistraBtn();}
+  if(p==='resoconto'){setDefaultDate();renderStorico();aggiornaSpeseResoconto();}
+  if(p==='storico')renderGestioneCassa();
+  if(p==='spese'){renderFilResocontoSpese();renderSpese();initDataSpesa();}
+  if(p==='report'){initReport();document.getElementById('report-wrap').innerHTML='';document.getElementById('btn-stampa-report').style.display='none';}
+}
+
+function setDefaultDate(){
+  const e1=document.getElementById('res-inizio');
+  const e2=document.getElementById('res-fine');
+  if(e2) e2.value=new Date().toISOString().split('T')[0];
+  if(e1){
+    if(state.storico&&state.storico.length){
+      const ultimaFine=getStoricoDataFine(state.storico[0]);
+      if(ultimaFine){
+        const d=new Date(ultimaFine);d.setDate(d.getDate()+1);
+        const minVal=d.toISOString().split('T')[0];
+        e1.value=minVal;
+        e1.min=minVal;
+      } else {e1.value='';e1.min='';}
+    } else {e1.value='';e1.min='';}
+  }
+  aggiornaSpeseResoconto();
+}
+
+
+function renderImmobili(){
+  const el=document.getElementById('immobili-list');
+  const badge=document.getElementById('cfg-imm-badge');
+  if(badge)badge.textContent=state.immobili.length;
+  if(!state.immobili.length){
+    el.innerHTML='<div class="empty" style="padding:1rem">Nessun immobile. Aggiungine uno.</div>';return;
+  }
+  const rows=state.immobili.map((imm,i)=>`
+    <tr>
+      <td>${imm.nome||'<span style="color:var(--color-text-tertiary)">—</span>'}</td>
+      <td>${imm.inquilino||'<span style="color:var(--color-text-tertiary)">—</span>'}</td>
+      <td class="td-quota" style="text-align:right;font-weight:700;color:#178a5a">${imm.quota?'€ '+imm.quota.toLocaleString('it-IT',{minimumFractionDigits:2}):'—'}</td>
+      <td style="text-align:center;white-space:nowrap">
+        <div style="display:flex;gap:4px;justify-content:center;align-items:center">
+          <button class="btn btn-sm btn-edit" onclick="apriModificaImmobile(${i})" title="Modifica">✏️</button>
+          <button class="btn btn-sm btn-danger" onclick="removeImmobile(${i})" title="Rimuovi">✕</button>
+        </div>
+      </td>
+    </tr>`).join('');
+  el.innerHTML=`
+    <div class="table-wrap">
+      <table>
+        <thead><tr>
+          <th>🏠 Immobile</th>
+          <th>👤 Inquilino</th>
+          <th style="text-align:right">💶 Fitto mensile</th>
+          <th style="text-align:center;width:90px">Azioni</th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>`;
+}
+
+function renderPersone(){
+  const el=document.getElementById('persone-list');
+  const badge=document.getElementById('cfg-ered-badge');
+  if(badge)badge.textContent=state.persone.length;
+  const AVATAR_COLORS=['#178a5a','#2a6496','#8e44ad','#c0392b','#d35400','#16a085','#2980b9'];
+  if(!state.persone.length){
+    el.innerHTML='<div class="empty" style="padding:1rem">Nessun erede. Aggiungine uno.</div>';return;
+  }
+  function initials(nome){if(!nome)return '?';const p=nome.trim().split(/\s+/);return p.length>=2?(p[0][0]+p[p.length-1][0]).toUpperCase():nome[0].toUpperCase();}
+  const rows=state.persone.map((p,i)=>`
+    <tr>
+      <td style="width:46px;text-align:center">
+        <div class="erede-av" style="background:${AVATAR_COLORS[i%AVATAR_COLORS.length]}">${initials(p.nome)}</div>
+      </td>
+      <td>${p.nome||'<span style="color:var(--color-text-tertiary)">—</span>'}</td>
+      <td style="text-align:center;white-space:nowrap">
+        <div style="display:flex;gap:4px;justify-content:center;align-items:center">
+          <button class="btn btn-sm btn-edit" onclick="apriModificaPersona(${i})" title="Modifica">✏️</button>
+          <button class="btn btn-sm btn-danger" onclick="removePersona(${i})" title="Rimuovi">✕</button>
+        </div>
+      </td>
+    </tr>`).join('');
+  el.innerHTML=`
+    <div class="table-wrap">
+      <table id="erede-table">
+        <thead><tr>
+          <th style="width:46px"></th>
+          <th>👤 Nominativo</th>
+          <th style="text-align:center;width:90px">Azioni</th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>`;
+}
+
+function addImmobile(){state.immobili.push({nome:'',inquilino:'',quota:0});saveState();renderImmobili();apriModificaImmobile(state.immobili.length-1);}
+function removeImmobile(i){
+  const imm=state.immobili[i];if(!imm)return;
+  const nPag=(state.pagamenti||[]).filter(p=>p.inquilino&&p.inquilino===imm.inquilino).length;
+  const nStor=(state.storico||[]).filter(r=>(r.pags||[]).some(p=>p.inquilino===imm.inquilino)).length;
+  let msg=`Rimuovere l'immobile "${imm.nome||imm.inquilino||'?'}" dall'elenco Patrimonio?`;
+  if(nPag>0||nStor>0){
+    msg+='\n\n⚠️ Dati storici trovati:\n';
+    if(nPag>0)msg+=`  • ${nPag} pagamento/i registrato/i per questo inquilino\n`;
+    if(nStor>0)msg+=`  • presente in ${nStor} resoconto/i salvato/i\n`;
+    msg+='\n✅ Lo storico NON verrà alterato: tutti i dati storici resteranno invariati.';
+  }
+  if(!confirm(msg))return;
+  state.immobili.splice(i,1);saveState();renderImmobili();renderSelInquilino();
+}
+function addPersona(){state.persone.push({nome:''});saveState();renderPersone();apriModificaPersona(state.persone.length-1);}
+function removePersona(i){
+  const p=state.persone[i];if(!p)return;
+  const nRec=(state.storico||[]).filter(r=>(r.persone||[]).some(pp=>pp.nome===p.nome)).length;
+  let msg=`Rimuovere l'erede "${p.nome||'?'}" dall'elenco Eredi?`;
+  if(nRec>0){
+    msg+=`\n\n⚠️ Questa persona compare in ${nRec} resoconto/i salvato/i nello storico.`;
+    msg+='\n\n✅ Lo storico NON verrà alterato: tutti i resoconti resteranno invariati.';
+  }
+  if(!confirm(msg))return;
+  state.persone.splice(i,1);saveState();renderPersone();
+}
+function salvaConfig(){saveState();alert('Anagrafiche salvate!');}
+
+function apriModificaImmobile(i){
+  const imm=state.immobili[i];if(!imm)return;
+  document.getElementById('modal-imm-idx').value=i;
+  document.getElementById('modal-imm-nome').value=imm.nome||'';
+  document.getElementById('modal-imm-inquilino').value=imm.inquilino||'';
+  document.getElementById('modal-imm-quota').value=imm.quota||'';
+  document.getElementById('modal-imm').style.display='flex';
+  document.getElementById('modal-imm-nome').focus();
+}
+function chiudiModaleImmobile(){document.getElementById('modal-imm').style.display='none';}
+function salvaModificaImmobile(){
+  const i=parseInt(document.getElementById('modal-imm-idx').value);
+  const nome=document.getElementById('modal-imm-nome').value.trim();
+  const inquilino=document.getElementById('modal-imm-inquilino').value.trim();
+  const quota=parseFloat(document.getElementById('modal-imm-quota').value)||0;
+  if(!nome&&!inquilino){alert('Inserisci almeno il nome immobile o l\'inquilino.');return;}
+  const vecchioInquilino=state.immobili[i].inquilino||'';
+  const vecchioNome=state.immobili[i].nome||'';
+  state.immobili[i]={...state.immobili[i],nome,inquilino,quota};
+
+  // Propaga cambio inquilino/nome a pagamenti
+  if(vecchioInquilino!==inquilino||vecchioNome!==nome){
+    state.pagamenti.forEach(p=>{
+      if(p.inquilino===vecchioInquilino){
+        if(vecchioInquilino!==inquilino)p.inquilino=inquilino;
+        if(vecchioNome!==nome)p.immobile=nome;
+      }
+    });
+    // Propaga nei pags dello storico
+    state.storico.forEach(r=>{
+      (r.pags||[]).forEach(p=>{
+        if(p.inquilino===vecchioInquilino){
+          if(vecchioInquilino!==inquilino)p.inquilino=inquilino;
+          if(vecchioNome!==nome)p.immobile=nome;
+        }
+      });
+    });
+  }
+
+  saveState();chiudiModaleImmobile();renderImmobili();renderSelInquilino();
+  renderPagamenti();
+}
+
+function apriModificaPersona(i){
+  const p=state.persone[i];if(!p)return;
+  document.getElementById('modal-pers-idx').value=i;
+  document.getElementById('modal-pers-nome').value=p.nome||'';
+  document.getElementById('modal-pers').style.display='flex';
+  document.getElementById('modal-pers-nome').focus();
+}
+function chiudiModalePersona(){document.getElementById('modal-pers').style.display='none';}
+function salvaModificaPersona(){
+  const i=parseInt(document.getElementById('modal-pers-idx').value);
+  const nome=document.getElementById('modal-pers-nome').value.trim();
+  if(!nome){alert('Inserisci il nominativo.');return;}
+  const vecchioNome=state.persone[i].nome||'';
+  state.persone[i]={...state.persone[i],nome};
+
+  // Propaga cambio nome erede nei persone dello storico
+  if(vecchioNome!==nome){
+    state.storico.forEach(r=>{
+      (r.persone||[]).forEach(p=>{
+        if(p.nome===vecchioNome)p.nome=nome;
+      });
+    });
+  }
+
+  saveState();chiudiModalePersona();renderPersone();
+}
+
+function renderSelInquilino(){
+  [document.getElementById('sel-inquilino'),document.getElementById('fil-inquilino')].forEach((sel,si)=>{
+    if(!sel)return;const val=sel.value;
+    sel.innerHTML=si===0?'<option value="">Seleziona</option>':'<option value="">Tutti gli inquilini</option>';
+    state.immobili.forEach(imm=>{if(imm.inquilino){const o=document.createElement('option');o.value=imm.inquilino;o.textContent=imm.inquilino+(imm.nome?' ('+imm.nome+')':'');sel.appendChild(o);}});
+    if(val)sel.value=val;
+  });
+  aggiornaImportoAuto();
+  checkRegistraBtn();
+}
+
+function annullaRegistrazione(){
+  document.getElementById('sel-inquilino').value='';
+  document.getElementById('inp-importo').value='';
+  document.getElementById('inp-data').value=new Date().toISOString().split('T')[0];
+  document.getElementById('inp-note').value='';
+  const hint=document.getElementById('importo-hint');if(hint)hint.textContent='';
+  mesiSelezionati=[];
+  renderPicker();
+  checkRegistraBtn();
+}
+
+function registraPagamento(){
+  const inq=document.getElementById('sel-inquilino').value;
+  const importo=parseFloat(document.getElementById('inp-importo').value);
+  const data=document.getElementById('inp-data').value;
+  const note=document.getElementById('inp-note').value;
+  if(!inq||!importo||!data){alert('Compila inquilino, importo e data.');return;}
+  // Verifica mesi già registrati per questo inquilino
+  if(mesiSelezionati.length){
+    const giàRegistrati=new Set();
+    state.pagamenti.forEach(p=>{if(p.inquilino===inq)(p.mesiRif||[]).forEach(k=>giàRegistrati.add(k));});
+    const duplicati=mesiSelezionati.filter(k=>giàRegistrati.has(k));
+    if(duplicati.length){
+      const labels=duplicati.map(k=>{const[y,mo]=k.split('-');return MESI[parseInt(mo)-1]+' '+y;});
+      alert('⚠️ Registrazione bloccata!\n\nI seguenti mesi sono già registrati per '+inq+':\n\n• '+labels.join('\n• ')+'\n\nRimuovi i mesi duplicati prima di procedere.');
+      return;
+    }
+  }
+  const imm=state.immobili.find(m=>m.inquilino===inq);
+  state.pagamenti.push({id:Date.now(),inquilino:inq,immobile:imm?imm.nome:'',importo,data,mesiRif:[...mesiSelezionati],note});
+  saveState();
+  document.getElementById('sel-inquilino').value='';
+  document.getElementById('inp-importo').value='';
+  document.getElementById('inp-data').value='';
+  document.getElementById('inp-note').value='';
+  document.getElementById('importo-hint').textContent='';
+  mesiSelezionati=[];
+  _primoMeseUtile_=null;
+  renderPicker();
+  renderPagamenti();
+  checkRegistraBtn();
+}
+
+function renderPagamenti(){
+  const fil=(document.getElementById('fil-inquilino')||{}).value||'';
+  const filResoconto=filResocontoVal||'';
+  let fInizio='',fFine='';
+  if(filResoconto){
+    if(filResoconto.includes('>')){const p=filResoconto.split('>');fInizio=p[0]||'';fFine=p[1]||'';}
+    else if(filResoconto.endsWith('|')){fInizio=filResoconto.slice(0,-1);fFine='';}
+    else{fInizio=filResoconto;fFine='';}
+  }
+  const pags=state.pagamenti
+    .filter(p=>(!fil||p.inquilino===fil)&&
+               (!filResoconto||
+                ((!fInizio||p.data>=fInizio)&&(!fFine||p.data<=fFine))))
+    .sort((a,b)=>b.data.localeCompare(a.data));
+  const tbody=document.getElementById('tbl-pagamenti');tbody.innerHTML='';
+  if(!pags.length){tbody.innerHTML='<tr><td colspan="7" class="empty">Nessun pagamento registrato.</td></tr>';}
+  pags.forEach(p=>{
+    const tr=document.createElement('tr');
+    const chiuso=isPagamentoInPeriodoChiuso(p.id);
+    const btnCancella=chiuso
+      ?`<button class="btn btn-sm btn-danger" disabled title="Periodo chiuso: cancellazione non consentita" style="opacity:.45;cursor:not-allowed">X</button>`
+      :`<button class="btn btn-sm btn-danger" onclick="rimuoviPagamento(${p.id})">X</button>`;
+    tr.innerHTML=`<td>${fmtData(p.data)}</td><td>${mesiTagsHtml(p.mesiRif)}</td><td>${p.inquilino}</td><td>${p.immobile||'-'}</td><td>${fmt(p.importo)}</td><td>${p.note||'-'}</td><td style="text-align:center;white-space:nowrap"><div style="display:flex;gap:4px;justify-content:center;align-items:center"><button class="btn btn-sm btn-edit" onclick="apriModificaPagamento(${p.id})" title="${chiuso?'Modifica nota':'Modifica pagamento'}">✏️</button>${btnCancella}</div></td>`;
+    tbody.appendChild(tr);
+  });
+  document.getElementById('tot-incassato').textContent=fmt(pags.reduce((s,p)=>s+p.importo,0));
+}
+
+function isPagamentoInPeriodoChiuso(id){
+  if(!state.storico||!state.storico.length)return false;
+  return state.storico.some(r=>(r.pags||[]).some(p=>p.id===id));
+}
+
+function isSpesaInPeriodoChiuso(data){
+  if(!state.storico||!state.storico.length)return false;
+  return state.storico.some(r=>{
+    const ini=getStoricoDataInizio(r);const fin=getStoricoDataFine(r);
+    return fin&&data<=fin&&(!ini||data>=ini);
+  });
+}
+
+function rimuoviPagamento(id){
+  if(isPagamentoInPeriodoChiuso(id)){alert('Impossibile eliminare: il pagamento appartiene a un periodo chiuso (resoconto già salvato).');return;}
+  if(!confirm('Rimuovere questo pagamento?'))return;
+  state.pagamenti=state.pagamenti.filter(p=>p.id!==id);saveState();renderPagamenti();
+}
+
+function annullaResoconto(){
+  setDefaultDate(); // chiama aggiornaSpeseResoconto() → popola res-spese e res-nota-spese
+  document.getElementById('res-cassa').value='';
+  document.getElementById('res-prelievo-cassa').value='';
+  // res-spese e res-nota-spese sono readonly: gestiti da aggiornaSpeseResoconto, non svuotare
+}
+function calcolaResoconto(){
+  const cassa=parseFloat(document.getElementById('res-cassa').value)||0;
+  const prelievo=parseFloat(document.getElementById('res-prelievo-cassa').value)||0;
+  const inizio=document.getElementById('res-inizio').value;
+  const fine=document.getElementById('res-fine').value;
+  if(!inizio||!fine){alert('Inserisci le date di inizio e fine.');return;}
+  if(fine<inizio){alert('La data fine deve essere successiva alla data inizio.');return;}
+  if(state.storico&&state.storico.length){
+    const ultimaFine=getStoricoDataFine(state.storico[0]);
+    if(ultimaFine&&inizio<=ultimaFine){
+      alert('La data inizio ('+fmtData(inizio)+') deve essere successiva all\'ultima data di fine periodo chiuso ('+fmtData(ultimaFine)+').');return;
+    }
+  }
+  // Ricalcola spese direttamente da state.spese (fonte di verità)
+  const speseDelPeriodo=(state.spese||[]).filter(s=>s.data>=inizio&&s.data<=fine).sort((a,b)=>a.data.localeCompare(b.data));
+  const spese=speseDelPeriodo.reduce((t,s)=>t+s.importo,0);
+  const pags=state.pagamenti.filter(p=>p.data>=inizio&&p.data<=fine);
+  const tot=pags.reduce((s,p)=>s+p.importo,0);
+  const netto=Math.max(0,tot-spese-cassa+prelievo);
+  const nPers=state.persone.length||1;
+  const quota=netto/nPers;
+  // Popola e mostra dialog di conferma
+  document.getElementById('conf-periodo').textContent=fmtData(inizio)+' → '+fmtData(fine);
+  document.getElementById('conf-tot').textContent=fmt(tot);
+  document.getElementById('conf-spese').textContent=fmt(spese);
+  document.getElementById('conf-cassa').textContent=fmt(cassa);
+  document.getElementById('conf-prelievo').textContent=fmt(prelievo);
+  document.getElementById('conf-netto').textContent=fmt(netto);
+  document.getElementById('conf-npersone').textContent=nPers;
+  document.getElementById('conf-quota').textContent=fmt(quota)+' × '+nPers+' pers.';
+  // Mostra/nascondi righe cassa e prelievo
+  document.getElementById('conf-row-cassa').style.display=cassa>0?'':'none';
+  document.getElementById('conf-row-prelievo').style.display=prelievo>0?'':'none';
+  document.getElementById('modal-conferma-calcola').style.display='flex';
+}
+function chiudiModaleConfermaCalcola(){
+  document.getElementById('modal-conferma-calcola').style.display='none';
+}
+function _eseguiCalcolaResoconto(){
+  chiudiModaleConfermaCalcola();
+  const cassa=parseFloat(document.getElementById('res-cassa').value)||0;
+  const prelievo=parseFloat(document.getElementById('res-prelievo-cassa').value)||0;
+  const inizio=document.getElementById('res-inizio').value;
+  const fine=document.getElementById('res-fine').value;
+  const speseDelPeriodo=(state.spese||[]).filter(s=>s.data>=inizio&&s.data<=fine).sort((a,b)=>a.data.localeCompare(b.data));
+  const spese=speseDelPeriodo.reduce((t,s)=>t+s.importo,0);
+  const notaSpese=speseDelPeriodo.filter(s=>s.note).map(s=>`${fmtData(s.data)}: ${s.note} (${fmt(s.importo)})`).join('\n');
+  let pags=state.pagamenti.filter(p=>p.data>=inizio&&p.data<=fine).sort((a,b)=>a.data.localeCompare(b.data));
+  const periodoLabel=fmtData(inizio)+' → '+fmtData(fine)+' (per data pagamento)';
+  const tot=pags.reduce((s,p)=>s+p.importo,0);
+  const netto=Math.max(0,tot-spese-cassa+prelievo);
+  const nPers=state.persone.length||1;
+  const quota=netto/nPers;
+  const now=new Date().toISOString();
+  const r={periodoLabel,dataInizio:inizio,dataFine:fine,spese,notaSpese,cassa,prelievo,tot,netto,quota,pags:pags.slice(),persone:state.persone.slice(),savedAt:now};
+  if((cassa||0)>0){
+    state.movimentiCassa.push({data:now,tipo:'deposito',importo:cassa,note:'Da resoconto: '+periodoLabel,auto:true});
+    state.saldoCassa+=cassa;
+  }
+  if((prelievo||0)>0){
+    state.movimentiCassa.push({data:now,tipo:'prelievo',importo:prelievo,note:'Prelievo per resoconto: '+periodoLabel,auto:true});
+    state.saldoCassa-=prelievo;
+  }
+  state.storico.unshift(r);
+  window._lastResoconto=r;
+  saveState();
+  // Reset form
+  document.getElementById('res-fine').value='';
+  document.getElementById('res-spese').value='';
+  document.getElementById('res-cassa').value='';
+  document.getElementById('res-prelievo-cassa').value='';
+  document.getElementById('res-nota-spese').value='';
+  resMesiSelezionati=[];
+  renderStorico();
+  renderGestioneCassa();
+  setDefaultDate();
+  // Scorri allo storico
+  document.querySelector('#page-resoconto .section-title[data-storico]')?.scrollIntoView({behavior:'smooth'});
+  const storicoEl=document.getElementById('storico-table-wrap');
+  if(storicoEl)storicoEl.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function getStoricoDataFine(r){
+  if(r.dataFine) return r.dataFine;
+  if(r.periodoLabel){
+    const m=r.periodoLabel.match(/(\d{2})-(\d{2})-(\d{4})\s*→\s*(\d{2})-(\d{2})-(\d{4})/);
+    if(m) return `${m[6]}-${m[5]}-${m[4]}`;
+  }
+  return r.savedAt?r.savedAt.slice(0,10):null;
+}
+
+function getStoricoDataInizio(r){
+  if(r.dataInizio) return r.dataInizio;
+  if(r.periodoLabel){
+    const m=r.periodoLabel.match(/^(\d{2})-(\d{2})-(\d{4})/);
+    if(m) return `${m[3]}-${m[2]}-${m[1]}`;
+  }
+  return null;
+}
+
+function setFilResoconto(val){
+  filResocontoVal=val;
+  renderPagamenti();
+}
+
+function renderFilResoconto(){
+  const sel=document.getElementById('fil-resoconto');
+  if(!sel)return;
+  sel.innerHTML='';
+
+  function addOpt(parent,val,label){
+    const o=document.createElement('option');
+    o.value=val;o.textContent=label;
+    parent.appendChild(o);
+  }
+
+  if(!state.storico||!state.storico.length){
+    const oggi=new Date().toISOString().split('T')[0];
+    addOpt(sel,oggi+'|','📅 Dal '+fmtData(oggi));
+    filResocontoVal=oggi+'|';
+    return;
+  }
+
+  addOpt(sel,'','🔍 Tutti i periodi');
+
+  // Gruppo periodi chiusi
+  const voci=[];
+  state.storico.forEach(r=>{
+    const fine=getStoricoDataFine(r);
+    const inizio=getStoricoDataInizio(r);
+    if(!fine)return;
+    const key=(inizio||'')+'>'+fine;
+    if(!voci.find(v=>v.key===key))voci.push({key,inizio,fine});
+  });
+  if(voci.length){
+    const grp=document.createElement('optgroup');
+    grp.label='── Periodi chiusi ──────────────';
+    voci.forEach(v=>{
+      addOpt(grp,v.key,v.inizio
+        ?'🗓  '+fmtData(v.inizio)+'  →  '+fmtData(v.fine)
+        :'🗓  Al '+fmtData(v.fine));
+    });
+    sel.appendChild(grp);
+  }
+
+  // Periodo corrente
+  const ultimaFine=getStoricoDataFine(state.storico[0]);
+  if(ultimaFine){
+    const d=new Date(ultimaFine);d.setDate(d.getDate()+1);
+    const dalGiorno=d.toISOString().split('T')[0];
+    const grp=document.createElement('optgroup');
+    grp.label='── Periodo corrente ────────────';
+    addOpt(grp,dalGiorno+'|','▶  Dal '+fmtData(dalGiorno));
+    sel.appendChild(grp);
+    sel.value=dalGiorno+'|';
+    filResocontoVal=dalGiorno+'|';
+  }
+}
+
+function salvaResoconto(){
+  if(!window._lastResoconto)return;
+  const r=window._lastResoconto;
+  const now=new Date().toISOString();
+  if((r.cassa||0)>0){
+    state.movimentiCassa.push({data:now,tipo:'deposito',importo:r.cassa,note:'Da resoconto: '+(r.periodoLabel||''),auto:true});
+    state.saldoCassa+=r.cassa;
+  }
+  if((r.prelievo||0)>0){
+    state.movimentiCassa.push({data:now,tipo:'prelievo',importo:r.prelievo,note:'Prelievo per resoconto: '+(r.periodoLabel||''),auto:true});
+    state.saldoCassa-=r.prelievo;
+  }
+  state.storico.unshift({...r,savedAt:now});
+  saveState();
+  alert('Resoconto salvato nello storico!');
+  renderStorico();
+  renderGestioneCassa();
+}
+
+function esportaExcel(r){
+  r=r||window._lastResoconto;if(!r)return;
+  const wb=XLSX.utils.book_new();
+  const ws1=XLSX.utils.aoa_to_sheet([['RESOCONTO IMMOBILI'],['Periodo',r.periodoLabel||''],[''],['Totale incassato',r.tot],['Spese dedotte',r.spese],...((r.cassa||0)>0?[['Quota in cassa',r.cassa]]:[]),...((r.prelievo||0)>0?[['Prelievo da cassa',r.prelievo]]:[]),['Netto da dividere',r.netto],[''],['DIVISIONE PER PERSONA'],...(r.persone||[]).map(p=>[p.nome,r.quota])]);
+  ws1['!cols']=[{wch:28},{wch:18}];
+  XLSX.utils.book_append_sheet(wb,ws1,'Riepilogo');
+  const ws2=XLSX.utils.aoa_to_sheet([['Data pagamento','Mesi di riferimento','Inquilino','Immobile','Importo (€)','Note'],...(r.pags||[]).map(p=>[fmtData(p.data),mesiLabel(p.mesiRif),p.inquilino,p.immobile||'',p.importo,p.note||''])]);
+  ws2['!cols']=[{wch:14},{wch:30},{wch:18},{wch:18},{wch:14},{wch:24}];
+  XLSX.utils.book_append_sheet(wb,ws2,'Pagamenti');
+  XLSX.writeFile(wb,'resoconto_'+new Date().toISOString().slice(0,10)+'.xlsx');
+}
+
+function stampaPDF(r){
+  r=r||window._lastResoconto;if(!r)return;
+  const persDiv=(r.persone||[]).map(p=>`<tr><td style="padding:6px 10px;border:1px solid #ddd">${p.nome}</td><td style="padding:6px 10px;border:1px solid #ddd;text-align:right"><strong>${fmt(r.quota)}</strong></td></tr>`).join('');
+
+  // Raggruppa pagamenti per inquilino
+  const pags=r.pags||[];
+  const gruppi={};
+  pags.forEach(p=>{
+    const k=p.inquilino||'N/D';
+    if(!gruppi[k])gruppi[k]={inquilino:k,immobile:p.immobile||'-',pags:[],tot:0};
+    gruppi[k].pags.push(p);
+    gruppi[k].tot+=p.importo;
+  });
+  const COLORS=['#2a6496','#178a5a','#8e44ad','#d35400','#16a085','#c0392b','#2980b9'];
+  const dettaglioHtml=Object.values(gruppi).map((g,gi)=>{
+    const colore=COLORS[gi%COLORS.length];
+    const righe=g.pags.map(p=>`<tr>
+      <td style="padding:5px 8px;border:1px solid #ddd;white-space:nowrap;overflow:hidden">${fmtData(p.data)}</td>
+      <td style="padding:5px 8px;border:1px solid #ddd;word-wrap:break-word">${mesiLabel(p.mesiRif)}</td>
+      <td style="padding:5px 8px;border:1px solid #ddd;color:#666;word-wrap:break-word">${p.note||'-'}</td>
+      <td style="padding:5px 8px;border:1px solid #ddd;text-align:right;font-weight:600;white-space:nowrap">${fmt(p.importo)}</td>
+    </tr>`).join('');
+    return `
+      <div style="margin-top:18px;border-left:4px solid ${colore};padding-left:10px;page-break-inside:avoid;break-inside:avoid">
+        <div style="font-weight:700;font-size:14px;color:${colore};margin-bottom:4px">
+          👤 ${g.inquilino} &nbsp;<span style="font-size:12px;color:#555;font-weight:400">— ${g.immobile}</span>
+          <span style="float:right;font-size:13px;color:#222">Totale: <strong>${fmt(g.tot)}</strong></span>
+        </div>
+        <table style="width:100%;table-layout:fixed;border-collapse:collapse;font-size:12px">
+          <thead><tr>
+            <th style="width:90px;white-space:nowrap">Data</th>
+            <th style="width:160px">Mesi rif.</th>
+            <th style="width:50%">Note</th>
+            <th style="text-align:right;width:90px;white-space:nowrap">Importo</th>
+          </tr></thead>
+          <tbody>${righe}</tbody>
+        </table>
+      </div>`;
+  }).join('');
+
+  // Tabella spese del periodo (da state.spese live, filtrate per date resoconto)
+  const speseDelPeriodo=(state.spese||[])
+    .filter(s=>s.data>=(r.dataInizio||'')&&s.data<=(r.dataFine||'9999'))
+    .sort((a,b)=>a.data.localeCompare(b.data));
+  const speseHtml=speseDelPeriodo.length
+    ?`<table>
+        <thead><tr>
+          <th style="width:110px">Data</th>
+          <th>Descrizione</th>
+          <th style="text-align:right;width:120px">Importo</th>
+        </tr></thead>
+        <tbody>
+          ${speseDelPeriodo.map((s,idx)=>`<tr${idx%2===1?' style="background:#f5f9fd"':''}>
+            <td style="white-space:nowrap">${fmtData(s.data)}</td>
+            <td>${s.note?s.note.replace(/</g,'&lt;'):'-'}</td>
+            <td style="text-align:right;font-weight:600;color:#c0392b">${fmt(s.importo)}</td>
+          </tr>`).join('')}
+          <tr style="background:#fff3cd">
+            <td colspan="2" style="font-weight:700;text-align:right">Totale spese</td>
+            <td style="text-align:right;font-weight:800;color:#c0392b">${fmt(speseDelPeriodo.reduce((t,s)=>t+s.importo,0))}</td>
+          </tr>
+        </tbody>
+      </table>`
+    :'<div style="color:#999;font-style:italic;padding:8px 0">Nessuna spesa registrata nel periodo.</div>';
+
+  // Formula netto (visibile solo se c'è prelievo da cassa)
+  const formulaHtml=(r.prelievo||0)>0?`<div style="margin-top:6px;font-size:12px;color:#555;padding:5px 10px;background:#f0f8f4;border-radius:4px;display:inline-block">
+    🧮 ${fmt(r.tot)} − ${fmt(r.spese)} − ${fmt(r.cassa||0)} + <span style="color:#1a6b3a;font-weight:700">${fmt(r.prelievo)} (prelievo cassa)</span> = <strong>${fmt(r.netto)}</strong>
+  </div>`:'';
+
+  const _html=`<!DOCTYPE html><html><head><meta charset="utf-8"><title>Resoconto Incassi</title><style>
+    body{font-family:Arial,sans-serif;font-size:13px;color:#222;padding:30px;max-width:960px;margin:0 auto}
+    .header-box{text-align:center;border:2px solid #2a6496;border-radius:10px;padding:18px 24px;margin-bottom:20px;background:linear-gradient(135deg,#eef4fb,#dceef9)}
+    .header-box h1{margin:0 0 6px 0;font-size:23px;color:#1e4f78;letter-spacing:.3px}
+    .header-box .subtitle{color:#555;font-size:13px}
+    .btn-stampa{display:block;margin:0 0 16px auto;padding:8px 20px;background:#c0392b;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:13px;white-space:nowrap}
+    h2{font-size:15px;margin:22px 0 8px;padding:7px 12px;background:#dceef9;border-left:4px solid #2a6496;border-radius:0 5px 5px 0;color:#1e4f78;font-weight:700}
+    table{border-collapse:collapse;width:100%;margin-bottom:6px}
+    th{background:#2a6496;color:#fff;font-weight:700;padding:9px 12px;border:1px solid #1e4f78;font-size:12px;text-align:left;white-space:nowrap;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    td{padding:7px 10px;border:1px solid #ddd;font-size:12px;vertical-align:top}
+    tr:nth-child(even) td{background:#f5f9fd}
+    .summary-outer{border:2px solid #2a6496;border-radius:10px;padding:16px 20px;margin:16px 0;background:#f7fafd;text-align:center}
+    .summary-outer .summary-title{font-size:11px;font-weight:700;color:#2a6496;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px}
+    .summary{display:inline-flex;gap:16px;flex-wrap:wrap;justify-content:center}
+    .summary-extra{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-top:10px}
+    .box{border:1px solid #ddd;border-radius:6px;padding:10px 16px;min-width:130px;text-align:center;background:#fff}
+    .box-label{font-size:11px;color:#666;margin-bottom:2px}
+    .box-val{font-size:18px;font-weight:bold}
+    .netto{background:#e6f4ed;border-color:#1a6b3a}
+    .footer{margin-top:30px;font-size:11px;color:#999;border-top:1px solid #eee;padding-top:10px}
+    @page{margin:22mm 15mm}
+    @page :first{margin:12mm 15mm}
+    @media print{.btn-stampa{display:none} div[style*="border-left"]{page-break-inside:avoid;break-inside:avoid} body{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+  </style></head><body>
+  <button class="btn-stampa" onclick="window.print()">🖨 Stampa / Salva PDF</button>
+  <div class="header-box">
+    <h1>📊 Resoconto Incassi Immobili</h1>
+    <div class="subtitle">Periodo: <strong>${(r.periodoLabel||'').replace(/\s*\(per [^)]+\)/,'')}</strong></div>
+  </div>
+  <div class="summary-outer">
+    <div class="summary-title">📊 Riepilogo periodo</div>
+    <div class="summary">
+      <div class="box"><div class="box-label">Totale incassato</div><div class="box-val">${fmt(r.tot)}</div></div>
+      <div class="box"><div class="box-label">Spese dedotte</div><div class="box-val" style="color:#c0392b">${fmt(r.spese)}</div></div>
+      <div class="box netto"><div class="box-label">Netto da dividere</div><div class="box-val" style="color:#178a5a">${fmt(r.netto)}</div></div>
+    </div>
+    ${(r.prelievo||0)>0||(r.cassa||0)>0?`<div class="summary-extra">
+      ${(r.prelievo||0)>0?`<div class="box" style="border-color:#1a6b3a;background:#f0f8f4"><div class="box-label">📤 Prelievo dalla Cassa</div><div class="box-val" style="color:#1a6b3a">${fmt(r.prelievo)}</div><div style="font-size:10px;color:#1a6b3a;margin-top:2px">contribuisce al netto</div></div>`:''}
+      ${(r.cassa||0)>0?`<div class="box" style="border-color:#e67e22;background:#fdf6ec"><div class="box-label">💰 Quota versata in Cassa</div><div class="box-val" style="color:#e67e22">${fmt(r.cassa)}</div></div>`:''}
+    </div>`:''}
+  </div>
+  ${formulaHtml}
+  <h2>Suddivisione Quote</h2>
+  <table><thead><tr>
+    <th>Erede</th>
+    <th style="text-align:right">Quota</th>
+  </tr></thead><tbody>${persDiv}</tbody></table>
+  <h2>🧾 Spese Periodo</h2>${speseHtml}
+  <h2>Dettaglio Incassi per inquilino</h2>
+  ${dettaglioHtml}
+  <div class="footer">Totale pagamenti: ${pags.length} &nbsp;|&nbsp; Inquilini: ${Object.keys(gruppi).length} &nbsp;|&nbsp; Totale incassato: ${fmt(r.tot)}</div>
+  </body></html>`;
+  const newWin=window.open('','_blank');
+  if(newWin){newWin.document.open();newWin.document.write(_html);newWin.document.close();}
+}
+
+function renderStorico(){
+  const el=document.getElementById('storico-list');
+  if(!state.storico.length){el.innerHTML='<div class="empty">Nessun resoconto salvato ancora.</div>';populateFiltriStorico();return;}
+
+  populateFiltriStorico();
+
+  const filtAnno=(document.getElementById('fil-storico-anno')||{}).value||'';
+  const filtPeriodo=(document.getElementById('fil-storico-periodo')||{}).value||'';
+
+  // Indici originali preservati per eliminaResoconto
+  const filtered=state.storico.map((r,i)=>({r,i})).filter(({r})=>{
+    const fine=getStoricoDataFine(r)||'';
+    const inizio=r.dataInizio||'';
+    const anno=fine?fine.slice(0,4):(inizio?inizio.slice(0,4):'');
+    if(filtAnno&&anno!==filtAnno)return false;
+    if(filtPeriodo){
+      const key=(inizio||'')+'>'+fine;
+      if(key!==filtPeriodo)return false;
+    }
+    return true;
+  });
+
+  if(!filtered.length){el.innerHTML='<div class="empty">Nessun resoconto per il filtro selezionato.</div>';return;}
+
+  const hasCassa=filtered.some(({r})=>(r.cassa||0)>0);
+  const hasPrelievo=filtered.some(({r})=>(r.prelievo||0)>0);
+
+  const rows=filtered.map(({r,i})=>{
+    const persStr=(r.persone||[]).map(p=>`<span>${p.nome||'?'}: <strong>${fmt(r.quota)}</strong></span>`).join('<br>');
+    const dataFineISO=getStoricoDataFine(r);
+    const dataFineLabel=dataFineISO?fmtData(dataFineISO):'-';
+    let dataInizioLabel='-';
+    if(r.dataInizio) dataInizioLabel=fmtData(r.dataInizio);
+    else if(r.periodoLabel){const m=r.periodoLabel.match(/^(\d{2}-\d{2}-\d{4})/);if(m)dataInizioLabel=m[1];}
+    const tipoLabel=r.periodoLabel&&r.periodoLabel.includes('mese')
+      ?'<span class="badge-periodo">per mese rif.</span>'
+      :'<span class="badge-periodo">per data pag.</span>';
+
+    const notes=r.notaSpese?r.notaSpese.split('\n').filter(n=>n.trim()):[];
+    const rs=Math.max(1,notes.length);
+    const rsAttr=rs>1?` rowspan="${rs}"`:'';
+    const notaTdStyle='font-size:12px;color:var(--color-text-secondary);max-width:180px;vertical-align:top';
+
+    const fmtNota=n=>n.replace(/(\(€[^)]+\))/g,'<strong>$1</strong>');
+
+    const firstNoteTd=notes.length
+      ?`<td style="${notaTdStyle}">${fmtNota(notes[0])}</td>`
+      :`<td style="${notaTdStyle}"><span style="color:var(--color-text-tertiary)">-</span></td>`;
+
+    const extraRows=notes.slice(1).map(n=>
+      `<tr><td style="${notaTdStyle};border-top:1px dashed #d0d7e0">${fmtNota(n)}</td></tr>`
+    ).join('');
+
+    return `<tr>
+      <td style="white-space:nowrap"${rsAttr}>${new Date(r.savedAt).toLocaleDateString('it-IT')}</td>
+      <td style="white-space:nowrap"${rsAttr}>${dataInizioLabel}</td>
+      <td style="white-space:nowrap"${rsAttr}>${dataFineLabel}</td>
+      <td style="text-align:right;font-weight:600"${rsAttr}>${fmt(r.tot)}</td>
+      <td style="text-align:right;color:#c0392b;font-weight:700"${rsAttr}>${fmt(r.spese)}</td>
+      ${firstNoteTd}
+      ${hasCassa?`<td style="text-align:right"${rsAttr}>${(r.cassa||0)>0?fmt(r.cassa):'-'}</td>`:''}
+      ${hasPrelievo?`<td style="text-align:right;color:#1a6b3a;font-weight:600"${rsAttr}>${(r.prelievo||0)>0?fmt(r.prelievo):'-'}</td>`:''}
+      <td style="text-align:right;font-weight:700;color:#178a5a"${rsAttr}>${fmt(r.netto)}</td>
+      <td class="persone-cell"${rsAttr}>${persStr||'-'}</td>
+      <td style="text-align:center;white-space:nowrap"${rsAttr}>
+        <div style="display:flex;gap:4px;justify-content:center;align-items:center">
+          <button class="btn btn-sm btn-excel" onclick="esportaExcel(state.storico[${i}])" title="Esporta Excel">XLS</button>
+          <button class="btn btn-sm btn-pdf" onclick="stampaPDF(state.storico[${i}])" title="Stampa PDF">PDF</button>
+          <button class="btn btn-sm btn-danger" onclick="eliminaResoconto(${i})" title="Elimina">✕</button>
+        </div>
+      </td>
+    </tr>${extraRows}`;
+  }).join('');
+  el.innerHTML=`
+    <div class="table-wrap">
+      <table id="storico-table">
+        <thead>
+          <tr>
+            <th>Salvato il</th><th>Da</th><th>A</th>
+            <th style="text-align:right">Incassato</th><th style="text-align:right">Spese</th>
+            <th>Nota spese</th>
+            ${hasCassa?'<th style="text-align:right">Depositato in cassa</th>':''}
+            ${hasPrelievo?'<th style="text-align:right">Prelevato dalla cassa</th>':''}
+            <th style="text-align:right">Netto diviso</th>
+            <th>Divisione</th><th style="text-align:center;width:90px">Azioni</th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>`;
+}
+
+function populateFiltriStorico(){
+  const selAnno=document.getElementById('fil-storico-anno');
+  const selPeriodo=document.getElementById('fil-storico-periodo');
+  if(!selAnno||!selPeriodo)return;
+  const prevAnno=selAnno.value, prevPeriodo=selPeriodo.value;
+
+  // Anni unici
+  const anni=new Set();
+  state.storico.forEach(r=>{
+    const fine=getStoricoDataFine(r)||'';
+    const inizio=r.dataInizio||'';
+    const a=fine?fine.slice(0,4):(inizio?inizio.slice(0,4):'');
+    if(a)anni.add(a);
+  });
+  selAnno.innerHTML='<option value="">Tutti gli anni</option>';
+  [...anni].sort((a,b)=>b-a).forEach(a=>{
+    const o=document.createElement('option');o.value=a;o.textContent=a;selAnno.appendChild(o);
+  });
+  if(prevAnno)selAnno.value=prevAnno;
+
+  // Periodi unici (deduplicati)
+  const periodi=[];
+  state.storico.forEach(r=>{
+    const fine=getStoricoDataFine(r)||'';
+    const inizio=r.dataInizio||'';
+    const key=(inizio||'')+'>'+fine;
+    if(fine&&!periodi.find(p=>p.key===key))periodi.push({key,inizio,fine});
+  });
+  selPeriodo.innerHTML='<option value="">Tutti i periodi</option>';
+  periodi.forEach(p=>{
+    const o=document.createElement('option');
+    o.value=p.key;
+    o.textContent=p.inizio?'🗓 '+fmtData(p.inizio)+' → '+fmtData(p.fine):'🗓 Al '+fmtData(p.fine);
+    selPeriodo.appendChild(o);
+  });
+  if(prevPeriodo)selPeriodo.value=prevPeriodo;
+}
+
+function resetFiltriStorico(){
+  const sa=document.getElementById('fil-storico-anno');
+  const sp=document.getElementById('fil-storico-periodo');
+  if(sa)sa.value='';if(sp)sp.value='';
+  renderStorico();
+}
+
+function eliminaResoconto(i){
+  if(!confirm('Eliminare questo resoconto?'))return;
+  const r=state.storico[i];
+  // Annulla i movimenti cassa automatici associati a questo resoconto
+  const label=r.periodoLabel||'';
+  const noteDeposito='Da resoconto: '+label;
+  const notePrelievo='Prelievo per resoconto: '+label;
+  state.movimentiCassa=state.movimentiCassa.filter(m=>{
+    if(m.auto&&m.tipo==='deposito'&&m.note===noteDeposito){state.saldoCassa-=m.importo;return false;}
+    if(m.auto&&m.tipo==='prelievo'&&m.note===notePrelievo){state.saldoCassa+=m.importo;return false;}
+    return true;
+  });
+  state.storico.splice(i,1);saveState();renderStorico();renderGestioneCassa();setDefaultDate();
+}
+
+// ── BACKUP & RIPRISTINO ────────────────────────────────────────
+function esportaDatiJSON(){
+  const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='incassi-dati-'+new Date().toISOString().slice(0,10)+'.json';
+  a.click();
+}
+
+// ── BACKUP AUTOMATICO (IndexedDB) ────────────────────────────
+(function(){
+  const DB='incassi_idb', STORE='backups', MAX=5;
+  function openDB(){
+    return new Promise((res,rej)=>{
+      const req=indexedDB.open(DB,1);
+      req.onupgradeneeded=e=>{const db=e.target.result;if(!db.objectStoreNames.contains(STORE))db.createObjectStore(STORE);};
+      req.onsuccess=e=>res(e.target.result);
+      req.onerror=()=>rej(req.error);
+    });
+  }
+  async function getAllBackups(){
+    const db=await openDB();
+    return new Promise((res,rej)=>{
+      const tx=db.transaction(STORE,'readonly');
+      const r=tx.objectStore(STORE).getAll();
+      const rk=tx.objectStore(STORE).getAllKeys();
+      let vals,keys;
+      r.onsuccess=()=>{vals=r.result;if(keys!==undefined)res(keys.map((k,i)=>({key:k,ts:vals[i].ts,data:vals[i].data})));};
+      rk.onsuccess=()=>{keys=rk.result;if(vals!==undefined)res(keys.map((k,i)=>({key:k,ts:vals[i].ts,data:vals[i].data})));};
+      tx.onerror=()=>rej(tx.error);
+    });
+  }
+  async function doBackup(){
+    try{
+      const db=await openDB();
+      const now=new Date();
+      const key='bk_'+now.toISOString().replace(/[:.]/g,'-');
+      await new Promise((res,rej)=>{const tx=db.transaction(STORE,'readwrite');tx.objectStore(STORE).put({ts:now.toISOString(),data:JSON.stringify(state)},key);tx.oncomplete=res;tx.onerror=()=>rej(tx.error);});
+      const allKeys=await new Promise((res,rej)=>{const tx=db.transaction(STORE,'readonly');const r=tx.objectStore(STORE).getAllKeys();r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error);});
+      allKeys.sort();
+      if(allKeys.length>MAX){
+        const toDelete=allKeys.slice(0,allKeys.length-MAX);
+        const tx=db.transaction(STORE,'readwrite');
+        toDelete.forEach(k=>tx.objectStore(STORE).delete(k));
+      }
+      const hms=now.toTimeString().slice(0,8);
+      const cnt=Math.min(allKeys.length,MAX);
+      const el=document.getElementById('export-status');
+      if(el)el.textContent='✅ Backup automatico attivo — ultimo: '+hms+' ('+cnt+' cop'+(cnt===1?'ia':'ie')+' conservate)';
+    }catch(e){console.warn('Backup IDB fallito:',e);}
+  }
+  function initAutoExport(){doBackup();setInterval(doBackup,3600000);}
+  window.initAutoExport=initAutoExport;
+  window.mostraListaBackup=async function(){
+    const el=document.getElementById('backup-list');
+    if(!el)return;
+    el.innerHTML='<span style="color:#888;font-size:13px">Caricamento…</span>';
+    try{
+      const list=await getAllBackups();
+      list.sort((a,b)=>b.key.localeCompare(a.key)); // più recente prima
+      if(!list.length){el.innerHTML='<span style="color:#888;font-size:13px">Nessuna copia disponibile ancora — attendi il primo ciclo (60s).</span>';return;}
+      const rows=list.map((b,i)=>{
+        const d=new Date(b.ts);
+        const label=d.toLocaleDateString('it-IT')+' alle '+d.toTimeString().slice(0,8);
+        const parsed=JSON.parse(b.data);
+        const info=(parsed.pagamenti||[]).length+' pagamenti, '+(parsed.immobili||[]).length+' immobili';
+        return `<tr>
+          <td style="padding:8px 10px;font-weight:600">${i===0?'🟢 Più recente':'🔵 Copia '+(i+1)}</td>
+          <td style="padding:8px 10px">${label}</td>
+          <td style="padding:8px 10px;color:#666;font-size:12px">${info}</td>
+          <td style="padding:8px 10px">
+            <button class="btn btn-sm btn-edit" onclick="ripristinaBackup('${b.key}')" title="Ripristina questo backup">↩️ Ripristina</button>
+            <button class="btn btn-sm btn-excel" onclick="scaricaBackup('${b.key}')" title="Scarica come JSON">⬇ JSON</button>
+          </td>
+        </tr>`;
+      }).join('');
+      el.innerHTML=`<table style="width:100%;border-collapse:collapse;font-size:13px">
+        <thead><tr style="background:#f0f0f0"><th style="padding:6px 10px;text-align:left">Copia</th><th style="padding:6px 10px;text-align:left">Data e ora</th><th style="padding:6px 10px;text-align:left">Contenuto</th><th style="padding:6px 10px;text-align:left">Azioni</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>`;
+    }catch(e){el.innerHTML='<span style="color:red;font-size:13px">Errore accesso backup: '+e.message+'</span>';}
+  };
+  window.ripristinaBackup=async function(key){
+    if(!confirm('Ripristinare i dati da questa copia?\n\nI dati attuali verranno sovrascritti. Considera di esportare prima un JSON di sicurezza.'))return;
+    try{
+      const list=await getAllBackups();
+      const b=list.find(x=>x.key===key);
+      if(!b){alert('Copia non trovata.');return;}
+      const imp=JSON.parse(b.data);
+      ['immobili','persone','pagamenti','storico'].forEach(k=>{if(!imp[k])imp[k]=[];});
+      if(!imp.movimentiCassa)imp.movimentiCassa=[];
+      if(typeof imp.saldoCassa!=='number')imp.saldoCassa=0;
+      state=imp;saveState();
+      renderImmobili();renderPersone();renderSelInquilino();
+      alert('✅ Ripristino completato!\n\n'+( imp.pagamenti.length)+' pagamenti, '+(imp.immobili.length)+' immobili caricati.');
+      mostraListaBackup();
+    }catch(e){alert('Errore durante il ripristino: '+e.message);}
+  };
+  window.scaricaBackup=async function(key){
+    const list=await getAllBackups();
+    const b=list.find(x=>x.key===key);
+    if(!b)return;
+    const d=new Date(b.ts);
+    const fname='backup-'+d.toISOString().slice(0,16).replace('T','_').replace(':','-')+'.json';
+    const blob=new Blob([b.data],{type:'application/json'});
+    const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=fname;a.click();
+  };
+})();
+
+function salvaFileSelfContained(input){}
+
+function importaDatiJSON(input){
+  const file=input.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=function(e){
+    try{
+      const imp=JSON.parse(e.target.result);
+      ['immobili','persone','pagamenti','storico'].forEach(k=>{if(!imp[k])imp[k]=[];});
+      if(!imp.movimentiCassa)imp.movimentiCassa=[];
+      if(typeof imp.saldoCassa!=='number')imp.saldoCassa=0;
+      state=imp;saveState();
+      renderImmobili();renderPersone();
+      alert('Dati importati correttamente! ('+state.pagamenti.length+' pagamenti, '+state.immobili.length+' immobili)');
+    }catch(err){alert('Errore: file JSON non valido.');}
+  };
+  reader.readAsText(file);
+  input.value='';
+}
+
+
+// ── GESTIONE CASSA ────────────────────────────────────────────
+function renderGestioneCassa(){
+  const saldo=state.saldoCassa||0;
+  const el=document.getElementById('gc-saldo');
+  if(el) el.textContent=fmt(saldo);
+  const box=document.getElementById('gc-saldo-box');
+  if(box) box.className='cassa-saldo-box'+(saldo<0?' negativo':'');
+  const wrap=document.getElementById('gc-movimenti-wrap');
+  if(!wrap)return;
+  if(!(state.movimentiCassa||[]).length){wrap.innerHTML='<div class="empty">Nessun movimento registrato.</div>';return;}
+  const filTipo=(document.getElementById('gc-fil-tipo')||{}).value||'';
+  const filDal=(document.getElementById('gc-fil-dal')||{}).value||'';
+  const filAl=(document.getElementById('gc-fil-al')||{}).value||'';
+  const filtered=[...state.movimentiCassa].map((m,idx)=>({m,idx})).reverse().filter(({m})=>{
+    if(filTipo&&m.tipo!==filTipo)return false;
+    const d=m.data?m.data.slice(0,10):'';
+    if(filDal&&d<filDal)return false;
+    if(filAl&&d>filAl)return false;
+    return true;
+  });
+  if(!filtered.length){wrap.innerHTML='<div class="empty">Nessun movimento trovato con i filtri selezionati.</div>';return;}
+  const rows=filtered.map(({m,idx})=>{
+    const isDeposito=m.tipo==='deposito';
+    const colore=isDeposito?'#178a5a':'#c0392b';
+    const icona=isDeposito?'📥 Deposito':'📤 Prelievo';
+    const segno=isDeposito?'+':'-';
+    const delBtn=m.auto
+      ?`<td style="text-align:center;white-space:nowrap"><span style="font-size:11px;color:var(--color-text-tertiary)">auto</span></td>`
+      :`<td style="text-align:center;white-space:nowrap"><div style="display:flex;gap:4px;justify-content:center;align-items:center"><button class="btn btn-sm btn-edit" onclick="apriModificaMovimentoCassa(${idx})" title="Modifica">✏️</button><button class="btn btn-sm btn-danger" onclick="rimuoviMovimentoCassa(${idx})">✕</button></div></td>`;
+    return `<tr>
+      <td>${new Date(m.data).toLocaleDateString('it-IT')}</td>
+      <td><span style="color:${colore};font-weight:700">${icona}</span></td>
+      <td style="text-align:right;color:${colore};font-weight:700">${segno}${fmt(m.importo)}</td>
+      <td style="font-size:12px">${m.note||'-'}</td>
+      ${delBtn}
+    </tr>`;
+  }).join('');
+  wrap.innerHTML=`<div class="table-wrap"><table>
+    <thead><tr><th>Data</th><th>Tipo</th><th style="text-align:right">Importo</th><th>Nota</th><th style="text-align:center;width:90px">Azioni</th></tr></thead>
+    <tbody>${rows}</tbody>
+  </table></div>`;
+}
+
+function resetFiltriCassa(){
+  const t=document.getElementById('gc-fil-tipo');if(t)t.value='';
+  const d=document.getElementById('gc-fil-dal');if(d)d.value='';
+  const a=document.getElementById('gc-fil-al');if(a)a.value='';
+  renderGestioneCassa();
+}
+
+function annullaMovimentoCassa(){
+  document.getElementById('gc-tipo').value='deposito';
+  document.getElementById('gc-importo').value='';
+  document.getElementById('gc-nota').value='';
+}
+
+let _modCassaIdx=null;
+function apriModificaMovimentoCassa(idx){
+  const m=state.movimentiCassa[idx];
+  if(!m)return;
+  _modCassaIdx=idx;
+  document.getElementById('mc-tipo').value=m.tipo;
+  document.getElementById('mc-importo').value=m.importo;
+  document.getElementById('mc-nota').value=m.note||'';
+  document.getElementById('mc-data').value=m.data?m.data.split('T')[0]:'';
+  document.getElementById('modal-mov-cassa').style.display='flex';
+}
+function chiudiModaleMovimentoCassa(){
+  document.getElementById('modal-mov-cassa').style.display='none';
+  _modCassaIdx=null;
+}
+function salvaModificaMovimentoCassa(){
+  if(_modCassaIdx===null)return;
+  const m=state.movimentiCassa[_modCassaIdx];
+  const nuovoTipo=document.getElementById('mc-tipo').value;
+  const nuovoImporto=parseFloat(document.getElementById('mc-importo').value);
+  if(!nuovoImporto||nuovoImporto<=0){alert('Inserisci un importo valido.');return;}
+  // aggiorna saldo: annulla vecchio
+  if(m.tipo==='deposito')state.saldoCassa-=m.importo; else state.saldoCassa+=m.importo;
+  // applica nuovo
+  if(nuovoTipo==='deposito')state.saldoCassa+=nuovoImporto; else state.saldoCassa-=nuovoImporto;
+  m.tipo=nuovoTipo;
+  m.importo=nuovoImporto;
+  m.note=document.getElementById('mc-nota').value.trim();
+  const dataVal=document.getElementById('mc-data').value;
+  if(dataVal) m.data=new Date(dataVal).toISOString();
+  saveState();
+  chiudiModaleMovimentoCassa();
+  renderGestioneCassa();
+}
+
+function aggiungiMovimentoCassa(){
+  const tipo=document.getElementById('gc-tipo').value;
+  const importo=parseFloat(document.getElementById('gc-importo').value);
+  const nota=(document.getElementById('gc-nota').value||'').trim();
+  if(!importo||importo<=0){alert('Inserisci un importo valido.');return;}
+  state.movimentiCassa.push({data:new Date().toISOString(),tipo,importo,note:nota,auto:false});
+  if(tipo==='deposito')state.saldoCassa+=importo;
+  else state.saldoCassa-=importo;
+  saveState();
+  document.getElementById('gc-importo').value='';
+  document.getElementById('gc-nota').value='';
+  renderGestioneCassa();
+}
+
+function rimuoviMovimentoCassa(i){
+  if(!confirm('Rimuovere questo movimento?'))return;
+  const m=state.movimentiCassa[i];
+  if(m.tipo==='deposito')state.saldoCassa-=m.importo;
+  else state.saldoCassa+=m.importo;
+  state.movimentiCassa.splice(i,1);
+  saveState();renderGestioneCassa();
+}
+
+// ── INIZIALIZZAZIONE ────────────────────────────────────────
+loadState();
+renderImmobili();
+renderPersone();
+renderSelInquilino();
+showPage('home');
+initAutoExport();
+initCloudSync();
+
+function renderReport(){
+  const dal=document.getElementById('rep-dal').value;
+  const al=document.getElementById('rep-al').value;
+  const wrap=document.getElementById('report-wrap');
+  const btnStampa=document.getElementById('btn-stampa-report');
+  if(!dal||!al){wrap.innerHTML='<div class="empty" style="padding:16px">Seleziona il periodo dal e al.</div>';btnStampa.style.display='none';return;}
+  if(dal>al){wrap.innerHTML='<div class="empty" style="padding:16px">Il mese di inizio deve essere precedente o uguale al mese di fine.</div>';btnStampa.style.display='none';return;}
+  // Genera lista mesi nel periodo
+  const mesi=[];
+  let [yy,mm]=dal.split('-').map(Number);
+  const [ye,me]=al.split('-').map(Number);
+  while(yy<ye||(yy===ye&&mm<=me)){
+    mesi.push(yy+'-'+String(mm).padStart(2,'0'));
+    mm++;if(mm>12){mm=1;yy++;}
+  }
+  // Inquilini attivi (unici, con nome)
+  const inquilini=[...new Map((state.immobili||[]).filter(i=>i.inquilino).map(i=>[i.inquilino,i])).values()];
+  if(!inquilini.length){wrap.innerHTML='<div class="empty" style="padding:16px">Nessun inquilino in anagrafica.</div>';btnStampa.style.display='none';return;}
+  // Costruisci indice: "YYYY-MM|inquilino" → conteggio pagamenti
+  const idx=new Map();
+  (state.pagamenti||[]).forEach(p=>{
+    (p.mesiRif||[]).forEach(k=>{
+      const key=k+'|'+p.inquilino;
+      idx.set(key,(idx.get(key)||0)+1);
+    });
+  });
+  // Render tabella
+  let html='<table><thead><tr><th class="col-mese">Mese / Inquilino</th>';
+  inquilini.forEach(i=>{html+=`<th title="${i.nome||''}">${i.inquilino}</th>`;});
+  html+='</tr></thead><tbody>';
+  mesi.forEach(mk=>{
+    const [y,m]=mk.split('-');
+    const label=MESI[parseInt(m)-1]+' '+y;
+    html+=`<tr><td class="col-mese">${label}</td>`;
+    inquilini.forEach(i=>{
+      const n=idx.get(mk+'|'+i.inquilino)||0;
+      if(n===0) html+='<td class="no">–</td>';
+      else if(n===1) html+='<td class="ok">✔</td>';
+      else html+=`<td class="dup" title="${n} pagamenti registrati">🔴</td>`;
+    });
+    html+='</tr>';
+  });
+  html+='</tbody></table>';
+  wrap.innerHTML=html;
+  btnStampa.style.display='inline-flex';
+}
+
+function stampaReport(){
+  const dal=document.getElementById('rep-dal').value;
+  const al=document.getElementById('rep-al').value;
+  const [yd,md]=dal.split('-');const [ya,ma]=al.split('-');
+  const titolo='Report Incassi — '+MESI[parseInt(md)-1]+' '+yd+' / '+MESI[parseInt(ma)-1]+' '+ya;
+  const tableHtml=document.getElementById('report-wrap').innerHTML;
+  const w=window.open('','_blank','width=1100,height=700');
+  w.document.write(`<!DOCTYPE html><html><head><meta charset="utf-8">
+  <title>${titolo}</title>
+  <style>
+    @page{size:A4 landscape;margin:1cm}
+    body{font-family:Arial,sans-serif;font-size:12px;margin:0;padding:12px}
+    h2{font-size:15px;margin:0 0 12px;color:#0e4a28}
+    table{border-collapse:collapse;width:100%}
+    th{background:#178a5a;color:#fff;padding:7px 9px;text-align:center;border:1px solid #0e6644;font-weight:600;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    th.col-mese{background:#0e6644;text-align:left;min-width:120px}
+    td{padding:6px 9px;text-align:center;border:1px solid #c8ddd0}
+    td.col-mese{text-align:left;font-weight:700;background:#fff9c4;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    td.ok{background:#d4edda;color:#155724;font-weight:700;font-size:14px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    td.dup{background:#fde8e8;font-size:15px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    td.no{color:#bbb}
+  </style></head><body>
+  <h2>📈 ${titolo}</h2>
+  ${tableHtml}
+  <script>window.onload=function(){window.print();}<\/script>
+  </body></html>`);
+  w.document.close();
+}
+
+function initReport(){
+  const oggi=new Date();
+  // Ultimi 12 mesi: dal mese corrente -11 al mese corrente
+  const fine=new Date(oggi.getFullYear(),oggi.getMonth(),1);
+  const inizio=new Date(fine);
+  inizio.setMonth(inizio.getMonth()-11);
+  const fmt=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');
+  document.getElementById('rep-dal').value=fmt(inizio);
+  document.getElementById('rep-al').value=fmt(fine);
+}
+
+</script>
+
+<!-- ══ MODALE MODIFICA IMMOBILE ══ -->
+<div id="modal-imm" class="modal-overlay" style="display: none;" onclick="if(event.target===this)chiudiModaleImmobile()">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3>🏠 Modifica immobile</h3>
+      <button class="modal-close" onclick="chiudiModaleImmobile()">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="modal-imm-idx" value="6">
+      <div style="margin-bottom:10px">
+        <label>Nome immobile</label>
+        <input type="text" id="modal-imm-nome" placeholder="es. PORTA CAPUANA - NAPOLI" style="width:100%" onkeydown="if(event.key==='Enter')salvaModificaImmobile()">
+      </div>
+      <div style="margin-bottom:10px">
+        <label>Inquilino</label>
+        <input type="text" id="modal-imm-inquilino" placeholder="es. ROSSI" style="width:100%" onkeydown="if(event.key==='Enter')salvaModificaImmobile()">
+      </div>
+      <div>
+        <label>Fitto mensile (€)</label>
+        <input type="number" id="modal-imm-quota" placeholder="0,00" min="0" step="0.01" style="width:100%" onkeydown="if(event.key==='Enter')salvaModificaImmobile()">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" onclick="chiudiModaleImmobile()">Annulla</button>
+      <button class="btn btn-edit" onclick="salvaModificaImmobile()">💾 Salva</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MODALE MODIFICA EREDE ══ -->
+<div id="modal-pers" class="modal-overlay" style="display:none" onclick="if(event.target===this)chiudiModalePersona()">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3>👤 Modifica erede</h3>
+      <button class="modal-close" onclick="chiudiModalePersona()">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="modal-pers-idx">
+      <div>
+        <label>Nominativo</label>
+        <input type="text" id="modal-pers-nome" placeholder="Nome e Cognome" style="width:100%" onkeydown="if(event.key==='Enter')salvaModificaPersona()">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" onclick="chiudiModalePersona()">Annulla</button>
+      <button class="btn btn-edit" onclick="salvaModificaPersona()">💾 Salva</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MODALE MODIFICA PAGAMENTO ══ -->
+<div id="modal-modifica-pag" class="modal-overlay" style="display: none;" onclick="if(event.target===this)chiudiModalePagamento()">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3 id="modal-mod-titolo">✏️ Modifica pagamento</h3>
+      <button class="modal-close" onclick="chiudiModalePagamento()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div id="modal-mod-warning" class="modal-warning" style="display:none">
+        ⚠️ <span>Questo pagamento appartiene a un <strong>periodo chiuso</strong>. Puoi modificare solo <strong>mesi di riferimento</strong> e <strong>note</strong> senza alterare i dati contabili.</span>
+      </div>
+      <div id="modal-mod-campi-base" style="display: block;">
+        <div class="grid2" style="margin-bottom:10px">
+          <div>
+            <label>Inquilino</label>
+            <input type="text" id="modal-mod-inquilino" readonly style="width:100%;background:#e8eaed;cursor:not-allowed;opacity:.85">
+          </div>
+          <div>
+            <label>Data pagamento</label>
+            <input type="date" id="modal-mod-data" style="width:100%">
+          </div>
+        </div>
+        <div style="margin-bottom:10px">
+          <label>Importo (€)</label>
+          <input type="number" id="modal-mod-importo" placeholder="0,00" min="0" step="0.01" style="width:100%">
+        </div>
+      </div>
+      <div style="margin-bottom:10px">
+        <label>Mesi di riferimento</label>
+        <div class="mese-picker">
+          <div class="mese-picker-nav">
+            <button type="button" class="btn btn-sm" onclick="modalPickerAnno(-1)">←</button>
+            <span id="modal-picker-anno" style="font-size:14px;font-weight:700">2026</span>
+            <button type="button" class="btn btn-sm" onclick="modalPickerAnno(+1)">→</button>
+          </div>
+          <div id="modal-picker-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:4px"></div>
+        </div>
+        <div class="mesi-sel-box" id="modal-mesi-sel-box" style="margin-top:8px">
+          <div class="mesi-sel-header">📅 Mesi selezionati</div>
+          <div class="mesi-sel-wrap" id="modal-mesi-tags"></div>
+        </div>
+      </div>
+      <div>
+        <label>Note</label>
+        <input type="text" id="modal-mod-note" placeholder="Note opzionali" style="width:100%">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" onclick="chiudiModalePagamento()">Annulla</button>
+      <button class="btn btn-edit" onclick="salvaModificaPagamento()">💾 Salva</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── Modale modifica pagamento ────────────────────────────
+let _modaleId=null;
+let _modaleMesiSel=[];
+let _modaleAnno=new Date().getFullYear();
+
+function apriModificaPagamento(id){
+  const p=state.pagamenti.find(x=>x.id===id);
+  if(!p)return;
+  _modaleId=id;
+  const chiuso=isPagamentoInPeriodoChiuso(id);
+  _modaleMesiSel=p.mesiRif?[...p.mesiRif]:[];
+  _modaleAnno=_modaleMesiSel.length?parseInt(_modaleMesiSel[_modaleMesiSel.length-1].split('-')[0]):new Date().getFullYear();
+
+  // Warning e visibilità campi
+  document.getElementById('modal-mod-warning').style.display=chiuso?'flex':'none';
+  document.getElementById('modal-mod-campi-base').style.display=chiuso?'none':'block';
+  document.getElementById('modal-mod-titolo').textContent=chiuso?'✏️ Modifica mesi e nota':'✏️ Modifica pagamento';
+
+  // Popola inquilino (sola lettura)
+  document.getElementById('modal-mod-inquilino').value=p.inquilino||'';
+
+  document.getElementById('modal-mod-data').value=p.data||'';
+  document.getElementById('modal-mod-importo').value=p.importo||'';
+  document.getElementById('modal-mod-note').value=p.note||'';
+
+  renderModalePicker();
+  document.getElementById('modal-modifica-pag').style.display='flex';
+}
+
+function chiudiModalePagamento(){
+  document.getElementById('modal-modifica-pag').style.display='none';
+  _modaleId=null;
+}
+
+function modalPickerAnno(d){_modaleAnno+=d;renderModalePicker();}
+
+function renderModalePicker(){
+  const el=document.getElementById('modal-picker-anno');
+  if(el)el.textContent=_modaleAnno;
+  const grid=document.getElementById('modal-picker-grid');
+  if(!grid)return;
+  grid.innerHTML='';
+  for(let m=0;m<12;m++){
+    const k=mKey(_modaleAnno,m);
+    const btn=document.createElement('button');
+    btn.type='button';
+    btn.className='mese-btn'+(_modaleMesiSel.includes(k)?' sel':'');
+    btn.textContent=MESI3[m];
+    btn.onclick=()=>{
+      if(_modaleMesiSel.includes(k))_modaleMesiSel=_modaleMesiSel.filter(x=>x!==k);
+      else _modaleMesiSel.push(k);
+      _modaleMesiSel.sort();
+      renderModalePicker();
+    };
+    grid.appendChild(btn);
+  }
+  // Tags mesi selezionati
+  const tags=document.getElementById('modal-mesi-tags');
+  const box=document.getElementById('modal-mesi-sel-box');
+  if(tags){
+    if(_modaleMesiSel.length){
+      if(box)box.classList.add('has-items');
+      tags.innerHTML=_modaleMesiSel.map(m=>{const[y,mo]=m.split('-');return`<span class="mesi-tag">${MESI3[parseInt(mo)-1]} ${y}</span>`;}).join('');
+    } else {
+      if(box)box.classList.remove('has-items');
+      tags.innerHTML='<span style="color:var(--color-text-tertiary);font-size:12px">Nessuno — clicca sul calendario</span>';
+    }
+  }
+}
+
+function onModalInquilinoChange(){}  // placeholder, nessuna side-effect necessaria
+
+function salvaModificaPagamento(){
+  if(_modaleId===null)return;
+  const p=state.pagamenti.find(x=>x.id===_modaleId);
+  if(!p)return;
+  const chiuso=isPagamentoInPeriodoChiuso(_modaleId);
+
+  if(chiuso){
+    // Periodi chiusi: solo mesi e note modificabili
+    p.mesiRif=[..._modaleMesiSel];
+    p.note=document.getElementById('modal-mod-note').value.trim();
+    // Propaga le modifiche anche allo storico (ogni resoconto che contiene questo pagamento)
+    state.storico.forEach(s=>{
+      const sp=s.pags&&s.pags.find(x=>x.id===_modaleId);
+      if(sp){sp.mesiRif=[..._modaleMesiSel];sp.note=p.note;}
+    });
+  } else {
+    const inq=document.getElementById('modal-mod-inquilino').value;
+    const data=document.getElementById('modal-mod-data').value;
+    const importo=parseFloat(document.getElementById('modal-mod-importo').value);
+    const note=document.getElementById('modal-mod-note').value.trim();
+    if(!inq||!data||!importo){alert('Compila inquilino, data e importo.');return;}
+    const imm=state.immobili.find(m=>m.inquilino===inq);
+    p.inquilino=inq;
+    p.immobile=imm?imm.nome:'';
+    p.data=data;
+    p.importo=importo;
+    p.mesiRif=[..._modaleMesiSel];
+    p.note=note;
+  }
+  saveState();
+  chiudiModalePagamento();
+  renderPagamenti();
+}
+
+/* ═══════════ SPESE ═══════════ */
+function initDataSpesa(){
+  const e=document.getElementById('sp-data');
+  if(e&&!e.value)e.value=new Date().toISOString().split('T')[0];
+}
+
+function registraSpesa(){
+  const data=document.getElementById('sp-data').value;
+  const importo=parseFloat(document.getElementById('sp-importo').value)||0;
+  const note=(document.getElementById('sp-note').value||'').trim();
+  if(!data){alert('Inserisci la data spesa.');return;}
+  if(!importo||importo<=0){alert('Inserisci un importo valido.');return;}
+  state.spese.push({id:Date.now(),data,importo,note});
+  saveState();
+  annullaSpesa();
+  renderSpese();
+  aggiornaSpeseResoconto();
+}
+
+function annullaSpesa(){
+  document.getElementById('sp-data').value=new Date().toISOString().split('T')[0];
+  document.getElementById('sp-importo').value='';
+  document.getElementById('sp-note').value='';
+}
+
+function renderSpese(){
+  const filVal=(document.getElementById('fil-resoconto-spese')||{}).value||'';
+  let fInizio='',fFine='';
+  if(filVal){
+    if(filVal.includes('>')){const p=filVal.split('>');fInizio=p[0]||'';fFine=p[1]||'';}
+    else if(filVal.endsWith('|')){fInizio=filVal.slice(0,-1);fFine='';}
+    else{fInizio=filVal;fFine='';}
+  }
+  const spese=(state.spese||[])
+    .filter(s=>!filVal||((!fInizio||s.data>=fInizio)&&(!fFine||s.data<=fFine)))
+    .sort((a,b)=>b.data.localeCompare(a.data));
+  const tbody=document.getElementById('tbl-spese');if(!tbody)return;
+  if(!spese.length){tbody.innerHTML='<tr><td colspan="4" class="empty">Nessuna spesa registrata.</td></tr>';const t=document.getElementById('tot-spese');if(t)t.textContent=fmt(0);return;}
+  tbody.innerHTML=spese.map(s=>{
+    const chiuso=isSpesaInPeriodoChiuso(s.data);
+    const azioni=chiuso
+      ? `<span title="Periodo chiuso" style="font-size:11px;color:#888;white-space:nowrap">🔒 chiuso</span>`
+      : `<div style="display:flex;gap:4px;justify-content:center;align-items:center"><button class="btn btn-sm btn-edit" onclick="apriModificaSpesa(${s.id})" title="Modifica">✏️</button><button class="btn btn-sm btn-danger" onclick="rimuoviSpesa(${s.id})" title="Elimina">✕</button></div>`;
+    return `<tr>
+    <td style="white-space:nowrap">${fmtData(s.data)}</td>
+    <td style="text-align:right;font-weight:600;color:#c0392b">${fmt(s.importo)}</td>
+    <td>${s.note||'-'}</td>
+    <td style="text-align:center;white-space:nowrap">${azioni}</td>
+  </tr>`;
+  }).join('');
+  const t=document.getElementById('tot-spese');if(t)t.textContent=fmt(spese.reduce((s,x)=>s+x.importo,0));
+}
+
+function resetFiltriSpese(){
+  const sel=document.getElementById('fil-resoconto-spese');if(sel)sel.value='';
+  renderSpese();
+}
+
+function rimuoviSpesa(id){
+  const s=(state.spese||[]).find(x=>x.id===id);
+  if(s&&isSpesaInPeriodoChiuso(s.data)){alert('Impossibile eliminare: la spesa appartiene a un periodo chiuso.');return;}
+  if(!confirm('Eliminare questa spesa?'))return;
+  state.spese=(state.spese||[]).filter(s=>s.id!==id);
+  saveState();renderSpese();aggiornaSpeseResoconto();
+}
+
+function apriModificaSpesa(id){
+  const s=(state.spese||[]).find(x=>x.id===id);if(!s)return;
+  if(isSpesaInPeriodoChiuso(s.data)){alert('Impossibile modificare: la spesa appartiene a un periodo chiuso.');return;}
+  document.getElementById('ms-id').value=id;
+  document.getElementById('ms-data').value=s.data||'';
+  document.getElementById('ms-importo').value=s.importo||'';
+  document.getElementById('ms-note').value=s.note||'';
+  document.getElementById('modal-spesa').style.display='flex';
+  document.getElementById('ms-data').focus();
+}
+
+function chiudiModaleSpesa(){document.getElementById('modal-spesa').style.display='none';}
+
+function salvaModificaSpesa(){
+  const id=parseInt(document.getElementById('ms-id').value);
+  const data=document.getElementById('ms-data').value;
+  const importo=parseFloat(document.getElementById('ms-importo').value)||0;
+  const note=(document.getElementById('ms-note').value||'').trim();
+  if(!data){alert('Inserisci la data.');return;}
+  if(!importo||importo<=0){alert('Inserisci un importo valido.');return;}
+  const s=(state.spese||[]).find(x=>x.id===id);if(!s)return;
+  s.data=data;s.importo=importo;s.note=note;
+  saveState();chiudiModaleSpesa();renderSpese();aggiornaSpeseResoconto();
+}
+
+function renderFilResocontoSpese(){
+  const sel=document.getElementById('fil-resoconto-spese');if(!sel)return;
+  sel.innerHTML='';
+  function addOpt(parent,val,label){const o=document.createElement('option');o.value=val;o.textContent=label;parent.appendChild(o);}
+  addOpt(sel,'','🔍 Tutti i periodi');
+  if(!state.storico||!state.storico.length)return;
+  const voci=[];
+  state.storico.forEach(r=>{
+    const fine=getStoricoDataFine(r);const inizio=getStoricoDataInizio(r);if(!fine)return;
+    const key=(inizio||'')+'>'+fine;
+    if(!voci.find(v=>v.key===key))voci.push({key,inizio,fine});
+  });
+  if(voci.length){
+    const grp=document.createElement('optgroup');grp.label='── Periodi chiusi ──────────────';
+    voci.forEach(v=>{addOpt(grp,v.key,v.inizio?'🗓  '+fmtData(v.inizio)+'  →  '+fmtData(v.fine):'🗓  Al '+fmtData(v.fine));});
+    sel.appendChild(grp);
+  }
+  const ultimaFine=getStoricoDataFine(state.storico[0]);
+  if(ultimaFine){
+    const d=new Date(ultimaFine);d.setDate(d.getDate()+1);
+    const dalGiorno=d.toISOString().split('T')[0];
+    const grp=document.createElement('optgroup');grp.label='── Periodo corrente ────────────';
+    addOpt(grp,dalGiorno+'|','▶  Dal '+fmtData(dalGiorno));
+    sel.appendChild(grp);
+    sel.value=dalGiorno+'|';
+  }
+}
+
+function aggiornaSpeseResoconto(){
+  const inizio=document.getElementById('res-inizio')?.value;
+  const fine=document.getElementById('res-fine')?.value;
+  if(!inizio)return;
+  const speseFiltered=(state.spese||[]).filter(s=>s.data>=inizio&&(!fine||s.data<=fine)).sort((a,b)=>a.data.localeCompare(b.data));
+  const totale=speseFiltered.reduce((s,x)=>s+x.importo,0);
+  const eSpese=document.getElementById('res-spese');
+  if(eSpese)eSpese.value=totale>0?totale.toFixed(2):'';
+  const eNota=document.getElementById('res-nota-spese');
+  if(eNota)eNota.value=speseFiltered.filter(s=>s.note).map(s=>`${fmtData(s.data)}: ${s.note} (${fmt(s.importo)})`).join('\n');
+  // Aggiorna hint saldo cassa
+  const hint=document.getElementById('res-prelievo-hint');
+  if(hint)hint.textContent='(saldo disponibile: '+fmt(state.saldoCassa||0)+')';
+}
+
+function anteprimaCalcolo(){
+  const inizio=document.getElementById('res-inizio').value;
+  const fine=document.getElementById('res-fine').value;
+  if(!inizio||!fine){alert('Inserisci le date di inizio e fine.');return;}
+  if(fine<inizio){alert('La data fine deve essere successiva alla data inizio.');return;}
+  const cassa=parseFloat(document.getElementById('res-cassa').value)||0;
+  const prelievo=parseFloat(document.getElementById('res-prelievo-cassa').value)||0;
+  const speseDelPeriodo=(state.spese||[]).filter(s=>s.data>=inizio&&s.data<=fine).sort((a,b)=>a.data.localeCompare(b.data));
+  const spese=speseDelPeriodo.reduce((t,s)=>t+s.importo,0);
+  const notaSpese=speseDelPeriodo.filter(s=>s.note).map(s=>`${fmtData(s.data)}: ${s.note} (${fmt(s.importo)})`).join('\n');
+  const pags=state.pagamenti.filter(p=>p.data>=inizio&&p.data<=fine);
+  const tot=pags.reduce((s,p)=>s+p.importo,0);
+  const netto=Math.max(0,tot-spese-cassa+prelievo);
+  const nPers=state.persone.length||1;
+  const quota=netto/nPers;
+
+  const persHtml=(state.persone||[]).map(p=>`
+    <tr>
+      <td>${p.nome||'?'}</td>
+      <td style="text-align:right;font-weight:700;color:#178a5a">${fmt(quota)}</td>
+    </tr>`).join('');
+
+  const notaHtml=notaSpese
+    ?notaSpese.split('\n').map(r=>`<li style="font-size:12px;color:var(--color-text-secondary)">${r}</li>`).join('')
+    :'<li style="color:var(--color-text-tertiary);font-size:12px">Nessuna spesa nel periodo</li>';
+
+  document.getElementById('anteprima-body').innerHTML=`
+    <div style="background:#fff8e1;border:1.5px solid #fcd34d;border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:12px;color:#92400e;display:flex;gap:8px;align-items:flex-start">
+      <span style="font-size:16px">⚠️</span>
+      <span>Questa è solo un'<strong>anteprima</strong>. Nessun dato verrà salvato nello storico né la cassa verrà modificata.</span>
+    </div>
+    <table style="width:100%;border-collapse:collapse;margin-bottom:14px">
+      <tr><td style="padding:5px 0;color:var(--color-text-secondary);width:55%">📅 Periodo</td>
+          <td style="font-weight:700">${fmtData(inizio)} → ${fmtData(fine)}</td></tr>
+      <tr><td style="padding:5px 0;color:var(--color-text-secondary)">💶 Totale incassato</td>
+          <td style="font-weight:700;color:#178a5a">${fmt(tot)}</td></tr>
+      <tr><td style="padding:5px 0;color:var(--color-text-secondary)">📉 Spese nel periodo</td>
+          <td style="font-weight:700;color:#c0392b">${fmt(spese)}</td></tr>
+      ${cassa>0?`<tr><td style="padding:5px 0;color:var(--color-text-secondary)">🏦 Depositato in cassa</td>
+          <td style="font-weight:700">${fmt(cassa)}</td></tr>`:''}
+      ${prelievo>0?`<tr><td style="padding:5px 0;color:var(--color-text-secondary)">📤 Prelevato dalla cassa</td>
+          <td style="font-weight:700;color:#1a6b3a">${fmt(prelievo)}</td></tr>`:''}
+      <tr style="border-top:2px solid var(--color-border-tertiary)">
+          <td style="padding:8px 0 5px;color:var(--color-text-primary);font-weight:700">✅ Netto da dividere</td>
+          <td style="font-weight:800;color:#178a5a;font-size:16px">${fmt(netto)}</td></tr>
+    </table>
+    <div style="font-weight:700;margin-bottom:6px">👥 Divisione (${nPers} ${nPers===1?'persona':'persone'})</div>
+    <table style="width:100%;border-collapse:collapse;margin-bottom:14px">
+      <thead><tr style="background:var(--color-background-secondary)">
+        <th style="padding:5px 8px;text-align:left;font-size:12px">Persona</th>
+        <th style="padding:5px 8px;text-align:right;font-size:12px">Quota</th>
+      </tr></thead>
+      <tbody>${persHtml}</tbody>
+    </table>
+    <div style="font-weight:700;margin-bottom:4px">🧾 Dettaglio spese</div>
+    <ul style="margin:0;padding-left:18px">${notaHtml}</ul>`;
+
+  document.getElementById('modal-anteprima').style.display='flex';
+}
+
+function chiudiModaleAnteprima(){
+  document.getElementById('modal-anteprima').style.display='none';
+}
+
+function validaPrelievoResoconto(inp){
+  const saldo=state.saldoCassa||0;
+  const val=parseFloat(inp.value)||0;
+  if(val>saldo){
+    inp.value=saldo.toFixed(2);
+    inp.style.borderColor='#e74c3c';
+    setTimeout(()=>inp.style.borderColor='',1500);
+  }
+}
+</script>
+
+<!-- ══ MODALE MODIFICA MOVIMENTO CASSA ══ -->
+<div id="modal-mov-cassa" class="modal-overlay" style="display:none;" onclick="if(event.target===this)chiudiModaleMovimentoCassa()">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3>✏️ Modifica movimento cassa</h3>
+      <button class="modal-close" onclick="chiudiModaleMovimentoCassa()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="grid2" style="margin-bottom:10px">
+        <div>
+          <label>Tipo movimento</label>
+          <select id="mc-tipo" style="width:100%">
+            <option value="deposito">📥 Deposito</option>
+            <option value="prelievo">📤 Prelievo</option>
+          </select>
+        </div>
+        <div>
+          <label>Data</label>
+          <input type="date" id="mc-data" style="width:100%">
+        </div>
+      </div>
+      <div style="margin-bottom:10px">
+        <label>Importo (€)</label>
+        <input type="number" id="mc-importo" placeholder="0,00" min="0" step="0.01" style="width:100%">
+      </div>
+      <div>
+        <label>Nota</label>
+        <input type="text" id="mc-nota" placeholder="Note opzionali" style="width:100%">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" onclick="chiudiModaleMovimentoCassa()">Annulla</button>
+      <button class="btn btn-edit" onclick="salvaModificaMovimentoCassa()">💾 Salva</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MODALE ANTEPRIMA CALCOLO ══ -->
+<!-- ══ MODALE CONFERMA CALCOLA E CHIUDI ══ -->
+<div id="modal-conferma-calcola" class="modal-overlay" style="display:none;" onclick="if(event.target===this)chiudiModaleConfermaCalcola()">
+  <div class="modal-box" style="max-width:540px">
+    <div class="modal-header" style="background:linear-gradient(135deg,#7a3500,#e67e22)">
+      <h3>⚠️ Conferma chiusura periodo</h3>
+      <button class="modal-close" onclick="chiudiModaleConfermaCalcola()">✕</button>
+    </div>
+    <div class="modal-body" style="font-size:14px">
+      <div style="background:#fff8e1;border:1.5px solid #f9a825;border-radius:10px;padding:12px 14px;margin-bottom:16px;display:flex;gap:10px;align-items:flex-start">
+        <span style="font-size:22px;line-height:1">⚠️</span>
+        <div style="color:#7a5c00;font-size:13px;line-height:1.5">
+          Stai per <strong>chiudere definitivamente</strong> il periodo indicato.<br>
+          Questa operazione <strong>non può essere annullata</strong> e aggiornerà lo storico.
+        </div>
+      </div>
+      <table style="width:100%;border-collapse:collapse;font-size:13px;margin-bottom:0">
+        <tr>
+          <td style="padding:7px 10px;font-weight:700;color:#1e4f78;background:#dceef9;border:1px solid #b0c4d8;width:48%">📅 Periodo</td>
+          <td id="conf-periodo" style="padding:7px 10px;background:#f4f5f6;border:1px solid #b0c4d8;font-weight:600"></td>
+        </tr>
+        <tr>
+          <td style="padding:7px 10px;font-weight:700;color:#1e4f78;background:#dceef9;border:1px solid #b0c4d8">💶 Totale incassato</td>
+          <td id="conf-tot" style="padding:7px 10px;background:#f4f5f6;border:1px solid #b0c4d8;font-weight:600;color:#178a5a"></td>
+        </tr>
+        <tr>
+          <td style="padding:7px 10px;font-weight:700;color:#1e4f78;background:#dceef9;border:1px solid #b0c4d8">🧾 Spese sostenute</td>
+          <td id="conf-spese" style="padding:7px 10px;background:#f4f5f6;border:1px solid #b0c4d8;font-weight:600;color:#c0392b"></td>
+        </tr>
+        <tr id="conf-row-cassa">
+          <td style="padding:7px 10px;font-weight:700;color:#1e4f78;background:#dceef9;border:1px solid #b0c4d8">💰 Quota da lasciare in cassa</td>
+          <td id="conf-cassa" style="padding:7px 10px;background:#f4f5f6;border:1px solid #b0c4d8;font-weight:600"></td>
+        </tr>
+        <tr id="conf-row-prelievo">
+          <td style="padding:7px 10px;font-weight:700;color:#1e4f78;background:#dceef9;border:1px solid #b0c4d8">🏦 Prelievo dalla cassa</td>
+          <td id="conf-prelievo" style="padding:7px 10px;background:#f4f5f6;border:1px solid #b0c4d8;font-weight:600"></td>
+        </tr>
+        <tr style="border-top:2px solid #2a6496">
+          <td style="padding:9px 10px;font-weight:700;color:#fff;background:#178a5a;border:1px solid #0f6e48;font-size:14px">✅ Netto da ripartire</td>
+          <td id="conf-netto" style="padding:9px 10px;background:#e6f4ed;border:1px solid #0f6e48;font-weight:800;font-size:15px;color:#0f6e48"></td>
+        </tr>
+        <tr>
+          <td style="padding:7px 10px;font-weight:700;color:#1e4f78;background:#dceef9;border:1px solid #b0c4d8">👥 Quota per persona (<span id="conf-npersone"></span>)</td>
+          <td id="conf-quota" style="padding:7px 10px;background:#f4f5f6;border:1px solid #b0c4d8;font-weight:700;color:#2a6496"></td>
+        </tr>
+      </table>
+    </div>
+    <div class="modal-footer" style="background:#fdf6ec;border-top:1px solid #f0d9b5">
+      <button class="btn btn-secondary" onclick="chiudiModaleConfermaCalcola()">✕ Annulla</button>
+      <button class="btn btn-primary" onclick="_eseguiCalcolaResoconto()" style="background:linear-gradient(135deg,#7a3500,#e67e22);border-color:#7a3500">🔒 Conferma e chiudi periodo</button>
+    </div>
+  </div>
+</div>
+
+<div id="modal-anteprima" class="modal-overlay" style="display:none;" onclick="if(event.target===this)chiudiModaleAnteprima()">
+  <div class="modal-box" style="max-width:620px">
+    <div class="modal-header" style="background:linear-gradient(135deg,#1a4a6b,#2a6496)">
+      <h3>🔍 Anteprima Calcolo — nessuna modifica allo storico</h3>
+      <button class="modal-close" onclick="chiudiModaleAnteprima()">✕</button>
+    </div>
+    <div class="modal-body" id="anteprima-body" style="font-size:14px">
+    </div>
+    <div class="modal-footer">
+      <button class="btn" onclick="chiudiModaleAnteprima()">✕ Chiudi</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MODALE MODIFICA SPESA ══ -->
+<div id="modal-spesa" class="modal-overlay" style="display:none;" onclick="if(event.target===this)chiudiModaleSpesa()">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3>✏️ Modifica spesa</h3>
+      <button class="modal-close" onclick="chiudiModaleSpesa()">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="ms-id">
+      <div class="grid2" style="margin-bottom:10px">
+        <div>
+          <label>Data spesa</label>
+          <input type="date" id="ms-data" style="width:100%">
+        </div>
+        <div>
+          <label>Importo (€)</label>
+          <input type="number" id="ms-importo" placeholder="0,00" min="0" step="0.01" style="width:100%">
+        </div>
+      </div>
+      <div>
+        <label>Note</label>
+        <input type="text" id="ms-note" placeholder="Descrizione spesa" style="width:100%" onkeydown="if(event.key==='Enter')salvaModificaSpesa()">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" onclick="chiudiModaleSpesa()">Annulla</button>
+      <button class="btn btn-edit" onclick="salvaModificaSpesa()">💾 Salva</button>
+    </div>
+  </div>
+</div>
+</body></html>
