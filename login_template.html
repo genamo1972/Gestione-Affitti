@@ -187,11 +187,11 @@
 </head>
 <body class="staticrypt-body">
 
-    <div id="staticrypt_loading" class="staticrypt-spinner-container">
+    <div id="staticrypt_loading" class="staticrypt-spinner-container hidden">
         <div class="staticrypt-spinner"></div>
     </div>
 
-    <div id="staticrypt_content" class="staticrypt-content hidden">
+    <div id="staticrypt_content" class="staticrypt-content">
         <div class="staticrypt-form">
 
             <div class="login-logo">
@@ -248,6 +248,12 @@
         const staticrypt = staticryptInitiator.init(staticryptConfig, templateConfig);
 
         window.onload = async function(){
+            // Show spinner only if there is a saved passphrase to auto-decrypt
+            const hasSaved = !!localStorage.getItem("staticrypt_passphrase");
+            if(hasSaved){
+                document.getElementById("staticrypt_loading").classList.remove("hidden");
+                document.getElementById("staticrypt_content").classList.add("hidden");
+            }
             try {
                 const { isSuccessful } = await staticrypt.handleDecryptOnLoad();
                 if(!isSuccessful){
