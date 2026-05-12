@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html><head><meta charset="utf-8"><style>
+<html><head><meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏠</text></svg>"><style>
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{background:#b8bcc4;min-height:100%}
 .section{background:var(--color-background-primary);border:none;border-radius:var(--border-radius-lg);padding:1.25rem;margin-bottom:1rem}
