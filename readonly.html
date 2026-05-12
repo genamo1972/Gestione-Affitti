@@ -654,6 +654,7 @@ input[type=text]:focus,input[type=number]:focus,input[type=date]:focus{
       <div class="cassa-saldo-label">Saldo Cassa Attuale</div>
       <div class="cassa-saldo-value" id="gc-saldo">€ 214,04</div>
     </div>
+    <div id="_ro-cassa-form">
     <div class="grid3" style="margin-bottom:10px">
       <div>
         <label>Tipo movimento</label>
@@ -674,6 +675,7 @@ input[type=text]:focus,input[type=number]:focus,input[type=date]:focus{
     <div style="display:flex;justify-content:center;gap:12px;margin-top:4px">
       <button class="btn btn-secondary" onclick="annullaMovimentoCassa()">✕ Annulla</button>
       <button class="btn btn-primary" onclick="aggiungiMovimentoCassa()">💰 Registra movimento</button>
+    </div>
     </div>
     <div class="section-title" style="margin-top:1.2rem">📋 Lista Movimenti Cassa</div>
     <div style="margin-bottom:12px;display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap">
@@ -2235,6 +2237,17 @@ function initReport(){
    'salvaModificaPagamento','apriModificaSpesa'].forEach(fn => { _writeFns.push(fn); });
   _writeFns.forEach(fn => { window[fn] = _deny; });
 
+  // ── Nascondi form registrazione cassa e override renderGestioneCassa ──
+  const cassaForm = document.getElementById('_ro-cassa-form');
+  if(cassaForm) cassaForm.style.display = 'none';
+
+  const _origRGC = window.renderGestioneCassa;
+  window.renderGestioneCassa = function(){
+    _origRGC && _origRGC();
+    const wrap = document.getElementById('gc-movimenti-wrap');
+    if(wrap) wrap.querySelectorAll('th:last-child, td:last-child').forEach(el => el.style.display = 'none');
+  };
+
   // ── Funzione anteprima resoconto (solo lettura, nessun salvataggio) ──
   window._roAnteprimaResoconto = function(){
     const inizio = document.getElementById('_ro-res-inizio').value;
@@ -2328,7 +2341,6 @@ function initReport(){
       '✏️ Registra pagamento',
       '➕ Registra spesa',
       'Creazione Resoconto per Periodo',
-      '💰 Gestione Cassa',  // form registrazione (solo la prima sezione)
     ];
     document.querySelectorAll('.section-title').forEach(function(title){
       hideTitles.forEach(function(t){
