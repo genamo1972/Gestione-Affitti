@@ -1,0 +1,54 @@
+name: 🔄 Backup Automatico JSON
+
+on:
+  schedule:
+    - cron: '0 2 * * *'   # Ogni giorno alle 02:00 UTC (03:00 ora italiana)
+  workflow_dispatch:        # Avvio manuale dalla UI GitHub
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Scarica dati dal Gist
+        run: |
+          RESPONSE=$(curl -s \
+            -H "Authorization: token ${{ secrets.GIST_TOKEN }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            "https://api.github.com/gists/${{ secrets.GIST_ID }}")
+
+          CONTENT=$(echo "$RESPONSE" | python3 -c "
+          import json, sys
+          data = json.load(sys.stdin)
+          f = data.get('files', {}).get('incassi-affitti-data.json')
+          print(f['content'] if f else '')
+          " 2>/dev/null)
+
+          if [ -z "$CONTENT" ]; then
+            echo "⚠️ Nessun dato trovato nel Gist. Backup non eseguito."
+            exit 1
+          fi
+
+          mkdir -p backups
+          TIMESTAMP=$(date -u +"%Y-%m-%d_%H-%M")
+          echo "$CONTENT" > "backups/backup_${TIMESTAMP}.json"
+
+          # Mantieni solo gli ultimi 3 backup
+          cd backups && ls -t backup_*.json 2>/dev/null | tail -n +4 | xargs -r rm -f && cd ..
+
+      - name: Commit e push
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add backups/
+          if git diff --staged --quiet; then
+            echo "ℹ️ Nessuna modifica. Backup saltato."
+          else
+            git commit -m "�� Backup automatico — $(date -u '+%Y-%m-%d %H:%M UTC')"
+            git push
+          fi
