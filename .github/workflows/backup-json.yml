@@ -38,8 +38,8 @@ jobs:
           TIMESTAMP=$(date -u +"%Y-%m-%d_%H-%M")
           echo "$CONTENT" > "backups/backup_${TIMESTAMP}.json"
 
-          # Mantieni solo gli ultimi 30 backup
-          cd backups && ls -t backup_*.json 2>/dev/null | tail -n +31 | xargs -r rm -f && cd ..
+          # Mantieni solo gli ultimi 3 backup
+          cd backups && ls -t backup_*.json 2>/dev/null | tail -n +4 | xargs -r rm -f && cd ..
 
       - name: Commit e push
         run: |
