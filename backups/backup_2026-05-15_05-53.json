@@ -1,0 +1,1210 @@
+{
+  "immobili": [
+    {
+      "nome": "PORTA CAPUANA - NAPOLI",
+      "inquilino": "ROMANO",
+      "quota": 1700
+    },
+    {
+      "nome": "CORSO GARIBALDI - NAPOLI",
+      "inquilino": "SHAMAD",
+      "quota": 430
+    },
+    {
+      "nome": "VICO EQUENSE",
+      "inquilino": "CESARANO",
+      "quota": 700
+    },
+    {
+      "nome": "VICO EQUENSE",
+      "inquilino": "DE MARTINO",
+      "quota": 794
+    },
+    {
+      "nome": "VICO EQUENSE",
+      "inquilino": "ESPOSITO",
+      "quota": 905
+    },
+    {
+      "nome": "VICO EQUENSE",
+      "inquilino": "BARBATO",
+      "quota": 1000
+    },
+    {
+      "nome": "VICO EQUENSE",
+      "inquilino": "NETWORK",
+      "quota": 850
+    },
+    {
+      "nome": "VICO EQUENSE",
+      "inquilino": "PATAVINI",
+      "quota": 800
+    }
+  ],
+  "persone": [
+    {
+      "nome": "FERRAIULOLO CARMELA"
+    },
+    {
+      "nome": "ESENTE ANTONIO"
+    },
+    {
+      "nome": "NIOSI MARCO / NIOSI MARIA LAURA"
+    }
+  ],
+  "pagamenti": [
+    {
+      "id": 1777150779322,
+      "inquilino": "ROMANO",
+      "immobile": "PORTA CAPUANA - NAPOLI",
+      "importo": 1700,
+      "data": "2025-09-13",
+      "mesiRif": [
+        "2025-09"
+      ],
+      "note": ""
+    },
+    {
+      "id": 1777150822242,
+      "inquilino": "ROMANO",
+      "immobile": "PORTA CAPUANA - NAPOLI",
+      "importo": 1700,
+      "data": "2025-10-07",
+      "mesiRif": [
+        "2025-10"
+      ],
+      "note": ""
+    },
+    {
+      "id": 1777150872059,
+      "inquilino": "ROMANO",
+      "immobile": "PORTA CAPUANA - NAPOLI",
+      "importo": 1700,
+      "data": "2025-12-09",
+      "mesiRif": [
+        "2025-12"
+      ],
+      "note": ""
+    },
+    {
+      "id": 1777150998571,
+      "inquilino": "ROMANO",
+      "immobile": "PORTA CAPUANA - NAPOLI",
+      "importo": 1700,
+      "data": "2026-03-10",
+      "mesiRif": [
+        "2026-02"
+      ],
+      "note": ""
+    },
+    {
+      "id": 1777151045642,
+      "inquilino": "ROMANO",
+      "immobile": "PORTA CAPUANA - NAPOLI",
+      "importo": 1700,
+      "data": "2026-01-08",
+      "mesiRif": [
+        "2026-01"
+      ],
+      "note": ""
+    },
+    {
+      "id": 1777151074354,
+      "inquilino": "ROMANO",
+      "immobile": "PORTA CAPUANA - NAPOLI",
+      "importo": 1700,
+      "data": "2026-03-27",
+      "mesiRif": [
+        "2026-03"
+      ],
+      "note": ""
+    },
+    {
+      "id": 1777151229218,
+      "inquilino": "SHAMAD",
+      "immobile": "CORSO GARIBALDI - NAPOLI",
+      "importo": 430,
+      "data": "2025-10-03",
+      "mesiRif": [
+        "2025-10"
+      ],
+      "note": ""
+    },
+    {
+      "id": 1777151719747,
+      "inquilino": "SHAMAD",
+      "immobile": "CORSO GARIBALDI - NAPOLI",
+      "importo": 430,
+      "data": "2025-11-04",
+      "mesiRif": [
+        "2025-11"
+      ],
+      "note": ""
+    },
+    {
+      "id": 1777151738371,
+      "inquilino": "SHAMAD",
+      "immobile": "CORSO GARIBALDI - NAPOLI",
+      "importo": 430,
+      "data": "2025-12-04",
+      "mesiRif": [
+        "2025-12"
+      ],
+      "note": ""
+    },
+    {
+      "id": 1777151778594,
+      "inquilino": "SHAMAD",
+      "immobile": "CORSO GARIBALDI - NAPOLI",
+      "importo": 430,
+      "data": "2026-01-06",
+      "mesiRif": [
+        "2026-01"
+      ],
+      "note": ""
+    },
+    {
+      "id": 1777151805163,
+      "inquilino": "SHAMAD",
+      "immobile": "CORSO GARIBALDI - NAPOLI",
+      "importo": 430,
+      "data": "2026-02-04",
+      "mesiRif": [
+        "2026-02"
+      ],
+      "note": ""
+    },
+    {
+      "id": 1777151817522,
+      "inquilino": "SHAMAD",
+      "immobile": "CORSO GARIBALDI - NAPOLI",
+      "importo": 430,
+      "data": "2026-03-04",
+      "mesiRif": [
+        "2026-03"
+      ],
+      "note": ""
+    },
+    {
+      "id": 1777152151659,
+      "inquilino": "DE MARTINO",
+      "immobile": "VICO EQUENSE",
+      "importo": 794,
+      "data": "2025-09-09",
+      "mesiRif": [
+        "2025-09"
+      ],
+      "note": ""
+    },
+    {
+      "id": 1777152164874,
+      "inquilino": "DE MARTINO",
+      "immobile": "VICO EQUENSE",
+      "importo": 794,
+      "data": "2025-10-08",
+      "mesiRif": [
+        "2025-10"
+      ],
+      "note": ""
+    },
+    {
+      "id": 1777152197363,
+      "inquilino": "DE MARTINO",
+      "immobile": "VICO EQUENSE",
+      "importo": 794,
+      "data": "2025-12-08",
+      "mesiRif": [
+        "2025-12"
+      ],
+      "note": ""
+    },
+    {
+      "id": 1777152313906,
+      "inquilino": "DE MARTINO",
+      "immobile": "VICO EQUENSE",
+      "importo": 794,
+      "data": "2025-11-06",
+      "mesiRif": [
+        "2025-11"
+      ],
+      "note": ""
+    },
+    {
+      "id": 1777152424698,
+      "inquilino": "DE MARTINO",
+      "immobile": "VICO EQUENSE",
+      "importo": 794,
+      "data": "2026-01-12",
+      "mesiRif": [
+        "2026-01"
+      ],
+      "note": ""
+    },
+    {
+      "id": 1777152452610,
+      "inquilino": "DE MARTINO",
+      "immobile": "VICO EQUENSE",
+      "importo": 794,
+      "data": "2026-02-10",
+      "mesiRif": [
+        "2026-02"
+      ],
+      "note": ""
+    },
+    {
+      "id": 1777152461594,
+      "inquilino": "DE MARTINO",
+      "immobile": "VICO EQUENSE",
+      "importo": 794,
+      "data": "2026-03-10",
+      "mesiRif": [
+        "2026-03"
+      ],
+      "note": ""
+    },
+    {
+      "id": 1777152509282,
+      "inquilino": "CESARANO",
+      "immobile": "VICO EQUENSE",
+      "importo": 700,
+      "data": "2025-09-09",
+      "mesiRif": [
+        "2025-09"
+      ],
+      "note": ""
+    },
+    {
+      "id": 1777152515275,
+      "inquilino": "CESARANO",
+      "immobile": "VICO EQUENSE",
+      "importo": 700,
+      "data": "2025-10-09",
+      "mesiRif": [
+        "2025-10"
+      ],
+      "note": ""
+    },
+    {
+      "id": 1777152539722,
+      "inquilino": "CESARANO",
+      "immobile": "VICO EQUENSE",
+      "importo": 700,
+      "data": "2025-12-08",
+      "mesiRif": [
+        "2025-12"
+      ],
+      "note": ""
+    },
+    {
+      "id": 1777152559059,
+      "inquilino": "CESARANO",
+      "immobile": "VICO EQUENSE",
+      "importo": 700,
+      "data": "2026-01-09",
+      "mesiRif": [
+        "2026-01"
+      ],
+      "note": ""
+    },
+    {
+      "id": 1777152585186,
+      "inquilino": "CESARANO",
+      "immobile": "VICO EQUENSE",
+      "importo": 700,
+      "data": "2026-02-05",
+      "mesiRif": [
+        "2026-02"
+      ],
+      "note": ""
+    },
+    {
+      "id": 1777152594147,
+      "inquilino": "CESARANO",
+      "immobile": "VICO EQUENSE",
+      "importo": 700,
+      "data": "2026-03-09",
+      "mesiRif": [
+        "2026-03"
+      ],
+      "note": ""
+    },
+    {
+      "id": 1777152719699,
+      "inquilino": "ESPOSITO",
+      "immobile": "VICO EQUENSE",
+      "importo": 905,
+      "data": "2025-09-15",
+      "mesiRif": [
+        "2025-09"
+      ],
+      "note": ""
+    },
+    {
+      "id": 1777152730802,
+      "inquilino": "ESPOSITO",
+      "immobile": "VICO EQUENSE",
+      "importo": 905,
+      "data": "2025-10-13",
+      "mesiRif": [
+        "2025-10"
+      ],
+      "note": ""
+    },
+    {
+      "id": 1777152739057,
+      "inquilino": "ESPOSITO",
+      "immobile": "VICO EQUENSE",
+      "importo": 905,
+      "data": "2025-11-17",
+      "mesiRif": [
+        "2025-11"
+      ],
+      "note": ""
+    },
+    {
+      "id": 1777152750059,
+      "inquilino": "ESPOSITO",
+      "immobile": "VICO EQUENSE",
+      "importo": 905,
+      "data": "2025-12-15",
+      "mesiRif": [
+        "2025-12"
+      ],
+      "note": ""
+    },
+    {
+      "id": 1777152765338,
+      "inquilino": "ESPOSITO",
+      "immobile": "VICO EQUENSE",
+      "importo": 905,
+      "data": "2026-01-12",
+      "mesiRif": [
+        "2026-01"
+      ],
+      "note": ""
+    },
+    {
+      "id": 1777152781994,
+      "inquilino": "ESPOSITO",
+      "immobile": "VICO EQUENSE",
+      "importo": 905,
+      "data": "2026-02-13",
+      "mesiRif": [
+        "2026-02"
+      ],
+      "note": ""
+    },
+    {
+      "id": 1777152801009,
+      "inquilino": "ESPOSITO",
+      "immobile": "VICO EQUENSE",
+      "importo": 905,
+      "data": "2026-03-14",
+      "mesiRif": [
+        "2026-03"
+      ],
+      "note": ""
+    },
+    {
+      "id": 1777152896402,
+      "inquilino": "BARBATO",
+      "immobile": "VICO EQUENSE",
+      "importo": 1000,
+      "data": "2025-09-16",
+      "mesiRif": [
+        "2025-09"
+      ],
+      "note": ""
+    },
+    {
+      "id": 1777152927434,
+      "inquilino": "BARBATO",
+      "immobile": "VICO EQUENSE",
+      "importo": 1000,
+      "data": "2025-10-10",
+      "mesiRif": [
+        "2025-10"
+      ],
+      "note": ""
+    },
+    {
+      "id": 1777152938762,
+      "inquilino": "BARBATO",
+      "immobile": "VICO EQUENSE",
+      "importo": 1000,
+      "data": "2025-11-05",
+      "mesiRif": [
+        "2025-11"
+      ],
+      "note": ""
+    },
+    {
+      "id": 1777153207018,
+      "inquilino": "NETWORK",
+      "immobile": "VICO EQUENSE",
+      "importo": 1500,
+      "data": "2026-01-19",
+      "mesiRif": [
+        "2026-02",
+        "2026-03"
+      ],
+      "note": "Ricevuti 1500 a fronte di 1700€"
+    },
+    {
+      "id": 1777153307722,
+      "inquilino": "PATAVINI",
+      "immobile": "VICO EQUENSE",
+      "importo": 1600,
+      "data": "2025-09-11",
+      "mesiRif": [
+        "2025-08",
+        "2025-09"
+      ],
+      "note": ""
+    },
+    {
+      "id": 1777153343427,
+      "inquilino": "PATAVINI",
+      "immobile": "VICO EQUENSE",
+      "importo": 1600,
+      "data": "2025-11-11",
+      "mesiRif": [
+        "2025-10",
+        "2025-11"
+      ],
+      "note": ""
+    },
+    {
+      "id": 1777153362785,
+      "inquilino": "PATAVINI",
+      "immobile": "VICO EQUENSE",
+      "importo": 1600,
+      "data": "2026-01-12",
+      "mesiRif": [
+        "2025-12",
+        "2026-01"
+      ],
+      "note": ""
+    },
+    {
+      "id": 1777153380939,
+      "inquilino": "PATAVINI",
+      "immobile": "VICO EQUENSE",
+      "importo": 1600,
+      "data": "2026-03-05",
+      "mesiRif": [
+        "2026-02",
+        "2026-03"
+      ],
+      "note": ""
+    },
+    {
+      "id": 1777158639948,
+      "inquilino": "NETWORK",
+      "immobile": "VICO EQUENSE",
+      "importo": 1500,
+      "data": "2025-10-29",
+      "mesiRif": [
+        "2025-12",
+        "2026-01"
+      ],
+      "note": "Ricevuti 1500 a fronte di 1700€"
+    },
+    {
+      "id": 1777158687369,
+      "inquilino": "NETWORK",
+      "immobile": "VICO EQUENSE",
+      "importo": 1500,
+      "data": "2025-09-11",
+      "mesiRif": [
+        "2025-10",
+        "2025-11"
+      ],
+      "note": "Ricevuti 1500 a fronte di 1700€"
+    },
+    {
+      "id": 1777220559536,
+      "inquilino": "CESARANO",
+      "immobile": "VICO EQUENSE",
+      "importo": 700,
+      "data": "2026-04-08",
+      "mesiRif": [
+        "2025-11"
+      ],
+      "note": "Pagato il 10/11/2025 e non contabilizzato nel resoconto precedente"
+    },
+    {
+      "id": 1777220606662,
+      "inquilino": "ROMANO",
+      "immobile": "PORTA CAPUANA - NAPOLI",
+      "importo": 1700,
+      "data": "2026-04-08",
+      "mesiRif": [
+        "2025-11"
+      ],
+      "note": "Pagato il 12/11/2025 e non contabilizzato nel resoconto precedente"
+    },
+    {
+      "id": 1777220707413,
+      "inquilino": "CESARANO",
+      "immobile": "VICO EQUENSE",
+      "importo": 700,
+      "data": "2026-04-09",
+      "mesiRif": [
+        "2026-04"
+      ],
+      "note": ""
+    },
+    {
+      "id": 1777220748101,
+      "inquilino": "SHAMAD",
+      "immobile": "CORSO GARIBALDI - NAPOLI",
+      "importo": 430,
+      "data": "2026-04-08",
+      "mesiRif": [
+        "2026-04"
+      ],
+      "note": "Pagato il 02/04/2026"
+    },
+    {
+      "id": 1777220782613,
+      "inquilino": "DE MARTINO",
+      "immobile": "VICO EQUENSE",
+      "importo": 794,
+      "data": "2026-04-08",
+      "mesiRif": [
+        "2026-04"
+      ],
+      "note": ""
+    },
+    {
+      "id": 1777220801796,
+      "inquilino": "ESPOSITO",
+      "immobile": "VICO EQUENSE",
+      "importo": 905,
+      "data": "2026-04-13",
+      "mesiRif": [
+        "2026-04"
+      ],
+      "note": ""
+    },
+    {
+      "id": 1777220846348,
+      "inquilino": "BARBATO",
+      "immobile": "VICO EQUENSE",
+      "importo": 3000,
+      "data": "2026-04-08",
+      "mesiRif": [
+        "2025-12",
+        "2026-01",
+        "2026-02"
+      ],
+      "note": "Pagato il 07/04/2026."
+    },
+    {
+      "id": 1777220960898,
+      "inquilino": "NETWORK",
+      "immobile": "VICO EQUENSE",
+      "importo": 1500,
+      "data": "2026-04-08",
+      "mesiRif": [
+        "2026-04",
+        "2026-05"
+      ],
+      "note": "Ricevuti 1500 a fronte di 1700€"
+    },
+    {
+      "id": 1777220989370,
+      "inquilino": "ROMANO",
+      "immobile": "PORTA CAPUANA - NAPOLI",
+      "importo": 1700,
+      "data": "2026-04-08",
+      "mesiRif": [
+        "2026-04"
+      ],
+      "note": ""
+    },
+    {
+      "id": 1777482436812,
+      "inquilino": "NETWORK",
+      "immobile": "VICO EQUENSE",
+      "importo": 600,
+      "data": "2026-04-22",
+      "mesiRif": [],
+      "note": "ACCONTO #1/5 (6 mesi) ARRETRATI COMPENSAZIONE AFFITTI"
+    },
+    {
+      "id": 1778003090115,
+      "inquilino": "ROMANO",
+      "immobile": "PORTA CAPUANA - NAPOLI",
+      "importo": 1700,
+      "data": "2026-05-05",
+      "mesiRif": [
+        "2026-05"
+      ],
+      "note": ""
+    },
+    {
+      "id": 1778003125914,
+      "inquilino": "SHAMAD",
+      "immobile": "CORSO GARIBALDI - NAPOLI",
+      "importo": 430,
+      "data": "2026-05-05",
+      "mesiRif": [
+        "2026-05"
+      ],
+      "note": ""
+    },
+    {
+      "id": 1778438118932,
+      "inquilino": "CESARANO",
+      "immobile": "VICO EQUENSE",
+      "importo": 700,
+      "data": "2026-05-12",
+      "mesiRif": [
+        "2026-05"
+      ],
+      "note": ""
+    },
+    {
+      "id": 1778498835597,
+      "inquilino": "NETWORK",
+      "immobile": "VICO EQUENSE",
+      "importo": 600,
+      "data": "2026-05-11",
+      "mesiRif": [],
+      "note": "ACCONTO #2/5 (6 mesi) ARRETRATI COMPENSAZIONE AFFITTI"
+    },
+    {
+      "id": 1778567763386,
+      "inquilino": "DE MARTINO",
+      "immobile": "VICO EQUENSE",
+      "importo": 700,
+      "data": "2026-05-08",
+      "mesiRif": [
+        "2026-05"
+      ],
+      "note": "Pagati 94€ per la registrazione"
+    }
+  ],
+  "storico": [
+    {
+      "periodoLabel": "01-09-2025 → 07-04-2026 (per data pagamento)",
+      "dataInizio": "2025-09-01",
+      "dataFine": "2026-04-07",
+      "spese": 483.52,
+      "notaSpese": "Stendardo: 300€ + 20€ + 50€ + 20€ - Taxi: 20€ Luce Cimitero: 73,52",
+      "cassa": 0,
+      "prelievo": 0,
+      "tot": 42773,
+      "netto": 42289.48,
+      "quota": 14096.493333333334,
+      "pags": [
+        {
+          "id": 1777152151659,
+          "inquilino": "DE MARTINO",
+          "immobile": "VICO EQUENSE",
+          "importo": 794,
+          "data": "2025-09-09",
+          "mesiRif": [
+            "2025-09"
+          ],
+          "note": ""
+        },
+        {
+          "id": 1777152509282,
+          "inquilino": "CESARANO",
+          "immobile": "VICO EQUENSE",
+          "importo": 700,
+          "data": "2025-09-09",
+          "mesiRif": [
+            "2025-09"
+          ],
+          "note": ""
+        },
+        {
+          "id": 1777153307722,
+          "inquilino": "PATAVINI",
+          "immobile": "VICO EQUENSE",
+          "importo": 1600,
+          "data": "2025-09-11",
+          "mesiRif": [
+            "2025-08",
+            "2025-09"
+          ],
+          "note": ""
+        },
+        {
+          "id": 1777158687369,
+          "inquilino": "NETWORK",
+          "immobile": "VICO EQUENSE",
+          "importo": 1500,
+          "data": "2025-09-11",
+          "mesiRif": [
+            "2025-10",
+            "2025-11"
+          ],
+          "note": "Ricevuti 1500 a fronte di 1700€"
+        },
+        {
+          "id": 1777150779322,
+          "inquilino": "ROMANO",
+          "immobile": "PORTA CAPUANA - NAPOLI",
+          "importo": 1700,
+          "data": "2025-09-13",
+          "mesiRif": [
+            "2025-09"
+          ],
+          "note": ""
+        },
+        {
+          "id": 1777152719699,
+          "inquilino": "ESPOSITO",
+          "immobile": "VICO EQUENSE",
+          "importo": 905,
+          "data": "2025-09-15",
+          "mesiRif": [
+            "2025-09"
+          ],
+          "note": ""
+        },
+        {
+          "id": 1777152896402,
+          "inquilino": "BARBATO",
+          "immobile": "VICO EQUENSE",
+          "importo": 1000,
+          "data": "2025-09-16",
+          "mesiRif": [
+            "2025-09"
+          ],
+          "note": ""
+        },
+        {
+          "id": 1777151229218,
+          "inquilino": "SHAMAD",
+          "immobile": "CORSO GARIBALDI - NAPOLI",
+          "importo": 430,
+          "data": "2025-10-03",
+          "mesiRif": [
+            "2025-10"
+          ],
+          "note": ""
+        },
+        {
+          "id": 1777150822242,
+          "inquilino": "ROMANO",
+          "immobile": "PORTA CAPUANA - NAPOLI",
+          "importo": 1700,
+          "data": "2025-10-07",
+          "mesiRif": [
+            "2025-10"
+          ],
+          "note": ""
+        },
+        {
+          "id": 1777152164874,
+          "inquilino": "DE MARTINO",
+          "immobile": "VICO EQUENSE",
+          "importo": 794,
+          "data": "2025-10-08",
+          "mesiRif": [
+            "2025-10"
+          ],
+          "note": ""
+        },
+        {
+          "id": 1777152515275,
+          "inquilino": "CESARANO",
+          "immobile": "VICO EQUENSE",
+          "importo": 700,
+          "data": "2025-10-09",
+          "mesiRif": [
+            "2025-10"
+          ],
+          "note": ""
+        },
+        {
+          "id": 1777152927434,
+          "inquilino": "BARBATO",
+          "immobile": "VICO EQUENSE",
+          "importo": 1000,
+          "data": "2025-10-10",
+          "mesiRif": [
+            "2025-10"
+          ],
+          "note": ""
+        },
+        {
+          "id": 1777152730802,
+          "inquilino": "ESPOSITO",
+          "immobile": "VICO EQUENSE",
+          "importo": 905,
+          "data": "2025-10-13",
+          "mesiRif": [
+            "2025-10"
+          ],
+          "note": ""
+        },
+        {
+          "id": 1777158639948,
+          "inquilino": "NETWORK",
+          "immobile": "VICO EQUENSE",
+          "importo": 1500,
+          "data": "2025-10-29",
+          "mesiRif": [
+            "2025-12",
+            "2026-01"
+          ],
+          "note": "Ricevuti 1500 a fronte di 1700€"
+        },
+        {
+          "id": 1777151719747,
+          "inquilino": "SHAMAD",
+          "immobile": "CORSO GARIBALDI - NAPOLI",
+          "importo": 430,
+          "data": "2025-11-04",
+          "mesiRif": [
+            "2025-11"
+          ],
+          "note": ""
+        },
+        {
+          "id": 1777152938762,
+          "inquilino": "BARBATO",
+          "immobile": "VICO EQUENSE",
+          "importo": 1000,
+          "data": "2025-11-05",
+          "mesiRif": [
+            "2025-11"
+          ],
+          "note": ""
+        },
+        {
+          "id": 1777152313906,
+          "inquilino": "DE MARTINO",
+          "immobile": "VICO EQUENSE",
+          "importo": 794,
+          "data": "2025-11-06",
+          "mesiRif": [
+            "2025-11"
+          ],
+          "note": ""
+        },
+        {
+          "id": 1777153343427,
+          "inquilino": "PATAVINI",
+          "immobile": "VICO EQUENSE",
+          "importo": 1600,
+          "data": "2025-11-11",
+          "mesiRif": [
+            "2025-10",
+            "2025-11"
+          ],
+          "note": ""
+        },
+        {
+          "id": 1777152739057,
+          "inquilino": "ESPOSITO",
+          "immobile": "VICO EQUENSE",
+          "importo": 905,
+          "data": "2025-11-17",
+          "mesiRif": [
+            "2025-11"
+          ],
+          "note": ""
+        },
+        {
+          "id": 1777151738371,
+          "inquilino": "SHAMAD",
+          "immobile": "CORSO GARIBALDI - NAPOLI",
+          "importo": 430,
+          "data": "2025-12-04",
+          "mesiRif": [
+            "2025-12"
+          ],
+          "note": ""
+        },
+        {
+          "id": 1777152197363,
+          "inquilino": "DE MARTINO",
+          "immobile": "VICO EQUENSE",
+          "importo": 794,
+          "data": "2025-12-08",
+          "mesiRif": [
+            "2025-12"
+          ],
+          "note": ""
+        },
+        {
+          "id": 1777152539722,
+          "inquilino": "CESARANO",
+          "immobile": "VICO EQUENSE",
+          "importo": 700,
+          "data": "2025-12-08",
+          "mesiRif": [
+            "2025-12"
+          ],
+          "note": ""
+        },
+        {
+          "id": 1777150872059,
+          "inquilino": "ROMANO",
+          "immobile": "PORTA CAPUANA - NAPOLI",
+          "importo": 1700,
+          "data": "2025-12-09",
+          "mesiRif": [
+            "2025-12"
+          ],
+          "note": ""
+        },
+        {
+          "id": 1777152750059,
+          "inquilino": "ESPOSITO",
+          "immobile": "VICO EQUENSE",
+          "importo": 905,
+          "data": "2025-12-15",
+          "mesiRif": [
+            "2025-12"
+          ],
+          "note": ""
+        },
+        {
+          "id": 1777151778594,
+          "inquilino": "SHAMAD",
+          "immobile": "CORSO GARIBALDI - NAPOLI",
+          "importo": 430,
+          "data": "2026-01-06",
+          "mesiRif": [
+            "2026-01"
+          ],
+          "note": ""
+        },
+        {
+          "id": 1777151045642,
+          "inquilino": "ROMANO",
+          "immobile": "PORTA CAPUANA - NAPOLI",
+          "importo": 1700,
+          "data": "2026-01-08",
+          "mesiRif": [
+            "2026-01"
+          ],
+          "note": ""
+        },
+        {
+          "id": 1777152559059,
+          "inquilino": "CESARANO",
+          "immobile": "VICO EQUENSE",
+          "importo": 700,
+          "data": "2026-01-09",
+          "mesiRif": [
+            "2026-01"
+          ],
+          "note": ""
+        },
+        {
+          "id": 1777152424698,
+          "inquilino": "DE MARTINO",
+          "immobile": "VICO EQUENSE",
+          "importo": 794,
+          "data": "2026-01-12",
+          "mesiRif": [
+            "2026-01"
+          ],
+          "note": ""
+        },
+        {
+          "id": 1777152765338,
+          "inquilino": "ESPOSITO",
+          "immobile": "VICO EQUENSE",
+          "importo": 905,
+          "data": "2026-01-12",
+          "mesiRif": [
+            "2026-01"
+          ],
+          "note": ""
+        },
+        {
+          "id": 1777153362785,
+          "inquilino": "PATAVINI",
+          "immobile": "VICO EQUENSE",
+          "importo": 1600,
+          "data": "2026-01-12",
+          "mesiRif": [
+            "2025-12",
+            "2026-01"
+          ],
+          "note": ""
+        },
+        {
+          "id": 1777153207018,
+          "inquilino": "NETWORK",
+          "immobile": "VICO EQUENSE",
+          "importo": 1500,
+          "data": "2026-01-19",
+          "mesiRif": [
+            "2026-02",
+            "2026-03"
+          ],
+          "note": "Ricevuti 1500 a fronte di 1700€"
+        },
+        {
+          "id": 1777151805163,
+          "inquilino": "SHAMAD",
+          "immobile": "CORSO GARIBALDI - NAPOLI",
+          "importo": 430,
+          "data": "2026-02-04",
+          "mesiRif": [
+            "2026-02"
+          ],
+          "note": ""
+        },
+        {
+          "id": 1777152585186,
+          "inquilino": "CESARANO",
+          "immobile": "VICO EQUENSE",
+          "importo": 700,
+          "data": "2026-02-05",
+          "mesiRif": [
+            "2026-02"
+          ],
+          "note": ""
+        },
+        {
+          "id": 1777152452610,
+          "inquilino": "DE MARTINO",
+          "immobile": "VICO EQUENSE",
+          "importo": 794,
+          "data": "2026-02-10",
+          "mesiRif": [
+            "2026-02"
+          ],
+          "note": ""
+        },
+        {
+          "id": 1777152781994,
+          "inquilino": "ESPOSITO",
+          "immobile": "VICO EQUENSE",
+          "importo": 905,
+          "data": "2026-02-13",
+          "mesiRif": [
+            "2026-02"
+          ],
+          "note": ""
+        },
+        {
+          "id": 1777151817522,
+          "inquilino": "SHAMAD",
+          "immobile": "CORSO GARIBALDI - NAPOLI",
+          "importo": 430,
+          "data": "2026-03-04",
+          "mesiRif": [
+            "2026-03"
+          ],
+          "note": ""
+        },
+        {
+          "id": 1777153380939,
+          "inquilino": "PATAVINI",
+          "immobile": "VICO EQUENSE",
+          "importo": 1600,
+          "data": "2026-03-05",
+          "mesiRif": [
+            "2026-02",
+            "2026-03"
+          ],
+          "note": ""
+        },
+        {
+          "id": 1777152594147,
+          "inquilino": "CESARANO",
+          "immobile": "VICO EQUENSE",
+          "importo": 700,
+          "data": "2026-03-09",
+          "mesiRif": [
+            "2026-03"
+          ],
+          "note": ""
+        },
+        {
+          "id": 1777150998571,
+          "inquilino": "ROMANO",
+          "immobile": "PORTA CAPUANA - NAPOLI",
+          "importo": 1700,
+          "data": "2026-03-10",
+          "mesiRif": [
+            "2026-02"
+          ],
+          "note": ""
+        },
+        {
+          "id": 1777152461594,
+          "inquilino": "DE MARTINO",
+          "immobile": "VICO EQUENSE",
+          "importo": 794,
+          "data": "2026-03-10",
+          "mesiRif": [
+            "2026-03"
+          ],
+          "note": ""
+        },
+        {
+          "id": 1777152801009,
+          "inquilino": "ESPOSITO",
+          "immobile": "VICO EQUENSE",
+          "importo": 905,
+          "data": "2026-03-14",
+          "mesiRif": [
+            "2026-03"
+          ],
+          "note": ""
+        },
+        {
+          "id": 1777151074354,
+          "inquilino": "ROMANO",
+          "immobile": "PORTA CAPUANA - NAPOLI",
+          "importo": 1700,
+          "data": "2026-03-27",
+          "mesiRif": [
+            "2026-03"
+          ],
+          "note": ""
+        }
+      ],
+      "persone": [
+        {
+          "nome": "FERRAIULOLO CARMELA"
+        },
+        {
+          "nome": "ESENTE ANTONIO"
+        },
+        {
+          "nome": "NIOSI MARCO / NIOSI MARIA LAURA"
+        }
+      ],
+      "savedAt": "2026-04-26T13:23:36.665Z"
+    }
+  ],
+  "movimentiCassa": [],
+  "saldoCassa": 0,
+  "spese": [
+    {
+      "id": 1777336318946,
+      "data": "2026-04-07",
+      "importo": 483.52,
+      "note": "Avv Stendardo + Luce Cimitero + Taxi"
+    },
+    {
+      "id": 1777481318252,
+      "data": "2026-04-29",
+      "importo": 976,
+      "note": "SPESE CONDOMINIO PRESENTATE DA AVV. VERDE (200€ COMPENSO VERDE)"
+    },
+    {
+      "id": 1777482614220,
+      "data": "2026-04-29",
+      "importo": 579,
+      "note": "SALDO NEGATIVO PER IMPORTO BONIFICI ERRATI PERIODO 01/09/2025 - 07/04/2026. Erogato 14.289,49 a fronte di 14.096,49"
+    }
+  ],
+  "lastModified": 1778788076206
+}
