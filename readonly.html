@@ -782,6 +782,21 @@ const MESI=['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Ag
 const MESI3=['Gen','Feb','Mar','Apr','Mag','Giu','Lug','Ago','Set','Ott','Nov','Dic'];
 
 var state={immobili:[],persone:[],pagamenti:[],storico:[],saldoCassa:0,movimentiCassa:[]};
+
+// Parsa "1/3", "0.5", ecc. → numero decimale
+function parseQuota(val){
+  if(val===null||val===undefined||val==='')return 0;
+  const s=String(val).trim();
+  if(s.includes('/')){const p=s.split('/');return parseFloat(p[0])/(parseFloat(p[1])||1);}
+  return parseFloat(s)||0;
+}
+// Converte decimale in frazione leggibile (0.333… → "1/3")
+function fmtQuotaFrazione(val){
+  if(val<=0)return'0';if(val>=1)return'1';
+  const eps=1e-8;
+  for(let d=2;d<=12;d++){const n=Math.round(val*d);if(Math.abs(n/d-val)<eps)return n+'/'+d;}
+  return val.toFixed(4);
+}
 let pickerAnnoVal=new Date().getFullYear();
 let mesiSelezionati=[];
 let resPickerAnnoVal=2025;
@@ -801,6 +816,17 @@ function loadState(){
   if(!state.movimentiCassa)state.movimentiCassa=[];
   if(!state.spese)state.spese=[];
   if(typeof state.saldoCassa!=='number')state.saldoCassa=0;
+  // Migra: assegna quotaPatrimoniale agli eredi che non ce l'hanno
+  if(state.persone.length>0&&!state.persone[0].quotaPatrimoniale){
+    const n=state.persone.length;
+    state.persone.forEach(p=>{if(!p.quotaPatrimoniale)p.quotaPatrimoniale='1/'+n;});
+  }
+  // Migra storico: aggiunge personeConQuota ai resoconti che non ce l'hanno
+  state.storico.forEach(r=>{
+    if(!r.personeConQuota&&r.persone&&r.quota){
+      r.personeConQuota=(r.persone||[]).map(p=>({nome:p.nome,quotaPatrimoniale:p.quotaPatrimoniale||'1/'+(r.persone.length||1),quotaCalcolata:r.quota}));
+    }
+  });
 }
 function saveState(){state.lastModified=Date.now();try{localStorage.setItem('incassi_v5',JSON.stringify(state));}catch(e){} gistAutoSync();}
 
@@ -1148,6 +1174,7 @@ function renderPersone(){
         <div class="erede-av" style="background:${AVATAR_COLORS[i%AVATAR_COLORS.length]}">${initials(p.nome)}</div>
       </td>
       <td>${p.nome||'<span style="color:var(--color-text-tertiary)">—</span>'}</td>
+      <td style="text-align:center">${p.quotaPatrimoniale||'—'}</td>
     </tr>`).join('');
   el.innerHTML=`
     <div class="table-wrap">
@@ -1155,6 +1182,7 @@ function renderPersone(){
         <thead><tr>
           <th style="width:46px"></th>
           <th>👤 Nominativo</th>
+          <th style="text-align:center">Quota Patrim.</th>
         </tr></thead>
         <tbody>${rows}</tbody>
       </table>
@@ -1176,7 +1204,13 @@ function removeImmobile(i){
   if(!confirm(msg))return;
   state.immobili.splice(i,1);saveState();renderImmobili();renderSelInquilino();
 }
-function addPersona(){state.persone.push({nome:''});saveState();renderPersone();apriModificaPersona(state.persone.length-1);}
+function addPersona(){
+  const totaleUsato=state.persone.reduce((s,p)=>s+parseQuota(p.quotaPatrimoniale),0);
+  const rimasta=Math.max(0,1-totaleUsato);
+  const nuovaQuota=rimasta>0?fmtQuotaFrazione(rimasta):'0';
+  state.persone.push({nome:'',quotaPatrimoniale:nuovaQuota});
+  saveState();renderPersone();apriModificaPersona(state.persone.length-1);
+}
 function removePersona(i){
   const p=state.persone[i];if(!p)return;
   const nRec=(state.storico||[]).filter(r=>(r.persone||[]).some(pp=>pp.nome===p.nome)).length;
@@ -1237,6 +1271,11 @@ function apriModificaPersona(i){
   const p=state.persone[i];if(!p)return;
   document.getElementById('modal-pers-idx').value=i;
   document.getElementById('modal-pers-nome').value=p.nome||'';
+  document.getElementById('modal-pers-quota').value=p.quotaPatrimoniale||'';
+  const altriTotale=state.persone.reduce((s,pp,ii)=>ii!==i?s+parseQuota(pp.quotaPatrimoniale):s,0);
+  const massima=Math.max(0,1-altriTotale);
+  const hint=document.getElementById('modal-pers-quota-hint');
+  if(hint)hint.textContent='Quota max disponibile: '+fmtQuotaFrazione(massima)+' (somma eredi deve essere 1)';
   document.getElementById('modal-pers').style.display='flex';
   document.getElementById('modal-pers-nome').focus();
 }
@@ -1245,13 +1284,18 @@ function salvaModificaPersona(){
   const i=parseInt(document.getElementById('modal-pers-idx').value);
   const nome=document.getElementById('modal-pers-nome').value.trim();
   if(!nome){alert('Inserisci il nominativo.');return;}
+  const quotaStr=(document.getElementById('modal-pers-quota').value||'').trim();
+  const quotaVal=parseQuota(quotaStr);
   const vecchioNome=state.persone[i].nome||'';
-  state.persone[i]={...state.persone[i],nome};
+  state.persone[i]={...state.persone[i],nome,quotaPatrimoniale:quotaStr||fmtQuotaFrazione(quotaVal)};
 
   // Propaga cambio nome erede nei persone dello storico
   if(vecchioNome!==nome){
     state.storico.forEach(r=>{
       (r.persone||[]).forEach(p=>{
+        if(p.nome===vecchioNome)p.nome=nome;
+      });
+      (r.personeConQuota||[]).forEach(p=>{
         if(p.nome===vecchioNome)p.nome=nome;
       });
     });
@@ -1383,7 +1427,7 @@ function calcolaResoconto(){
   const tot=pags.reduce((s,p)=>s+p.importo,0);
   const netto=Math.max(0,tot-spese-cassa+prelievo);
   const nPers=state.persone.length||1;
-  const quota=netto/nPers;
+  const personeConQuota=state.persone.map(p=>({...p,quotaCalcolata:netto*parseQuota(p.quotaPatrimoniale||('1/'+nPers))}));
   // Popola e mostra dialog di conferma
   document.getElementById('conf-periodo').textContent=fmtData(inizio)+' → '+fmtData(fine);
   document.getElementById('conf-tot').textContent=fmt(tot);
@@ -1392,7 +1436,7 @@ function calcolaResoconto(){
   document.getElementById('conf-prelievo').textContent=fmt(prelievo);
   document.getElementById('conf-netto').textContent=fmt(netto);
   document.getElementById('conf-npersone').textContent=nPers;
-  document.getElementById('conf-quota').textContent=fmt(quota)+' × '+nPers+' pers.';
+  document.getElementById('conf-quota').innerHTML=personeConQuota.map(p=>`<span style="display:block">${p.nome||'?'}: <strong>${fmt(p.quotaCalcolata)}</strong> (${p.quotaPatrimoniale||'—'})</span>`).join('');
   // Mostra/nascondi righe cassa e prelievo
   document.getElementById('conf-row-cassa').style.display=cassa>0?'':'none';
   document.getElementById('conf-row-prelievo').style.display=prelievo>0?'':'none';
@@ -1416,8 +1460,9 @@ function _eseguiCalcolaResoconto(){
   const netto=Math.max(0,tot-spese-cassa+prelievo);
   const nPers=state.persone.length||1;
   const quota=netto/nPers;
+  const personeConQuota=state.persone.map(p=>({...p,quotaCalcolata:netto*parseQuota(p.quotaPatrimoniale||('1/'+nPers))}));
   const now=new Date().toISOString();
-  const r={periodoLabel,dataInizio:inizio,dataFine:fine,spese,notaSpese,cassa,prelievo,tot,netto,quota,pags:pags.slice(),persone:state.persone.slice(),savedAt:now};
+  const r={periodoLabel,dataInizio:inizio,dataFine:fine,spese,notaSpese,cassa,prelievo,tot,netto,quota,pags:pags.slice(),persone:state.persone.slice(),personeConQuota,savedAt:now};
   if((cassa||0)>0){
     state.movimentiCassa.push({data:now,tipo:'deposito',importo:cassa,note:'Da resoconto: '+periodoLabel,auto:true});
     state.saldoCassa+=cassa;
@@ -1544,7 +1589,8 @@ function salvaResoconto(){
 function esportaExcel(r){
   r=r||window._lastResoconto;if(!r)return;
   const wb=XLSX.utils.book_new();
-  const ws1=XLSX.utils.aoa_to_sheet([['RESOCONTO IMMOBILI'],['Periodo',r.periodoLabel||''],[''],['Totale incassato',r.tot],['Spese dedotte',r.spese],...((r.cassa||0)>0?[['Quota in cassa',r.cassa]]:[]),...((r.prelievo||0)>0?[['Prelievo da cassa',r.prelievo]]:[]),['Netto da dividere',r.netto],[''],['DIVISIONE PER PERSONA'],...(r.persone||[]).map(p=>[p.nome,r.quota])]);
+  const personeConQuota=r.personeConQuota||(r.persone||[]).map(p=>({...p,quotaCalcolata:r.quota}));
+  const ws1=XLSX.utils.aoa_to_sheet([['RESOCONTO IMMOBILI'],['Periodo',r.periodoLabel||''],[''],['Totale incassato',r.tot],['Spese dedotte',r.spese],...((r.cassa||0)>0?[['Quota in cassa',r.cassa]]:[]),...((r.prelievo||0)>0?[['Prelievo da cassa',r.prelievo]]:[]),['Netto da dividere',r.netto],[''],['DIVISIONE PER PERSONA'],...personeConQuota.map(p=>[p.nome+' ('+(p.quotaPatrimoniale||'—')+')',p.quotaCalcolata])]);
   ws1['!cols']=[{wch:28},{wch:18}];
   XLSX.utils.book_append_sheet(wb,ws1,'Riepilogo');
   const ws2=XLSX.utils.aoa_to_sheet([['Data pagamento','Mesi di riferimento','Inquilino','Immobile','Importo (€)','Note'],...(r.pags||[]).map(p=>[fmtData(p.data),mesiLabel(p.mesiRif),p.inquilino,p.immobile||'',p.importo,p.note||''])]);
@@ -1555,7 +1601,8 @@ function esportaExcel(r){
 
 function stampaPDF(r){
   r=r||window._lastResoconto;if(!r)return;
-  const persDiv=(r.persone||[]).map(p=>`<tr><td style="padding:6px 10px;border:1px solid #ddd">${p.nome}</td><td style="padding:6px 10px;border:1px solid #ddd;text-align:right"><strong>${fmt(r.quota)}</strong></td></tr>`).join('');
+  const personeConQuotaPdf=r.personeConQuota||(r.persone||[]).map(p=>({...p,quotaCalcolata:r.quota}));
+  const persDiv=personeConQuotaPdf.map(p=>`<tr><td style="padding:6px 10px;border:1px solid #ddd">${p.nome}</td><td style="padding:6px 10px;border:1px solid #ddd;text-align:center">${p.quotaPatrimoniale||'—'}</td><td style="padding:6px 10px;border:1px solid #ddd;text-align:right"><strong>${fmt(p.quotaCalcolata)}</strong></td></tr>`).join('');
 
   // Raggruppa pagamenti per inquilino
   const pags=r.pags||[];
@@ -1668,7 +1715,8 @@ function stampaPDF(r){
   <h2>Suddivisione Quote</h2>
   <table><thead><tr>
     <th>Erede</th>
-    <th style="text-align:right">Quota</th>
+    <th style="text-align:center">Quota Patrim.</th>
+    <th style="text-align:right">Importo</th>
   </tr></thead><tbody>${persDiv}</tbody></table>
   <h2>🧾 Spese Periodo</h2>${speseHtml}
   <h2>Dettaglio Incassi per inquilino</h2>
@@ -1707,7 +1755,8 @@ function renderStorico(){
   const hasPrelievo=filtered.some(({r})=>(r.prelievo||0)>0);
 
   const rows=filtered.map(({r,i})=>{
-    const persStr=(r.persone||[]).map(p=>`<span>${p.nome||'?'}: <strong>${fmt(r.quota)}</strong></span>`).join('<br>');
+    const persConQ=r.personeConQuota||(r.persone||[]).map(p=>({...p,quotaCalcolata:r.quota}));
+    const persStr=persConQ.map(p=>`<span>${p.nome||'?'}: <strong>${fmt(p.quotaCalcolata)}</strong>${p.quotaPatrimoniale?' ('+p.quotaPatrimoniale+')':''}</span>`).join('<br>');
     const dataFineISO=getStoricoDataFine(r);
     const dataFineLabel=dataFineISO?fmtData(dataFineISO):'-';
     let dataInizioLabel='-';
@@ -2242,12 +2291,13 @@ function initReport(){
     const tot   = pags.reduce((s,p)=>s+p.importo, 0);
     const netto = Math.max(0, tot - spese);
     const nPers = (state.persone||[]).length || 1;
-    const quota = netto / nPers;
+    const personeConQuotaRo = (state.persone||[]).map(p=>({...p,quotaCalcolata:netto*parseQuota(p.quotaPatrimoniale||('1/'+nPers))}));
 
-    const persHtml = (state.persone||[]).map(p=>`
+    const persHtml = personeConQuotaRo.map(p=>`
       <tr>
         <td>${p.nome||'?'}</td>
-        <td style="text-align:right;font-weight:700;color:#178a5a">${fmt(quota)}</td>
+        <td style="text-align:center;color:var(--color-text-secondary)">${p.quotaPatrimoniale||'—'}</td>
+        <td style="text-align:right;font-weight:700;color:#178a5a">${fmt(p.quotaCalcolata)}</td>
       </tr>`).join('');
 
     const notaHtml = notaSpese
@@ -2270,7 +2320,8 @@ function initReport(){
       <table style="width:100%;border-collapse:collapse;margin-bottom:14px">
         <thead><tr style="background:var(--color-background-secondary)">
           <th style="padding:5px 8px;text-align:left;font-size:12px">Persona</th>
-          <th style="padding:5px 8px;text-align:right;font-size:12px">Quota</th>
+          <th style="padding:5px 8px;text-align:center;font-size:12px">Quota Patrim.</th>
+          <th style="padding:5px 8px;text-align:right;font-size:12px">Importo</th>
         </tr></thead>
         <tbody>${persHtml}</tbody>
       </table>
@@ -2401,6 +2452,15 @@ function initReport(){
         ? await (await fetch(fileObj.raw_url)).text()
         : '');
       const newState = JSON.parse(content);
+      // Aggiorna lo stato solo se il Gist è più recente dei dati locali
+      const gistModified = newState.lastModified || 0;
+      const localModified = window.state.lastModified || 0;
+      if(gistModified < localModified){
+        // Dati locali più aggiornati: non sovrascrivere
+        const ts = new Date(localModified).toLocaleString('it-IT');
+        if(banner) banner.innerHTML = '💾 Dati locali aggiornati: ' + ts;
+        return;
+      }
       // Aggiorna lo stato e ri-renderizza tutto
       ['immobili','persone','pagamenti','storico','movimentiCassa','spese'].forEach(k=>{
         if(newState[k]) window.state[k] = newState[k];
@@ -2483,6 +2543,11 @@ function initReport(){
       <div>
         <label>Nominativo</label>
         <input type="text" id="modal-pers-nome" placeholder="Nome e Cognome" style="width:100%" onkeydown="if(event.key==='Enter')salvaModificaPersona()">
+      </div>
+      <div style="margin-top:10px">
+        <label>Quota Patrimoniale <span style="font-weight:400;color:var(--color-text-secondary)">(es. 1/3, 0.25)</span></label>
+        <input type="text" id="modal-pers-quota" placeholder="es. 1/3" style="width:100%" onkeydown="if(event.key==='Enter')salvaModificaPersona()">
+        <div id="modal-pers-quota-hint" style="font-size:11px;color:var(--color-text-secondary);margin-top:4px"></div>
       </div>
     </div>
     <div class="modal-footer">
@@ -2796,12 +2861,13 @@ function anteprimaCalcolo(){
   const tot=pags.reduce((s,p)=>s+p.importo,0);
   const netto=Math.max(0,tot-spese-cassa+prelievo);
   const nPers=state.persone.length||1;
-  const quota=netto/nPers;
+  const personeConQuota=state.persone.map(p=>({...p,quotaCalcolata:netto*parseQuota(p.quotaPatrimoniale||('1/'+nPers))}));
 
-  const persHtml=(state.persone||[]).map(p=>`
+  const persHtml=personeConQuota.map(p=>`
     <tr>
       <td>${p.nome||'?'}</td>
-      <td style="text-align:right;font-weight:700;color:#178a5a">${fmt(quota)}</td>
+      <td style="text-align:center;color:var(--color-text-secondary)">${p.quotaPatrimoniale||'—'}</td>
+      <td style="text-align:right;font-weight:700;color:#178a5a">${fmt(p.quotaCalcolata)}</td>
     </tr>`).join('');
 
   const notaHtml=notaSpese
@@ -2832,7 +2898,8 @@ function anteprimaCalcolo(){
     <table style="width:100%;border-collapse:collapse;margin-bottom:14px">
       <thead><tr style="background:var(--color-background-secondary)">
         <th style="padding:5px 8px;text-align:left;font-size:12px">Persona</th>
-        <th style="padding:5px 8px;text-align:right;font-size:12px">Quota</th>
+        <th style="padding:5px 8px;text-align:center;font-size:12px">Quota Patrim.</th>
+        <th style="padding:5px 8px;text-align:right;font-size:12px">Importo</th>
       </tr></thead>
       <tbody>${persHtml}</tbody>
     </table>
@@ -2936,7 +3003,7 @@ function validaPrelievoResoconto(inp){
           <td id="conf-netto" style="padding:9px 10px;background:#e6f4ed;border:1px solid #0f6e48;font-weight:800;font-size:15px;color:#0f6e48"></td>
         </tr>
         <tr>
-          <td style="padding:7px 10px;font-weight:700;color:#1e4f78;background:#dceef9;border:1px solid #b0c4d8">👥 Quota per persona (<span id="conf-npersone"></span>)</td>
+          <td style="padding:7px 10px;font-weight:700;color:#1e4f78;background:#dceef9;border:1px solid #b0c4d8">👥 Quote per erede (<span id="conf-npersone"></span> persone)</td>
           <td id="conf-quota" style="padding:7px 10px;background:#f4f5f6;border:1px solid #b0c4d8;font-weight:700;color:#2a6496"></td>
         </tr>
       </table>
